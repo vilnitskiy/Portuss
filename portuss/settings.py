@@ -54,7 +54,7 @@ ROOT_URLCONF = 'portuss.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': BASE_DIR + '/templates/',
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,3 +118,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR + '/assets/'),
+]
+
+
+# Braintree settings (sandbox version)
+BRAINTREE_MERCHANT_ID = 'qqnj48w8krhvkwmp'
+
+BRAINTREE_PUBLIC_KEY = 'gc2mr7nqbr9hrztm'
+
+BRAINTREE_PRIVATE_KEY = '8c73fcee37ff7f857f06f4ca4a9c00a2'
