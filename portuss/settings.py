@@ -54,7 +54,7 @@ ROOT_URLCONF = 'portuss.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': BASE_DIR + '/templates/',
+        'DIRS': [BASE_DIR + '/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,7 +124,9 @@ STATICFILES_DIRS = [
 ]
 
 
-# Braintree settings (sandbox version)
+# Braintree settings
+BRAINTREE_PRODUCTION = False
+
 BRAINTREE_MERCHANT_ID = 'qqnj48w8krhvkwmp'
 
 BRAINTREE_PUBLIC_KEY = 'gc2mr7nqbr9hrztm'
