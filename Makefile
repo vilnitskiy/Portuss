@@ -1,6 +1,6 @@
 MANAGE=python manage.py
 flake8=flake8 --exclude '*migrations*',manage.py
-TEST_APP=syncapp
+TEST_APP=pproject
 
 init:
 	$(MANAGE) migrate
