@@ -21,5 +21,5 @@ from pproject import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^$', views.CheckoutView.as_view(), name='checkout'),
+    url(r'payment/token/', views.start_payment_view, name='checkout'),
 ]

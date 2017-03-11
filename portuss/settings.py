@@ -132,3 +132,18 @@ BRAINTREE_MERCHANT_ID = 'qqnj48w8krhvkwmp'
 BRAINTREE_PUBLIC_KEY = 'gc2mr7nqbr9hrztm'
 
 BRAINTREE_PRIVATE_KEY = '8c73fcee37ff7f857f06f4ca4a9c00a2'
+
+# Heroku settings
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ALLOWED_HOSTS = ['*']
+
+DEBUG = False
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
