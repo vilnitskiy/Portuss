@@ -16,6 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from pproject import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    url(r'^$', views.main, name='main'),
+
+    url(r'payment/token/', views.start_payment_view, name='checkout'),
 ]

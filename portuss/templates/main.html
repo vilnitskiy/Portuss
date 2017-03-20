@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="popup_on">
+<div class="wrapper">
+    <div class="header">
+        <div class="header-content main-content">
+        <div class="header-table">
+            <div class="header-block no-stretch mob-menu-burger-block mobile-only-element">
+                <div class="mobile-menu-burger">
+                    <div class="stick"></div>
+                </div>
+            </div>
+            <div class="header-block no-stretch logo-block">
+                <a href="./index.html" class="main-logo-holder">
+                    <img src="{% static 'img/logo.png' %}">
+                </a>
+            </div>
+            <div class="header-block search-block desktop-only-element">
+                <form action="#" method="post" class="header-search">
+                    <input type="text">
+                    <input type="submit" value=" ">
+                    <div class="additional-layer">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+                </form>
+                <a href="rent-form.html" class="give-car-for-rent">Сдать машину</a>
+            </div>
+            <div class="header-block no-stretch help-block desktop-only-element">
+                <a href="#" class="get-help">Помощь</a>
+            </div>
+            <div class="header-block no-stretch registration-login-block for-notreg-user">
+                <a href="#id-registration-login" class="registration modal-show">Вход/Регистрация</a>
+            </div>
+            <!--<div class="header-block no-stretch login-block for-notreg-user">-->
+                <!--<a href="#id-login" class="login-button modal-show">Войти</a>-->
+            <!--</div>-->
+            <div class="header-block no-stretch profile-block for-reg-user">
+                <a href="#" class="view-profile">
+                    <span>Profile</span>
+                    <div class="profile-img-header">
+                        <img src="{% static 'img/profile-img.png' %}">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+        <div class="header-content mob-menu">
+        <a href="rent-form.html" class="give-car-for-rent mob-block mob-block-1">
+            <div class="icon"><i class="fa fa-car" aria-hidden="true"></i></div>
+            <span>Сдать машину</span>
+        </a>
+        <a href="#" class="get-help mob-block mob-block-2">
+            <div class="icon"><i class="fa fa-question" aria-hidden="true"></i></div>
+            <span>Помощь</span>
+        </a>
+        <div class="search-block mob-block mob-block-3">
+            <div class="icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+            <form action="#" method="post" class="header-search">
+                <input type="text">
+            </form>
+        </div>
+
+        </div>
+    </div>
+</div>
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <div class="main-slider">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide swiper-slide-first">
+                                <img src="{% static 'img/main-slider-image.png' %}" alt="">
+                                <div class="additional-layer">
+                                    <div class="slide-text">Путешествуйте без границ</div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide-second">
+                                <img src="{% static 'img/main-slider-image.png' %}" alt="">
+                                <div class="additional-layer">
+                                    <div class="slide-text">Путешествуйте без границ</div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide-third">
+                                <img src="{% static 'img/main-slider-image.png' %}" alt="">
+                                <div class="additional-layer">
+                                    <div class="slide-text">Путешествуйте без границ</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-button-row">
+                            <div class="main-slider-prev-button"><img src="{% static 'img/slider-arrow.png' %}" alt=""></div>
+                            <div class="main-slider-next-button"><img src="{% static 'img/slider-arrow.png' %}" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <form action="#" class="on-page-search" method="post">
+                        <div class="search-block city-search">
+                            <input type="text" placeholder="Город">
+                        </div>
+                        <div class="search-block search-date-block">
+                            <label for="page-search-date-from">Срок аренды</label>
+                            <input readonly type="text" name="page-search-date-from" id="page-search-date-from" placeholder="от">
+                            <input readonly type="text" name="page-search-date-to" id="page-search-date-to" placeholder="до">
+                        </div>
+                        <a class="search-block on-page-search-trigger">
+                            <span>Поиск</span>
+                        </a>
+                    </form>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="slider-heading">Популярные обьявления</div>
+                    <div class="slider-holder popular-cars-slider-holder">
+                        <div class="popular-cars-slider">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="car-name">Bugatti Veyron, Israel</span>
+                                    <span class="car-price">300</span>
+                                    <span class="currency">$</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="car-name">Bugatti Veyron, Israel</span>
+                                    <span class="car-price">300</span>
+                                    <span class="currency">$</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="car-name">Bugatti Veyron, Israel</span>
+                                    <span class="car-price">300</span>
+                                    <span class="currency">$</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="car-name">Bugatti Veyron, Israel</span>
+                                    <span class="car-price">300</span>
+                                    <span class="currency">$</span>
+                                    <a href="#"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-controls">
+                            <div class="popular-cars-prev"><img src="{% static 'img/slider-arrow-red.png' %}" alt=""></div>
+                            <div class="popular-cars-next"><img src="{% static 'img/slider-arrow-red.png' %}" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="slider-heading">Популярные города</div>
+                    <div class="slider-holder popular-city-slider-holder">
+                        <div class="popular-city-slider">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="city-name">Kiev</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="city-name">Kiev</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="city-name">Kiev</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="city-name">Kiev</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="city-name">Kiev</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="{% static 'img/car-block-1.png' %}" alt="">
+                                    <span class="city-name">Kiev</span>
+                                    <a href="#"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-controls">
+                            <div class="popular-city-prev"><img src="{% static 'img/slider-arrow-red.png' %}" alt=""></div>
+                            <div class="popular-city-next"><img src="{% static 'img/slider-arrow-red.png' %}" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--Modal section-->
+    <div id="id-registration-login" class="modal-box">
+        <div class="modal-box__close-btn"></div>
+        <div class="popup-content">
+            <form action="#" name="login" id="login">
+                <span>Войти как</span>
+                <label for="login-e-mail">E-mail:</label>
+                <input type="text" id="login-e-mail">
+                <label for="login-password">Пароль:</label>
+                <input type="text" id="login-password">
+                <input type="submit" value="Войти">
+            </form>
+            <a href="registration-form.html" class="reg-link">Зарегистрироваться</a>
+        </div>
+    </div>
+    <div class="background-mask"></div>
+</div>
+<div class="how-it-works-holder">
+    <a href="#" class="how-it-works">Как это работает?</a>
+</div>
+<div class="footer">
+    <div class="footer-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="footer-block">
+                        <select name="currency" id="currency">
+                            <option>Валюта</option>
+                            <option>Грн</option>
+                            <option>$</option>
+                        </select>
+                        <select name="lang" id="lang">
+                            <option>Язык</option>
+                            <option>Укр</option>
+                            <option>Eng</option>
+                        </select>
+                    </div>
+                    <div class="footer-block">
+                        <ul class="footer-link-group">
+                            <li><a href="#">О компании</a></li>
+                            <li><a href="#">Условия и конфиденциальность</a></li>
+                            <li><a href="#">Правила</a></li>
+                            <li><a href="#">Помощь</a></li>
+                            <li><a href="#">Карта сайта</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-block">
+                        <ul class="contact-phone">
+                            <li>+380500000000</li>
+                            <li>+380500000000</li>
+                            <li>+380500000000</li>
+                        </ul>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="social-row">
+    <ul class="social-bar">
+        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-odnoklassniki" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+    </ul>
+</div>
+<script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
+<script src="{% static 'js/swiper.jquery.min.js' %}"></script>
+<script src="{% static 'js/modal-popup.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<script src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script>
+<script src="{% static 'js/select-block.js' %}"></script>
+<script src="{% static 'js/scripts.js' %}"></script>
+<script src="{% static 'js/slider.js' %}"></script>
+<script type="text/javascript">
+    var modal = new Modal(".popup_on")
+</script>
+</body>
+</html>
+{% endblock %}

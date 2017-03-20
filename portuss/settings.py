@@ -56,7 +56,9 @@ ROOT_URLCONF = 'portuss.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(PROJECT_ROOT, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': True,
@@ -78,8 +80,12 @@ WSGI_APPLICATION = 'portuss.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'portuss',
+        'USER': 'padmin',
+        'PASSWORD': 'ppassword',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -135,3 +141,12 @@ STATICFILES_DIRS = (
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# Braintree settings
+BRAINTREE_PRODUCTION = False
+
+BRAINTREE_MERCHANT_ID = 'qqnj48w8krhvkwmp'
+
+BRAINTREE_PUBLIC_KEY = 'gc2mr7nqbr9hrztm'
+
+BRAINTREE_PRIVATE_KEY = '8c73fcee37ff7f857f06f4ca4a9c00a2'
