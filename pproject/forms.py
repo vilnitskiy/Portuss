@@ -9,3 +9,9 @@ class CarRentForm1(ModelForm):
             'car_type', 'fuel', 'transmission',
             'issue_date', 'condition', 'mileage',
             'model')
+
+
+class CarRentForm2(ModelForm):
+    class Meta:
+        model = Car
+        fields = ('photos',)

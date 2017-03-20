@@ -73,64 +73,16 @@
                         <div class="form-tab non-active-tab"><span class="tab-index">3.</span>Описание</div>
                         <div class="form-tab non-active-tab"><span class="tab-index">4.</span>Цена</div>
                     </div>
-                    <form class="rent-form" action="#" method="post" enctype="multipart/form-data">
+
                         <div class="tab-content pre-active">
                             <span class="tab-content-heading">В этом разделе укажите технические характеристики вашего автомобиля</span>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <select name="transport-type" id="transport-type">
-                                            <option value="1">Тип транспорта</option>
-                                            <option value="2">234</option>
-                                            <option value="3">345</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select name="fuel-type" id="fuel-type">
-                                            <option value="1">Тип топлива</option>
-                                            <option value="2">234</option>
-                                            <option value="3">345</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select name="transmission-type" id="transmission-type">
-                                            <option value="1">Тип коробки передач</option>
-                                            <option value="2">234</option>
-                                            <option value="3">345</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <select name="manufactured-year" id="manufactured-year">
-                                            <option value="1">Год выпуска</option>
-                                            <option value="2">234223234</option>
-                                            <option value="3">345</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select name="condition" id="condition">
-                                            <option value="1">Состояние</option>
-                                            <option value="2">234</option>
-                                            <option value="3">345</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select name="mileage" id="mileage">
-                                            <option value="1">Пробег</option>
-                                            <option value="2">234</option>
-                                            <option value="3">345</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        <input type="text" name="brand" placeholder="Марка/Модель">
-                                    </td>
-                                </tr>
-                            </table>
+                                <form method="post" id="rent-form1">
+                                    {% csrf_token %}
+
+                                    {{ form1.as_p }}
+                                </form>
                             <div>
-                                <a href="#" class="form-next-step-button">Далее</a>
+                                <input type="submit" class="form-next-step-button" value="Next"/>
                             </div>
                         </div>
                         <div class="tab-content">
@@ -179,7 +131,7 @@
                                 <input type="submit" value="Опубликовать">
                             </div>
                         </div>
-                    </form>
+
                 </div>
             </div>
         </div>
@@ -248,12 +200,5 @@
         <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
         <li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
     </ul>
-</div>
-<div class="form1" style="width:30%;">
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="form-next-step-button">Next</button>
-</form>
 </div>
 {% endblock %}
