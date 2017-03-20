@@ -1,3 +1,6 @@
 from django.contrib import admin
+from pproject.models import Car, CommonUser
 
-# Register your models here.
+
+admin.site.register(Car)
+admin.site.register(CommonUser)

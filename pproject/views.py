@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.conf import settings
 
+from pproject.forms import CarRentForm1
+
 
 braintree.Configuration.configure(braintree.Environment.Sandbox,
                                   merchant_id=settings.BRAINTREE_MERCHANT_ID,
@@ -25,3 +27,8 @@ def start_payment_view(request, template_name="start_payment.html"):
 
 def main(request):
     return render(request, "main.html")
+
+
+def set_car_rent(request):
+    form1 = CarRentForm1
+    return render(request, "set_car_rent.html", {'form': form1})
