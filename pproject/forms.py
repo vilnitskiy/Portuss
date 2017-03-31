@@ -15,3 +15,9 @@ class CarRentForm2(ModelForm):
     class Meta:
         model = Car
         fields = ('photos',)
+
+
+class CarRentForm3(ModelForm):
+    class Meta:
+        model = Car
+        fields = ('car-rent-title', 'car-rent-description')

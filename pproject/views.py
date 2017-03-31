@@ -6,7 +6,8 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.views import View
 
-from pproject.forms import CarRentForm1
+from pproject.forms import CarRentForm1, CarRentForm2, \
+    CarRentForm3, CarRentForm4
 
 
 braintree.Configuration.configure(braintree.Environment.Sandbox,
@@ -42,13 +43,10 @@ class CarRentView(View):
 
     def post(self, request, *args, **kwargs):
         form1 = self.form_class(request.POST)
-        if request.method == 'POST':
-            print request.POST["car_type"]
         if form1.is_valid():
-            # <process form cleaned data>
-            return HttpResponseRedirect('/success/')
-        elif not form1.is_valid():
+            return HttpResponse()
+        else:
             json_data = json.dumps(form1.errors)
-            print HttpResponse(
+            return HttpResponse(
                 json_data, {'content_type': 'application/json'})
         return render(request, self.template_name, {'form1': form1})
