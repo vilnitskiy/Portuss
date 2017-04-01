@@ -21,4 +21,5 @@ urlpatterns = [
 
     url(r'^', include('chat.urls')),
     url(r'^', include('pproject.urls')),
+    url(r'^', include('payments.urls')),
 ]

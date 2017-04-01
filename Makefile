@@ -13,5 +13,19 @@ test:
 	$(MANAGE) test $(TEST_APP)
 test_only:
 	$(MANAGE) test $(TEST_APP)
+mm:
+	$(MANAGE) makemigrations
+migrate:
+	$(MANAGE) migrate
+startapp:
+	$(MANAGE) startapp $(name)
+static:
+	$(MANAGE) collectstatic
+shell:
+	$(MANAGE) shell
+
 freeze:
 	pip freeze | grep -v "pkg-resources" > requirements.txt
+
+psql:
+	sudo -u postgres psql
