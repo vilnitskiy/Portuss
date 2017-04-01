@@ -6,8 +6,7 @@ from django.http import HttpResponseRedirect
 from django.conf import settings
 from django.views import View
 
-from pproject.forms import CarRentForm1, CarRentForm2, \
-    CarRentForm3, CarRentForm4
+from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3
 
 
 braintree.Configuration.configure(braintree.Environment.Sandbox,

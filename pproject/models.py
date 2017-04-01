@@ -43,6 +43,7 @@ class Car(models.Model):
     model = models.CharField(max_length=10)
     photos = models.ImageField()
     price = models.PositiveIntegerField()
+    description_title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     rental_perion_begin = models.DateTimeField(
         validators=[validators.validate_rental_perion_begin])
