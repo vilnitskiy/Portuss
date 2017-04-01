@@ -13,3 +13,5 @@ test:
 	$(MANAGE) test $(TEST_APP)
 test_only:
 	$(MANAGE) test $(TEST_APP)
+freeze:
+	pip freeze | grep -v "pkg-resources" > requirements.txt
