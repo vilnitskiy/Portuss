@@ -17,9 +17,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-
-    url(r'^', include('chat.urls')),
+    url(r'^', include('posts.urls')),
     url(r'^', include('pproject.urls')),
     url(r'^', include('payments.urls')),
+
+    url(r'^admin/', admin.site.urls),
 ]
