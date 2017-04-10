@@ -18,3 +18,9 @@ def validate_rental_perion_end(value):
         raise ValidationError(
             "Please, enter the future date!")
     return "OK"
+
+
+def validate_date_of_birth(value):
+    if value > timezone.now():
+        raise ValidationError("Please, write your real date of birth!")
+    return "OK"

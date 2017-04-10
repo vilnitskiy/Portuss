@@ -1,15 +1,37 @@
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.views import View
+from django.views.generic.edit import CreateView
+from django.contrib.auth import authenticate, login
+from django.urls import reverse
+from django.contrib.auth.models import User
 
-from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3
+from pproject.models import CommonUser
+from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
+    RegistrationMultiForm
 
 
 def main(request):
-    return render(request, "main.html")
+    return render(request, 'main.html')
+
+
+class RegistrationView(CreateView):
+    form_class = RegistrationMultiForm
+    template_name = 'registration/registration.html'
+    success_url = 'main'
+
+    def form_valid(self, form):
+        user = form['user'].save()
+        student = form['student'].save(commit=False)
+        student.user = User.objects.get(username=user.username)
+        student.save()
+        new_user = authenticate(username=form['user'].cleaned_data['username'],
+                                password=form['user'].cleaned_data['password1'])
+        login(self.request, new_user)
+        return redirect(reverse(self.success_url))
 
 
 class CarRentView(View):

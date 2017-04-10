@@ -66,12 +66,10 @@ class CheckoutView(generic.FormView):
             "last_name": self.user.last_name,
             "email": self.user.email,
         }
-        print customer_kwargs
         # Create a new Braintree customer
         # In this example we always create new Braintree users
         # You can store and re-use Braintree's customer IDs, if you want to
         result = braintree.Customer.create(customer_kwargs)
-        print result
         if not result.is_success:
             # Ouch, something went wrong here
             # I recommend to send an error report to all admins
@@ -97,32 +95,18 @@ class CheckoutView(generic.FormView):
         fraud issues, since some providers require matching addresses
 
         """
-        address_dict = {
+        user_dict = {
             "first_name": self.user.first_name,
             "last_name": self.user.last_name,
-            "street_address": 'street',
-            "extended_address": 'street_2',
-            "locality": 'city',
-            "region": 'state_or_region',
-            "postal_code": 'postal_code',
-            "country_code_alpha2": 'alpha2_country_code',
-            "country_code_alpha3": 'alpha3_country_code',
-            "country_name": 'country',
-            "country_code_numeric": 'numeric_country_code',
         }
 
         # You can use the form to calculate a total or add a static total amount
-        # I'll use a static amount in this example
         result = braintree.Transaction.sale({
             "customer_id": customer_id,
             "amount": 100,
             "payment_method_nonce": form.cleaned_data['payment_method_nonce'],
-            "descriptor": {
-                # Definitely check out https://developers.braintreepayments.com/reference/general/validation-errors/all/python#descriptor
-                "name": "COMPANY.*test",
-            },
-            "billing": address_dict,
-            "shipping": address_dict,
+            "billing": user_dict,
+            "shipping": user_dict,
             "options": {
                 # Use this option to store the customer data, if successful
                 'store_in_vault_on_success': True,
@@ -154,5 +138,4 @@ class CheckoutView(generic.FormView):
         return super(CheckoutView, self).form_valid(form)
 
     def get_success_url(self):
-        # Add your preferred success url
-        return reverse('foo')
+        return reverse('main')

@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -65,6 +66,18 @@ class CommonUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     own_cars = models.ForeignKey(Car, related_name='user_own_cars')
     tenant_cars = models.ForeignKey(Car, related_name='user_tenant_cars')
+    date_of_birth = models.DateField(
+        validators=[validators.validate_date_of_birth],
+        null=False,
+        blank=False,
+        default=timezone.now())
+    phone = models.IntegerField(null=True, blank=True)
+    vk = models.CharField(max_length=60, null=True, blank=True)
+    fb = models.CharField(max_length=60, null=True, blank=True)
+    about = models.TextField(null=True, blank=True)
+    photo = models.ImageField(
+        upload_to='img/users_avatars/',
+        default='img/users_avatars/default.jpg')
     # TODO: develop rating system, it's could be \
     # model method or model field
     # rating = models.PositiveIntegerField()
