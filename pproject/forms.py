@@ -32,7 +32,7 @@ class BaseUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = (
-            'email',
+            'email', 'username',
             'password1', 'password2',
             'first_name', 'last_name',)
 

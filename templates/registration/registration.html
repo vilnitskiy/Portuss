@@ -2,5 +2,9 @@
 {% load static %}
 
 {% block main %}
+<form method="post">
+{% csrf_token %}
 {{ form }}
+<input type="submit" value="Регистрация">
+</form>
 {% endblock %}

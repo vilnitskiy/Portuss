@@ -24,12 +24,12 @@ class RegistrationView(CreateView):
     success_url = 'main'
 
     def form_valid(self, form):
-        user = form['user'].save()
-        student = form['student'].save(commit=False)
-        student.user = User.objects.get(username=user.username)
-        student.save()
-        new_user = authenticate(username=form['user'].cleaned_data['username'],
-                                password=form['user'].cleaned_data['password1'])
+        user = form['base_user'].save()
+        common_user = form['common_user'].save(commit=False)
+        common_user.user = User.objects.get(username=user.username)
+        common_user.save()
+        new_user = authenticate(username=form['base_user'].cleaned_data['username'],
+                                password=form['base_user'].cleaned_data['password1'])
         login(self.request, new_user)
         return redirect(reverse(self.success_url))
 
