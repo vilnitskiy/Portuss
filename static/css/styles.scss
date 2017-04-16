@@ -50,6 +50,7 @@ body{
   max-width: 1920px;
   width: 100%;
   position: relative;
+  min-height: 90vh;
 }
 
 .header{
@@ -99,7 +100,7 @@ body{
     padding-left: 1.428em;
   }
   .main-logo-holder{
-    height: 2.428em;
+    height: 3em;
     display: inline-block;
     img{
       height: 100%;
@@ -274,7 +275,7 @@ body{
   position: absolute;
   top: 50%;
   @include transform(translateY(-50%));
-  height: 60px;
+  height: 40px;
   left: -5%;
   right: -5%;
   z-index: 500;
@@ -355,6 +356,7 @@ body{
 }
 .how-it-works-holder{
   position: relative;
+  display: block;
   background: url("../images/how-it-works-1.png") no-repeat center;
   background-size: cover;
   height: 15.5em;
@@ -362,7 +364,8 @@ body{
   margin-bottom: 6.666em;
   border-bottom: 1px solid $main-border;
   border-top: 1px solid $main-border;
-  a{
+  @include color-this-link($car-red,$car-red);
+  span{
     position: absolute;
     left: 0;
     right: 0;
@@ -370,7 +373,6 @@ body{
     top: 45%;
     display: inline-block;
     text-align: center;
-    @include color-this-link($car-red,$car-red);
     font-size: 2em;
     font-weight: 700;
   }
@@ -397,7 +399,6 @@ body{
       padding-left: 0.5em;
       border: 1px solid $secondary-border;
       @include border-radius(5px);
-      color: $main-gray-blue;
     }
     &:first-child{
       float: left;
@@ -556,9 +557,9 @@ body{
 }
 .cc-price-holder{
   position: absolute;
-  top: 85%;
   left: 0;
   right: 0;
+  bottom: 5%;
   .cc-price{
     display: inline-block;
     padding: 0 1.5em;
@@ -664,6 +665,7 @@ body{
   float: right;
   cursor: pointer;
   font-size: 0.8em;
+  margin-top: 0.15em;
 }
 .cc-text-sector{
   span,p,li{
@@ -811,8 +813,8 @@ body{
   }
 }
 .po-heading{
-  text-align: center;
-  padding-bottom: 2em;
+  text-align: left;
+  padding-bottom: 0.5em;
 }
 .po-user-name{
   display: inline-block;
@@ -821,7 +823,6 @@ body{
 }
 .po-edit{
   display: inline-block;
-  float: right;
   line-height: 3em;
   @include color-this-link(black, black);
   text-decoration: underline;
@@ -832,13 +833,18 @@ body{
 .po-profile-photo{
   width: 13em;
   height: 13em;
-  @include border-radius(50%);
+  //@include border-radius(50%);
   display: inline-block;
   overflow: hidden;
   margin-right: 4em;
 }
 .po-main-section{
   display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  &>div{
+    padding-bottom: 0.5em;
+  }
 }
 .form-heading{
   font-size: 1.75em;
@@ -976,6 +982,9 @@ body{
       color: $section-separator;
     }
   }
+  &>div:last-child{
+    padding-top: 1em;
+  }
 }
 #car-card-heading{
   height: 3.5em;
@@ -998,6 +1007,19 @@ body{
 .form-next-step-button{
   display: inline-block;
   float: right;
+  padding: 0 1em;
+  background: $heavy-gray;
+  @include color-this-link(white, white);
+  font-size: 1.15em;
+  line-height: 2.25em;
+  &:focus{
+    text-decoration: none;
+    color: white;
+  }
+}
+.form-prev-step-button{
+  display: inline-block;
+  float: left;
   padding: 0 1em;
   background: $heavy-gray;
   @include color-this-link(white, white);
@@ -1052,13 +1074,13 @@ body{
   }
 }
 .contact-data{
-  margin: 3em 0 1.5em;
+  margin: 0.5em 0;
 }
 .po-section-heading{
   margin-bottom: 1em;
   font-size: 1.3em;
   display: inline-block;
-  line-height: 3em;
+  line-height: 2em;
 }
 .section-first{
   margin: 0.25em 0 1em;
@@ -1069,6 +1091,8 @@ body{
 }
 .po-contact-info-section{
   padding-top: 3em;
+  padding-bottom: 1em;
+  text-align: center;
 }
 .city-search{
     input[type="text"]{
@@ -1090,13 +1114,15 @@ body{
   height: 100%;
   display: inline-block;
   float: right;
-  width: 30%;
   border-left: 1px solid $main-border;
-  padding: 0 1.5em;
+  padding: 0 3em;
+  text-align: center;
+  background: $heavy-gray;
   cursor: pointer;
+  font-size: 1.5em;
   span{
-    line-height: 4em;
-    color: $section-separator;
+    line-height: 2.8em;
+    color: white;
   }
 }
 .search-date-block{
@@ -1236,7 +1262,7 @@ body{
     text-align: center;
   }
 }
-#page-search-date-from,#page-search-date-to{
+#page-search-date-from,#page-search-date-to,#rent-terms-from,#rent-terms-to{
   display: inline-block;
   width: 7em;
   margin-left: 1em;
@@ -1308,21 +1334,7 @@ body{
   left: 0;
   background: white;
 }
-#profile-reg{
-  width: 500px;
-  max-width: 95%;
-  display: block;
-  margin: 30px auto;
-  padding: 20px;
-  @include border-radius(10px);
-  border: 1px solid $heavy-gray;
-  .img-load-button{
-    display: inline-block;
-    width: auto;
-    margin-top: 1em;
-    cursor: pointer;
-  }
-}
+
 #profile-edit,#login,#profile-reg,#comment-form{
   text-align: left;
   width: 100%;
@@ -1358,6 +1370,22 @@ body{
     line-height: 2em;
   }
 }
+#profile-reg{
+  width: 500px;
+  max-width: 95%;
+  display: block;
+  margin: 30px auto;
+  padding: 20px;
+  overflow: hidden;
+  @include border-radius(10px);
+  border: 1px solid $heavy-gray;
+  .img-load-button{
+    display: inline-block;
+    width: auto;
+    margin-top: 1em;
+    cursor: pointer;
+  }
+}
 #id-show-on-map{
   iframe{
     width: 400px;
@@ -1367,15 +1395,17 @@ body{
 .detailed-search-block{
   display: none;
 }
-#car-gallery-load{
-  position: absolute;
-  left: -20em;
+#car-gallery-load,#car-document-load,#driver-licence,#passport,#make-photo{
+  position: fixed;
+  left: 0;
+  top: 0;
 }
-.img-load-button{
+.img-load-button,.document-load-button{
   display: inline-block;
   padding: 0 1em;
   line-height: 2em;
   background: $heavy-gray;
+  margin-top: 1em;
   color: white;
 }
 .thumb {
@@ -1560,7 +1590,7 @@ $gallery-top-height: 400px;
   max-height: $gallery-top-height;
 }
 .pagination-gallery-button{
-  width: 4.8em;
+  width: 4em;
   height: 100%;
   background: white;
   position: absolute;
@@ -1574,21 +1604,24 @@ $gallery-top-height: 400px;
     &>div{
       line-height: 100%;
       display: table-cell;
-      width: 4.8em;
-      text-align: center;
+      width: 4em;
+      text-align: left;
       vertical-align: middle;
       cursor: pointer;
       color: white;
       font-size: 1.4em;
+      img{
+        width: 70%;
+      }
     }
   }
 }
 .left-pagination-gallery-button{
   left: 0;
-  transform: rotate(180deg);
 }
 .right-pagination-gallery-button{
   right: 0;
+  transform: rotate(180deg);
 }
 .search-map{
   height: 350px;
@@ -1617,4 +1650,525 @@ padding-top: 20px;
   width: 100%;
 }
 //slider
+.how-it-works-section-start{
+  position: relative;
+  background: url("../images/how-it-works-1.png") no-repeat center;
+  background-size: cover;
+  height: 16em;
+  margin-top: 4.286em;
+  margin-bottom: -4.286em;
+  border-bottom: 1px solid $main-border;
+  border-top: 1px solid $main-border;
+  &>div{
+    position: absolute;
+    top: 50%;
+    @include transform(translateY(-50%));
+    width: 100%;
+    span{
+      color: $car-red;
+      font-size: 3em;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      line-height: 1.1em;
+      &:first-child{
+        font-size: 3.5em;
+        padding-bottom: 1em;
+      }
+    }
+  }
+}
+.hiw-tabs-section{
+  padding: 1em 0;
+  margin-right: -30px;
+  margin-left: -30px;
+}
+.hiw-tab{
+  width: 100%;
+  @include border-radius(7px);
+  display: inline-block;
+  line-height: 2em;
+  text-align: center;
+  background: $heavy-gray;
+  margin-bottom: 1em;
+  cursor: pointer;
+  color: white;
+  @include transition(all 0.3s ease)
+}
+.active-hiw-tab{
+  background: $car-red;
+}
+.hiw-tab-content{
+  background: $section-separator;
+  padding: 1em;
+  display: none;
+  p:first-child{
+    margin-top: 0;
+  }
+  margin-bottom: 1em;
+}
+.active-hiw-content{
+  display: block;
+}
+.gallery-slider-row{
+  padding: 0.5em 0 1em;
+}
+.rating{
+  @extend .typical-horizontal-list;
+  color: $heavy-gray;
+  width: 100%;
+}
+.payment-tab-content{
+  display: block;
+  margin: 0 auto 3em;
+  padding: 0 3em;
+  input[type="text"]{
+    width: 100%;
+    display: inline-block;
+    height: 2.5em;
+    padding: 0 1em;
+    &:focus{
+      outline: none;
+    }
+  }
+}
+.payment-table{
+  display: table;
+  width: 100%;
+  height: 3em;
+  margin: 1em 0;
+  div{
+    display: table-cell;
+    height: 100%;
+    text-align: center;
+    label{
+      display: inline-block;
+      font-size: 1.3em;
+      line-height: 3em;
+      text-align: center;
+      width: 95%;
+      padding: 0 2em;
+      border: 1px solid $main-border;
+      @include transition(all 0.3s ease);
+    }
+    &:first-child{
+      text-align: left;
+    }
+    &:last-child{
+      text-align: right;
+    }
+  }
+  input[type="radio"]{
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+  input[type="radio"]:checked+label{
+    background: $main-gray-blue;
+    color: white;
+  }
+}
+.insurance-check{
+  float: right;
+}
+#car-insurance{
+  width: 1.1em;
+  height: 1.1em;
+  position: relative;
+  bottom: -2px;
+}
+.doc-row{
+  margin-top: 1em;
+  label{
+    line-height: 2em;
+    margin-top: 0;
+  }
+}
+.dp-tabs-row{
+  padding-top: 6em;
+  padding-bottom: 1em;
+}
+.dp-tab{
+  display: inline-block;
+  font-size: 1.5em;
+  margin-right: 1em;
+  @include transition(color 0.3s ease);
+  color: $main-gray-blue;
+  .tab-index{
+    width: auto;
+    margin-right: 4px;
+  }
+}
+.dp-tab-active{
+  color: $car-red
+}
+.cc-rating{
+  text-align: center;
+}
+#id-registration-login {
+  .reg-link{
+    width: 100%;
+    margin-top: 1em;
+  }
+  .social{
+    @extend .typical-horizontal-list;
+    margin-top: 1em;
+    li{
+      @include border-radius(5px);
+      width: 2em;
+      height: 2em;
+      margin-right: 1em;
+      a{
+        display: inline-block;
+        line-height: 2em;
+        width: 100%;
+        text-align: center;
+        @include color-this-link(white, white);
+        &>*{
+          font-size: 1.5em;
+          vertical-align: middle;
+        }
+      }
+    }
+    .soc-vk{
+      background: #45668e;
+    }
+    .soc-fb{
+      background: #3b5998;
+    }
+    .soc-ok{
+      background: #ee8208;
+    }
+    .soc-gl{
+      background: #dd4b39;
+    }
+  }
+}
+.document-upload-row{
+  position: relative;
+  label{
+    width: 40%;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 0;
+    &:last-of-type{
+      float: right;
+    }
+  }
+  .image-holder{
+    display: inline-block;
+    width: 40%;
+  }
+  .make-photo-button{
+    position: absolute;
+    top: 50%;
+    right: 0;
+    @include transform(translateY(-50%));
+  }
+}
+#payment-country{
+  width: 30%;
+  display: inline-block;
+  margin-bottom: 1em;
+  margin-top: 0.5em;
+  font-size: 1.15em;
+  height: 2em;
+  padding-left: 0.5em;
+  border: 1px solid #cfd8dc;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  min-width: 150px;
+}
+.input-separator{
+  margin-top: 1em;
+  input{
+    width: 40%;
+    padding-left: 1em;
+    height: 2.5em;
+    &:last-child{
+      float: right;
+    }
+  }
+}
+#card-number{
+  width: 100%;
+  padding-left: 1em;
+  height: 2.5em;
+}
+.dp-form{
+  padding-bottom: 1em;
+  input[type="submit"]{
+    display: inline-block;
+    float: right;
+    line-height: 2.25em;
+    width: 10em;
+    text-align: center;
+    color: white;
+    background: $heavy-gray;
+    border: none;
+    &:focus{
+      outline: none;
+    }
+  }
+}
+.revision{
+  overflow: auto;
+  padding: 2px 0 1em;
+  &>div{
+    display: inline-block;
+    float: left;
+    height: 3em;
+    white-space: nowrap;
+    padding: 0 1em;
+    border: 1px solid $heavy-gray;
+    margin-left: -1px;
+    &:first-of-type{
+      margin-left: 0;
+    }
+    span{
+      line-height: 3em;
+      vertical-align: middle;
+      display: inline-block;
+    }
+    img{
+      display: none;
+    }
+    &.confirmed{
+      img{
+        height: 20px;
+        width: auto;
+        display: inline-block;
+        vertical-align: text-top;
+        margin-left: 5px;
+      }
+    }
+  }
+}
+.get-contact{
+  width: 8em;
+  font-size: 1.3em;
+  text-align: center;
+  line-height: 2em;
+  background: $main-gray-blue;
+  @include color-this-link(white,white);
+  display: inline-block;
+}
+.comment-tab-row{
+  .comment-tab{
+    padding: 0 2em;
+    font-size: 1.3em;
+    text-align: center;
+    line-height: 2em;
+    background: white;
+    border: 1px solid $main-gray-blue;
+    @include color-this-link(black,black);
+    display: inline-block;
+    @include transition(all 0.4s ease);
+    &.active{
+      background: $main-gray-blue;
+      @include color-this-link(white,white);
+    }
+    &:focus{
+      text-decoration: none;
+    }
+  }
+}
+.owners-reviews{
+  display: none;
+}
+.input-separator{
+  overflow: auto;
+  padding: 5px 0;
+  input{
+    width: 45%;
+    height: 2.5em;
+    border: 1px solid #b0bec5;
+    padding: 0 0.5em;
+  }
+  input:first-child{
+    float: left;
+  }
+  input:last-child{
+    float: right;
+  }
+}
+.profile-block{
+  position: relative;
+}
+.profile-submenu{
+  position: absolute;
+  top: 100%;
+  right: 1px;
+  @extend .typical-vertical-list;
+  display: none;
+  background: white;
+  border: 1px solid $header-border;
+  border-top: none;
+  min-width: 100%;
+  li{
+    border-bottom: 1px solid $header-border;
+    a{
+      @include color-this-link(black, black);
+      display: inline-block;
+      width: 100%;
+      padding: 0.5em;
+
+    }
+    &:last-of-type{
+      border-bottom: none;
+    }
+  }
+}
+.rent-terms{
+  display: inline-block;
+}
+.chat-section{
+  border: 1px solid $header-border;
+  margin-top: 3em;
+  overflow: auto;
+
+}
+.chat-contacts-sector,.chat-text-sector{
+  display: block;
+  float: left;
+}
+.chat-contacts-sector{
+  width: 30%;
+  border-right: 1px solid $header-border;
+  min-height: 30em;
+}
+.chat-text-sector{
+  width: 70%;
+}
+.chat-top-row{
+  border-bottom: 1px solid $header-border;
+  height: 5em;
+  padding: 1em;
+}
+.chat-bot-row{
+  min-height: 30em;
+}
+#chat-contacts-search{
+  display: block;
+  position: relative;
+  margin-top: 0.5em;
+  height: 2em;
+  border: 1px solid $main-gray-blue;
+  input[type="text"]{
+    width: 100%;
+    height: 100%;
+    padding: 0 8em 0 1em;
+    border: none;
+    &:focus{
+      outline: none;
+    }
+  }
+  input[type="submit"]{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    color: white;
+    width: 7em;
+    border: none;
+    background: $main-gray-blue;
+    &:focus{
+      outline: none;
+    }
+  }
+}
+.chat-contacts-list{
+  @extend .typical-vertical-list;
+  width: 100%;
+  li{
+    padding: 1em;
+    border-bottom: 1px solid $header-border;
+    cursor: pointer;
+  }
+}
+.round-img-wrap{
+  width: 2.5em;
+  height: 2.5em;
+  @include border-radius(50%);
+  overflow: hidden;
+  border: 1px solid $main-gray-blue;
+  display: inline-block;
+  vertical-align: middle;
+}
+.chat-contact-username{
+  display: inline-block;
+  font-size: 1.2em;
+  vertical-align: middle;
+  margin-left: 0.5em;
+}
+.chat-username{
+  font-size: 2em;
+  line-height: 1.5em;
+  display: inline-block;
+  margin-left: 1em;
+}
+#chat-massages{
+  display: block;
+  position: relative;
+  height: 100%;
+  min-height: 30em;
+  .bottom-holder{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5em;
+    padding: 1em;
+    textarea{
+      height: 3em;
+      max-height: 3em;
+      min-height: 3em;
+      width: 70%;
+      min-width: 70%;
+      max-width: 70%;
+      border: 1px solid $main-gray-blue;
+      padding: 0.5em;
+      &:focus{
+        outline: none;
+      }
+    }
+    input[type="submit"]{
+      width: 25%;
+      height: 3em;
+      display: inline-block;
+      float: right;
+      border: none;
+      background: $main-gray-blue;
+      color: white;
+    }
+  }
+  .massage{
+    padding: 1em;
+    @include border-radius(5px);
+    border: 1px solid $header-border;
+    background: white;
+    float: left;
+    width: 60%;
+    margin-bottom: 1em;
+    &:last-child{
+      margin-bottom: 0;
+    }
+    p {
+      margin: 0;
+    }
+  }
+  .input-massage{
+    background: #f2f2f2;
+    float: right;
+    clear: both;
+  }
+}
+.massages-sector{
+  width: 100%;
+  height: 30em;
+  padding: 2em 2em 6em;
+  //overflow-y: scroll;
+  //overflow-x: hidden;
+}
 @import 'media';

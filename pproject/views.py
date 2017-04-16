@@ -15,6 +15,11 @@ from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
 
 
 def main(request):
+    if request.POST:
+        print request.POST
+        new_user = authenticate(username=request.POST['email'],
+                                password=request.POST['password'])
+        login(request, new_user)
     return render(request, 'main.html')
 
 
@@ -28,8 +33,9 @@ class RegistrationView(CreateView):
         common_user = form['common_user'].save(commit=False)
         common_user.user = User.objects.get(username=user.username)
         common_user.save()
-        new_user = authenticate(username=form['base_user'].cleaned_data['username'],
-                                password=form['base_user'].cleaned_data['password1'])
+        new_user = authenticate(
+            username=form['base_user'].cleaned_data['username'],
+            password=form['base_user'].cleaned_data['password1'])
         login(self.request, new_user)
         return redirect(reverse(self.success_url))
 

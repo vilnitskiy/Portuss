@@ -12,38 +12,26 @@ $(document).ready(function(){
             source: availableTags
         });
     } );
-    function display_errors(errors){
-        $('.error').remove();
-        for (var k in errors) {
-            $("#rent-form1").append(errors[k]);
-       }
-    }
-    var $fnb=$(".form-next-step-button");
+    var $fnb=$(".form-next-step-button"),
+        $fpb=$(".form-prev-step-button");
     $(".pre-active").removeClass("pre-active").addClass("active-tab").slideToggle(1);
     $fnb.click(function(e){
-        serializedData = $("#rent-form1").serialize();
-        $.ajax({
-            url: rent_url,
-            type: "post",
-            data: serializedData,
-            success: function(data) {
-                console.log(data);
-                display_errors(data);
-                if (!data) {
-                    var $cur_tab=$(".active-tab"),
-                        $cur_ac_tab=$(".active-form-tab");
-                    $cur_tab.removeClass("active-tab").slideToggle(1).next().slideToggle(1).addClass("active-tab");
-                    $cur_ac_tab.removeClass("active-form-tab").addClass('non-active-tab').next().addClass("active-form-tab").removeClass('non-active-tab');
-                }
-            },
-            error: function(data){
-              var errors = data.responseJSON;
-              console.log(errors);
-              // Render the errors with js ...
-            }
-        })
-  
         e.preventDefault();
+        var $cur_tab=$(".active-tab"),
+            $cur_dp_tab=$(".dp-tab-active"),
+            $cur_ac_tab=$(".active-form-tab");
+        $cur_tab.removeClass("active-tab").slideToggle(1).next().slideToggle(1).addClass("active-tab");
+        $cur_ac_tab.removeClass("active-form-tab").addClass('non-active-tab').next().addClass("active-form-tab").removeClass('non-active-tab');
+        $cur_dp_tab.removeClass("dp-tab-active").addClass('dp-tab-inactive').next().addClass("dp-tab-active").removeClass('non-active-tab');
+    });
+    $fpb.click(function(e){
+        e.preventDefault();
+        var $cur_tab=$(".active-tab"),
+            $cur_dp_tab=$(".dp-tab-active"),
+            $cur_ac_tab=$(".active-form-tab");
+        $cur_tab.removeClass("active-tab").slideToggle(1).prev().slideToggle(1).addClass("active-tab");
+        $cur_ac_tab.removeClass("active-form-tab").addClass('non-active-tab').prev().addClass("active-form-tab").removeClass('non-active-tab');
+        $cur_dp_tab.removeClass("dp-tab-active").addClass('dp-tab-inactive').prev().addClass("dp-tab-active").removeClass('non-active-tab');
     });
     $( function() {
         $( "#form-datepicker" ).datepicker();
@@ -79,10 +67,10 @@ $(document).ready(function(){
             return date;
         }
     } );
-    // $('.datepicker').keydown(function(e) {
-    //     e.preventDefault();
-    //     return false;
-    // });
+    $('.view-profile').click(function(event){
+        event.preventDefault();
+        $('.profile-submenu').slideToggle();
+    });
     $( function() {
         var dateFormat = "mm/dd/yy",
             from = $( "#page-search-date-from" )
@@ -91,6 +79,27 @@ $(document).ready(function(){
                     to.datepicker( "option", "minDate", getDate( this ) );
                 }),
             to = $( "#page-search-date-to" ).datepicker()
+                .on( "change", function() {
+                    from.datepicker( "option", "maxDate", getDate( this ) );
+                });
+        function getDate( element ) {
+            var date;
+            try {
+                date = $.datepicker.parseDate( dateFormat, element.value );
+            } catch( error ) {
+                date = null;
+            }
+            return date;
+        }
+    } );
+    $( function() {
+        var dateFormat = "mm/dd/yy",
+            from = $( "#rent-terms-from" )
+                .datepicker()
+                .on( "change", function() {
+                    to.datepicker( "option", "minDate", getDate( this ) );
+                }),
+            to = $( "#rent-terms-to" ).datepicker()
                 .on( "change", function() {
                     from.datepicker( "option", "maxDate", getDate( this ) );
                 });
@@ -180,6 +189,21 @@ $(document).ready(function(){
         e.preventDefault();
         $di.slideToggle(400);
     });
+    var $com_tab=$('.comment-tab');
+    $('.clients-tab').click(function (event) {
+        event.preventDefault();
+        $com_tab.removeClass('active');
+        $(this).addClass('active');
+        $('.clients-reviews').css('display','block');
+        $('.owners-reviews').css('display','none');
+    });
+    $('.owners-tab').click(function (event) {
+        event.preventDefault();
+        $com_tab.removeClass('active');
+        $(this).addClass('active');
+        $('.clients-reviews').css('display','none');
+        $('.owners-reviews').css('display','block');
+    });
 
     var $mob_menu_trigger=$('.mobile-menu-burger'),
         $mob_menu=$('.mob-menu'),
@@ -230,7 +254,20 @@ $(document).ready(function(){
             }
         }
     });
-
+    var $hiw_tab=$('.hiw-tab'),
+        $cur_hiw_tab=$('.active-hiw-tab').attr('data-tab-index'),
+        $hiw_content=$('.hiw-tab-content');
+    $hiw_tab.click(function () {
+        if($cur_hiw_tab!=$(this).attr('data-tab-index')){
+            $hiw_tab.removeClass('active-hiw-tab');
+            $(this).addClass('active-hiw-tab');
+            $cur_hiw_tab=$(this).attr('data-tab-index');
+            $hiw_content.fadeOut(300);
+            setTimeout(function () {
+                $('.hiw-tab-content[data-tab-index="'+$cur_hiw_tab+'"]').fadeIn(300);
+            }, 300);
+        }
+    });
     function handleFileSelect(evt) {
         var files = evt.target.files; // FileList object
 
@@ -267,8 +304,7 @@ $(document).ready(function(){
             $('.gallery-top').removeClass('opened-gallery-top');
         });
     })($);
-
+    $('.massages-sector').niceScroll();
     document.getElementById('car-gallery-load').addEventListener('change', handleFileSelect, false);
-
 
 });

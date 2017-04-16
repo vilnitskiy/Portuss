@@ -106,6 +106,10 @@
       border: 1px solid #ddd;
       float: none;
       text-align: center;
+      &:nth-child(2){
+        border-top: none;
+        border-bottom: none;
+      }
     }
     .city-search{
       text-align: center;
@@ -288,12 +292,18 @@
   }
   .cc-profile-contact{
     line-height: 15px;
+    padding: 10px 0;
   }
   .modal-box{
     max-width: 400px;
   }
   .rent-form table{
     width: 100%;
+  }
+  .cc-detailed-info{
+    float: none;
+    margin-top: 0;
+    white-space: nowrap;
   }
 }
 
@@ -329,6 +339,11 @@
   }
   .search-result-text-sector .search-result-info-row .info-block{
     margin-right: 0.3em;
+    display: block;
+    margin-bottom: 0.5em;
+    &:last-child{
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -339,6 +354,10 @@
   .modal-box{
     max-width: 90%;
     min-width: 100px;
+  }
+  .po-profile-photo{
+    display: block;
+    margin: 0 auto 1em;
   }
 }
 

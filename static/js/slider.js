@@ -10,7 +10,7 @@ $(document).ready(function(){
         loop: "true"
     });
     var popular_cars = new Swiper('.popular-cars-slider', {
-        slidesPerView: 3,
+        slidesPerView: 4,
         spaceBetween: 30,
         nextButton: '.popular-cars-next',
         prevButton: '.popular-cars-prev',
@@ -25,12 +25,16 @@ $(document).ready(function(){
             700: {
                 slidesPerView: 2,
                 spaceBetween: 15
+            },
+            1024: {
+                slidesPerView: 3,
+                spaceBetween: 20
             }
         }
     });
     var popular_city = new Swiper('.popular-city-slider', {
-        slidesPerView: 3,
-        slidesPerColumn: 2,
+        slidesPerView: 4,
+        slidesPerColumn: 1,
         spaceBetween: 30,
         nextButton: '.popular-city-next',
         prevButton: '.popular-city-prev',
@@ -44,8 +48,13 @@ $(document).ready(function(){
             },
             700: {
                 slidesPerView: 2,
-                slidesPerColumn: 2,
+                slidesPerColumn: 1,
                 spaceBetween: 15
+            },
+            1024: {
+                slidesPerView: 3,
+                slidesPerColumn: 1,
+                spaceBetween: 20
             }
         }
     });
