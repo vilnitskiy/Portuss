@@ -17,3 +17,4 @@ media
 *.log
 venv
 staticfiles
+.venv
