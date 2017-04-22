@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # SECURITY WARNING: keep the secret key used in production secret! And don't use debug=True in production!
 SECRET_KEY = 'imasecret'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['portuss.herokuapp.com']
 
 # Application definition
 INSTALLED_APPS = [
