@@ -2,9 +2,14 @@
 {% load static %}
 
 {% block main %}
-<form method="post">
-{% csrf_token %}
-{{ form }}
-<input type="submit" value="Регистрация">
-</form>
+<div class="wrapper">
+{% include "header.html" %}
+    <div class="page-content">
+	<form method="post" id="profile-reg" name="profile-reg">
+		{% csrf_token %}
+			{{ form }}
+		<input type="submit" value="Регистрация">
+	</form>
+	</div>
+</div>
 {% endblock %}

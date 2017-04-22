@@ -12,6 +12,5 @@ urlpatterns = [
     url(r'^registration/',
         views.RegistrationView.as_view(),
         name='registration'),
-    url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'next_page': 'main'}, name='logout'),
 ]

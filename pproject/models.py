@@ -78,6 +78,7 @@ class CommonUser(models.Model):
         validators=[validators.validate_date_of_birth],
         null=False,
         blank=False)
+    city = models.CharField(max_length=60, null=True, blank=True)
     phone = models.IntegerField(null=True, blank=True)
     vk = models.CharField(max_length=60, null=True, blank=True)
     fb = models.CharField(max_length=60, null=True, blank=True)

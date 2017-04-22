@@ -29,6 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
+
     'channels',
     'posts',
     'pproject',
@@ -41,8 +43,20 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.vk.VKOAuth2',
+    'social_core.backends.odnoklassniki.OdnoklassnikiOAuth2',
+
+    'portuss.custom_backends.UserModelEmailBackend',
+
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'portuss.urls'
@@ -60,6 +74,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -125,3 +142,23 @@ BRAINTREE_MERCHANT_ID = 'qqnj48w8krhvkwmp'
 BRAINTREE_PUBLIC_KEY = 'gc2mr7nqbr9hrztm'
 
 BRAINTREE_PRIVATE_KEY = '8c73fcee37ff7f857f06f4ca4a9c00a2'
+
+
+# Auth settings
+LOGIN_URL = 'main'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'main'
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '318448215241474' # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '9fbacf187c5dbbd41b6d5809b79fb82f' # App Secret
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '866680194761-6qpbqr7k8pp5kovto7blfkrs3lqv2i9h.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'McFymPba41Zt7Oyp60Y5L9lJ'
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = '5987534'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = 'i1KFplzCdM0E2kegOzMG'
+
+SOCIAL_AUTH_ODNOKLASSNIKI_OAUTH2_KEY = '1250774016'
+SOCIAL_AUTH_ODNOKLASSNIKI_OAUTH2_SECRET = '77B385E81F790AF65332F106'
+SOCIAL_AUTH_ODNOKLASSNIKI_OAUTH2_PUBLIC_NAME = 'CBANEOILEBABABABA'

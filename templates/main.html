@@ -14,75 +14,7 @@
 </head>
 <body class="popup_on">
 <div class="wrapper">
-    <div class="header">
-        <div class="header-content main-content">
-        <div class="header-table">
-            <div class="header-block no-stretch mob-menu-burger-block mobile-only-element">
-                <div class="mobile-menu-burger">
-                    <div class="stick"></div>
-                </div>
-            </div>
-            <div class="header-block no-stretch logo-block">
-                <a href="./index.html" class="main-logo-holder">
-                    <img src="{% static 'images/logo.png' %}">
-                </a>
-            </div>
-            <div class="header-block search-block desktop-only-element">
-                <form action="#" method="post" class="header-search">
-                    <input type="text">
-                    <input type="submit" value=" ">
-                    <div class="additional-layer">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                    </div>
-                </form>
-                <a href="rent-form.html" class="give-car-for-rent">Сдать машину</a>
-            </div>
-            <div class="header-block no-stretch help-block desktop-only-element">
-                <a href="#" class="get-help">Помощь</a>
-            </div>
-
-            {% if user.is_authenticated %}
-            <div class="header-block no-stretch help-block desktop-only-element">
-                <a href="#" class="get-help">Сообщения</a>
-            </div>
-            <div class="header-block no-stretch profile-block">
-                <a href="#" class="view-profile">
-                    <span>Profile</span>
-                    <div class="profile-img-header">
-                        <img src="{% static 'images/profile-img.png' %}">
-                    </div>
-                </a>
-                <ul class="profile-submenu">
-                    <li><a href="PO.html">Мой профиль</a></li>
-                    <li><a href="#">Статистика</a></li>
-                    <li><a href="{% url 'logout' %}">Выйти</a></li>
-                </ul>
-            </div>
-            {% else %}
-            <div class="header-block no-stretch registration-login-block">
-                <a href="#id-registration-login" class="registration modal-show">Вход/Регистрация</a>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-        <div class="header-content mob-menu">
-        <a href="rent-form.html" class="give-car-for-rent mob-block mob-block-1">
-            <div class="icon"><i class="fa fa-car" aria-hidden="true"></i></div>
-            <span>Сдать машину</span>
-        </a>
-        <a href="#" class="get-help mob-block mob-block-2">
-            <div class="icon"><i class="fa fa-question" aria-hidden="true"></i></div>
-            <span>Помощь</span>
-        </a>
-        <div class="search-block mob-block mob-block-3">
-            <div class="icon"><i class="fa fa-search" aria-hidden="true"></i></div>
-            <form action="#" method="post" class="header-search">
-                <input type="text">
-            </form>
-        </div>
-
-        </div>
-    </div>
+{% include "header.html" %}
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">

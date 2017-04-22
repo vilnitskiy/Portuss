@@ -8,19 +8,22 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django import forms
 
 from pproject.models import CommonUser
 from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
-    RegistrationMultiForm
+    RegistrationMultiForm, LoginForm
 
 
 def main(request):
+    form = LoginForm
     if request.POST:
-        print request.POST
-        new_user = authenticate(username=request.POST['email'],
-                                password=request.POST['password'])
-        login(request, new_user)
-    return render(request, 'main.html')
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            new_user = authenticate(username=form.cleaned_data['email'],
+                                    password=form.cleaned_data['password'])
+            login(request, new_user)
+    return render(request, 'main.html', {'form': form})
 
 
 class RegistrationView(CreateView):
@@ -33,10 +36,14 @@ class RegistrationView(CreateView):
         common_user = form['common_user'].save(commit=False)
         common_user.user = User.objects.get(username=user.username)
         common_user.save()
-        new_user = authenticate(
-            username=form['base_user'].cleaned_data['username'],
-            password=form['base_user'].cleaned_data['password1'])
-        login(self.request, new_user)
+        try:
+            new_user = authenticate(
+                username=form['base_user'].cleaned_data['email'],
+                password=form['base_user'].cleaned_data['password1'])
+            login(self.request, new_user)
+        except:
+            raise forms.ValidationError(
+                "Error!")
         return redirect(reverse(self.success_url))
 
 

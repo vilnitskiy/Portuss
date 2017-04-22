@@ -7,6 +7,7 @@
 // var m1 = new Modal('#main');
 
 function Modal (sSelector) {
+    console.log(sSelector);
     var m = this;
     // 1. Data section
     m.main           = $(sSelector);
@@ -14,6 +15,7 @@ function Modal (sSelector) {
     m.AllModalBox    = m.main.find('.modal-box');
     // 2. Logic section
     m.showModal = function (event) {
+        console.log(event);
         event.preventDefault(); 
         var  CurrentModalDiv = $(this).attr('href')
             ,ScrollPosition  = $(window).scrollTop() + 100;
