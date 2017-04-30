@@ -17,19 +17,55 @@ class CarRentForm1(ModelForm):
         fields = (
             'car_type', 'fuel', 'transmission',
             'issue_date', 'condition', 'mileage',
-            'model',)
+            'model', 'country', 'city', 'street',
+            'building',)
+
+    def __init__(self, *args, **kwargs):
+        super(CarRentForm1, self).__init__(*args, **kwargs)
+        self.fields['car_type'].widget.attrs.update({
+            'id': 'transport-type'})
+        self.fields['fuel'].widget.attrs.update({
+            'id': 'fuel-type'})
+        self.fields['transmission'].widget.attrs.update({
+            'id': 'transmission-type'})
+        self.fields['issue_date'].widget.attrs.update({
+            'id': 'manufactured-year'})
+        self.fields['condition'].widget.attrs.update({
+            'id': 'condition'})
+        self.fields['mileage'].widget.attrs.update({
+            'id': 'mileage'})
+        self.fields['country'].widget.attrs.update({
+            'id': 'car-country'})
+        self.fields['city'].widget.attrs.update({
+            'id': 'car-city'})
+        self.fields['street'].widget.attrs.update({
+            'id': 'car-street'})
+        self.fields['building'].widget.attrs.update({
+            'id': 'car-house'})
 
 
 class CarRentForm2(ModelForm):
     class Meta:
         model = Car
-        fields = ('photos',)
+        fields = ('photo',)
 
 
 class CarRentForm3(ModelForm):
     class Meta:
         model = Car
         fields = ('description_title', 'description',)
+
+
+class CarRentForm4(ModelForm):
+    class Meta:
+        model = Car
+        fields = ('rental_perion_begin', 'rental_perion_end', 'price',)
+
+
+class CarRentForm5(ModelForm):
+    class Meta:
+        model = Car
+        fields = ('docs', 'is_insured',)
 
 
 class BaseUserForm(UserCreationForm):

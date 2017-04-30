@@ -34,11 +34,11 @@
                 <a href="#" class="view-profile">
                     <span>Profile</span>
                     <div class="profile-img-header">
-                        <img src="{% static 'images/profile-img.png' %}">
+                        <img src="{{ common_user.photo.url }}">
                     </div>
                 </a>
                 <ul class="profile-submenu">
-                    <li><a href="PO.html">Мой профиль</a></li>
+                    <li><a href="{% url 'user_profile' %}">Мой профиль</a></li>
                     <li><a href="#">Статистика</a></li>
                     <li><a href="{% url 'logout' %}">Выйти</a></li>
                 </ul>

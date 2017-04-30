@@ -15,6 +15,88 @@ $(document).ready(function(){
     var $fnb=$(".form-next-step-button"),
         $fpb=$(".form-prev-step-button");
     $(".pre-active").removeClass("pre-active").addClass("active-tab").slideToggle(1);
+
+    $.ajaxSetup({ 
+         beforeSend: function(xhr, settings) {
+             function getCookie(name) {
+                 var cookieValue = null;
+                 if (document.cookie && document.cookie != '') {
+                     var cookies = document.cookie.split(';');
+                     for (var i = 0; i < cookies.length; i++) {
+                         var cookie = jQuery.trim(cookies[i]);
+                         // Does this cookie string begin with the name we want?
+                         if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                             break;
+                         }
+                     }
+                 }
+                 return cookieValue;
+             }
+             if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                 // Only send the token to relative URLs i.e. locally.
+                 xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+             }
+         } 
+    });
+
+    $.ajax({
+        url: rent_url,
+        type: "GET",
+        dataType: 'html',
+        success: function (data) {
+            console.log('OK');
+            console.log(data);
+            $('#form_rent_wizard').append(data);
+        },
+        error: function(data){
+            console.log('notOK');
+            var errors = data.responseJSON;
+            console.log(data.responseText);
+            $('#form_rent_wizard').append(data.responseText);
+        }
+    });
+
+    function display_errors(errors){
+        $('.error').remove();
+        for (var k in errors) {
+            if (errors[k] != 'errors_marker_value') {
+                $("#form_rent_wizard").append(errors[k]);
+            }
+       }
+    }
+
+    var next_step = 1;
+    $("#submit_wizard").click(function(e){
+        e.preventDefault();
+        var serializedData = $('#form_rent_wizard').serialize() + '&next_step=' + next_step;
+        $.ajax({
+            url: rent_url,
+            data: serializedData,
+            type: "POST",
+            success: function (data) {
+                $('#form_rent_wizard').append(data);
+                for (var k in data) {
+                    if (data[k] == 'errors_marker_value') {
+                        display_errors(data);
+                    }
+                }
+                if (data['errors_marker_key'] == undefined){
+                    // increase next_step till the forms in multistep form end
+                    if (next_step != 4) {
+                        next_step++;
+                    }
+                    console.log(next_step);
+                }
+            },
+            error: function(data){
+                var errors = data.responseJSON;
+                console.log(errors);
+            }
+        });
+    });
+
+
     $fnb.click(function(e){
         e.preventDefault();
         var $cur_tab=$(".active-tab"),

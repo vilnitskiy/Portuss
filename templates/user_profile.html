@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="wrapper">
+{% include "header.html" %}
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 po-contact-info-section">
+                    <div class="po-profile-photo">
+                        <img src="{{ common_user.photo.url }}">
+                    </div>
+                    <div class="po-main-section">
+                        <div class="po-heading">
+                            <span class="po-user-name">{{ common_user.user.first_name }} {{ common_user.user.last_name }}</span>
+                        </div>
+                        <div>
+                            <span>С нами с </span><span class="po-registration-date">{{ common_user.user.date_joined |date:"d.m.Y" }}</span>
+                        </div>
+                        <div>
+                            <span>Город: </span><span class="po-city">{{ common_user.city }}</span>
+                        </div>
+                        <div>
+                            <span>Дата рождения: </span><span class="po-birthday">{{ common_user.date_of_birth|date:"d.m.Y" }}</span>
+                        </div>
+                        <div>
+                            <a href="#id-profile-edit" class="po-edit modal-show">Редактировать</a>
+                            <a href="#" class="get-contact">Связаться</a>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 po-contact-info-section">-->
+                    <!--<div>-->
+                        <!--<span>Телефон: </span><span class="po-phone">+380654456955</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<span class="po-vk">vk.com/vanya_vanin</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 po-contact-info-section">-->
+                    <!--<div>-->
+                        <!--<span>Email: </span><span class="po-e-mail">vlad@ilnitskiy.esy</span>-->
+                    <!--</div>-->
+                    <!--<div>-->
+                        <!--<span class="po-facebook">facebook.com/ggg</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="revision-section">
+                        <span class="po-section-heading">Проверено Portuss</span>
+                        <div class="revision">
+                            <div class="confirmed"><span>Документы</span><img src="{% if user.docs_are_checked %}{{ STATIC_URL }}images/confirm-icon-black.png{% else %}{{ STATIC_URL }}images/cross.svg{% endif %}"></div>
+                            <div class="confirmed"><span>Социальные сети</span><img src="{% if user.docs_are_checked %}{{ STATIC_URL }}images/confirm-icon-black.png{% else %}{{ STATIC_URL }}images/cross.svg{% endif %}"></div>
+                        </div>
+                    </div>
+                    <span class="po-section-heading section-first">О себе:</span>
+                    <p class="po-about-myself">
+                        {{ common_user.about }}
+                    </p>
+                    <span class="po-section-heading">Мои объявления:</span>
+                    <div class="search-result">
+                        <div class="search-result-img-sector">
+                            <img src="./images/search-result-car-1.png">
+                        </div>
+                        <div class="search-result-text-sector">
+                            <div class="search-result-heading">Nissan Note на 2 недели</div>
+                            <div class="search-result-short-description">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit, sed do eiusmod tempor incididunt
+                                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                                    sint
+                                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+                                </p>
+                            </div>
+                            <a href="#" class="search-result-more-info">Подробнее</a>
+                            <div class="search-result-info-row">
+                                <div class="info-block"><img src="./images/wallet.png"><span>$300</span></div>
+                                <div class="info-block"><img src="./images/calendar.png"><span>на 14 дней</span></div>
+                                <div class="info-block"><img src="./images/car.png"><span>Nissan Note</span></div>
+                                <div class="info-block"><img src="./images/city.png"><span>Малі Кучугури</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="po-section-heading">Мои поездки:</span>
+                    <div class="slider-holder popular-cars-slider-holder">
+                        <div class="popular-cars-slider">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="./images/car-block-1.png" alt="">
+                                    <span class="car-name">Bugatti Veyron, Israel</span>
+                                    <span class="car-price">300</span>
+                                    <span class="currency">$</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="./images/car-block-1.png" alt="">
+                                    <span class="car-name">Bugatti Veyron, Israel</span>
+                                    <span class="car-price">300</span>
+                                    <span class="currency">$</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="./images/car-block-1.png" alt="">
+                                    <span class="car-name">Bugatti Veyron, Israel</span>
+                                    <span class="car-price">300</span>
+                                    <span class="currency">$</span>
+                                    <a href="#"></a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="./images/car-block-1.png" alt="">
+                                    <span class="car-name">Bugatti Veyron, Israel</span>
+                                    <span class="car-price">300</span>
+                                    <span class="currency">$</span>
+                                    <a href="#"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-controls">
+                            <div class="popular-cars-prev"><img src="./images/slider-arrow-red.png" alt=""></div>
+                            <div class="popular-cars-next"><img src="./images/slider-arrow-red.png" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="comment-tab-row">
+                        <a href="#" class="comment-tab clients-tab active">Отзывы клиентов</a>
+                        <a href="#" class="comment-tab owners-tab">Отзывы владельцев</a>
+                    </div>
+                    <div class="po-comment-section">
+                        <div class="clients-reviews">
+                            <div class="comment-table">
+                                <div class="comment-cell">
+                                    <div class="comment-profile-photo">
+                                        <img src="./images/profile-img-omg.jpg">
+                                    </div>
+                                </div>
+                                <div class="comment-cell">
+                                    <div class="comment-heading">
+                                        <span class="comment-user-name">Богдан,</span>
+                                        <span class="comment-user-age">27</span>
+                                        <span> лет</span>
+                                    </div>
+                                    <div class="comment-text">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                        </p>
+                                    </div>
+                                    <span class="comment-date">27.09.2016</span>
+                                    <a href="#" class="comment-like">Полезный отзыв</a>
+                                </div>
+                            </div>
+                            <div class="comment-table">
+                                <div class="comment-cell">
+                                    <div class="comment-profile-photo">
+                                        <img src="./images/profile-img-omg.jpg">
+                                    </div>
+                                </div>
+                                <div class="comment-cell">
+                                    <div class="comment-heading">
+                                        <span class="comment-user-name">Богдан,</span>
+                                        <span class="comment-user-age">27</span>
+                                        <span> лет</span>
+                                    </div>
+                                    <div class="comment-text">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                        </p>
+                                    </div>
+                                    <span class="comment-date">27.09.2016</span>
+                                    <a href="#" class="comment-like">Полезный отзыв</a>
+                                </div>
+                            </div>
+                            <div class="comment-table">
+                                <div class="comment-cell">
+                                    <div class="comment-profile-photo">
+                                        <img src="./images/profile-img-omg.jpg">
+                                    </div>
+                                </div>
+                                <div class="comment-cell">
+                                    <div class="comment-heading">
+                                        <span class="comment-user-name">Богдан,</span>
+                                        <span class="comment-user-age">27</span>
+                                        <span> лет</span>
+                                    </div>
+                                    <div class="comment-text">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                        </p>
+                                    </div>
+                                    <span class="comment-date">27.09.2016</span>
+                                    <a href="#" class="comment-like">Полезный отзыв</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="owners-reviews">
+                            <div class="comment-table">
+                                <div class="comment-cell">
+                                    <div class="comment-profile-photo">
+                                        <img src="./images/passport-guy.jpg">
+                                    </div>
+                                </div>
+                                <div class="comment-cell">
+                                    <div class="comment-heading">
+                                        <span class="comment-user-name">Богдан,</span>
+                                        <span class="comment-user-age">27</span>
+                                        <span> лет</span>
+                                    </div>
+                                    <div class="comment-text">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                        </p>
+                                    </div>
+                                    <span class="comment-date">27.09.2016</span>
+                                    <a href="#" class="comment-like">Полезный отзыв</a>
+                                </div>
+                            </div>
+                            <div class="comment-table">
+                                <div class="comment-cell">
+                                    <div class="comment-profile-photo">
+                                        <img src="./images/passport-guy.jpg">
+                                    </div>
+                                </div>
+                                <div class="comment-cell">
+                                    <div class="comment-heading">
+                                        <span class="comment-user-name">Богдан,</span>
+                                        <span class="comment-user-age">27</span>
+                                        <span> лет</span>
+                                    </div>
+                                    <div class="comment-text">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                        </p>
+                                    </div>
+                                    <span class="comment-date">27.09.2016</span>
+                                    <a href="#" class="comment-like">Полезный отзыв</a>
+                                </div>
+                            </div>
+                            <div class="comment-table">
+                                <div class="comment-cell">
+                                    <div class="comment-profile-photo">
+                                        <img src="./images/passport-guy.jpg">
+                                    </div>
+                                </div>
+                                <div class="comment-cell">
+                                    <div class="comment-heading">
+                                        <span class="comment-user-name">Богдан,</span>
+                                        <span class="comment-user-age">27</span>
+                                        <span> лет</span>
+                                    </div>
+                                    <div class="comment-text">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                        </p>
+                                    </div>
+                                    <span class="comment-date">27.09.2016</span>
+                                    <a href="#" class="comment-like">Полезный отзыв</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	</div>
+</div>
+{% include "footer.html" %}
+{% endblock %}
