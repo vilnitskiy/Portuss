@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -9,18 +8,22 @@ from pproject import validators
 
 class CarConstants:
     CAR_TYPE_CHOICES = (
+        (u'', u'Transport type'),
         ("t1", ("type1")),
         ("t2", ("type2")),
     )
     FUEL_CHOICES = (
+        (u'', u'Fuel type'),
         ("t1", ("type1")),
         ("t2", ("type2")),
     )
     TRANSMISSION_CHOICES = (
+        (u'', u'Transmission type'),
         ("t1", ("type1")),
         ("t2", ("type2")),
     )
     CONDITION_CHOICES = (
+        (u'', u'Condition'),
         ("t1", ("type1")),
         ("t2", ("type2")),
     )

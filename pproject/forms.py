@@ -29,19 +29,21 @@ class CarRentForm1(ModelForm):
         self.fields['transmission'].widget.attrs.update({
             'id': 'transmission-type'})
         self.fields['issue_date'].widget.attrs.update({
-            'id': 'manufactured-year'})
+            'id': 'manufactured-year', 'placeholder': 'Year of manufacturing'})
         self.fields['condition'].widget.attrs.update({
             'id': 'condition'})
         self.fields['mileage'].widget.attrs.update({
-            'id': 'mileage'})
+            'id': 'mileage', 'placeholder': 'Mileage'})
+        self.fields['model'].widget.attrs.update({
+            'placeholder': 'Brand/Model'})
         self.fields['country'].widget.attrs.update({
-            'id': 'car-country'})
+            'id': 'car-country', 'placeholder': 'Country'})
         self.fields['city'].widget.attrs.update({
-            'id': 'car-city'})
+            'id': 'car-city', 'placeholder': 'City'})
         self.fields['street'].widget.attrs.update({
-            'id': 'car-street'})
+            'id': 'car-street', 'placeholder': 'Steet'})
         self.fields['building'].widget.attrs.update({
-            'id': 'car-house'})
+            'id': 'car-house', 'placeholder': 'Building'})
 
 
 class CarRentForm2(ModelForm):
@@ -49,11 +51,31 @@ class CarRentForm2(ModelForm):
         model = Car
         fields = ('photo',)
 
+    def __init__(self, *args, **kwargs):
+        super(CarRentForm2, self).__init__(*args, **kwargs)
+        self.fields['photo'].widget.attrs.update({
+            'id': 'car-gallery-load'})
+
 
 class CarRentForm3(ModelForm):
     class Meta:
         model = Car
         fields = ('description_title', 'description',)
+
+    def __init__(self, *args, **kwargs):
+        super(CarRentForm3, self).__init__(*args, **kwargs)
+        self.fields['description_title'].widget.attrs.update({
+            'id': 'car-card-heading', 'rows': '2',
+            'placeholder': 'Here you can write'
+            'the title for the ad, otherwise'
+            'the system will generate it yourself.'})
+        self.fields['description'].widget.attrs.update({
+            'id': 'car-card-description',
+            'placeholder': 'Here you can describe all'
+            'the nuances: the rules of behavior in'
+            'the car, whether it is possible to smoke'
+            'inside, whether the tank will be filled when'
+            'renting, etc.'})
 
 
 class CarRentForm4(ModelForm):
@@ -61,11 +83,32 @@ class CarRentForm4(ModelForm):
         model = Car
         fields = ('rental_perion_begin', 'rental_perion_end', 'price',)
 
+    def __init__(self, *args, **kwargs):
+        super(CarRentForm4, self).__init__(*args, **kwargs)
+        self.fields['rental_perion_begin'].widget.attrs.update({
+            'id': 'rent-terms-from',
+            'placeholder': 'from',
+            'class': 'hasDatepicker'})
+        self.fields['rental_perion_end'].widget.attrs.update({
+            'id': 'rent-terms-to',
+            'placeholder': 'to',
+            'class': 'hasDatepicker'})
+        self.fields['price'].widget.attrs.update({
+            'id': 'form-price',
+            'placeholder': 'Enter the price'})
+
 
 class CarRentForm5(ModelForm):
     class Meta:
         model = Car
         fields = ('docs', 'is_insured',)
+
+    def __init__(self, *args, **kwargs):
+        super(CarRentForm5, self).__init__(*args, **kwargs)
+        self.fields['docs'].widget.attrs.update({
+            'id': 'car-document-load'})
+        self.fields['is_insured'].widget.attrs.update({
+            'id': 'car-insurance'})
 
 
 class BaseUserForm(UserCreationForm):
@@ -119,3 +162,21 @@ class LoginForm(ModelForm):
             raise forms.ValidationError(
                 "Something went wrong, check your email and password and try again")
         return self.cleaned_data
+
+
+class QuickSearchForm(ModelForm):
+    class Meta:
+        model = Car
+        fields = (
+            'city', 'rental_perion_begin', 'rental_perion_end',)
+
+    def __init__(self, *args, **kwargs):
+        super(QuickSearchForm, self).__init__(*args, **kwargs)
+        self.fields['city'].widget = forms.TextInput(attrs={
+            'placeholder': 'City'})
+        self.fields['rental_perion_begin'].widget = forms.TextInput(attrs={
+            'id': 'page-search-date-from',
+            'placeholder': 'from'})
+        self.fields['rental_perion_end'].widget = forms.TextInput(attrs={
+            'id': 'page-search-date-to',
+            'placeholder': 'to'})

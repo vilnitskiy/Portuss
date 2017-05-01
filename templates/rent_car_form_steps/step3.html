@@ -1,0 +1,14 @@
+{% load static %}
+<span class="tab-content-heading">И наконец вы можете указать цену и срок аренды вашего авто</span>
+<div class="form-row">
+	<span class="mobile-full-width">Укажите срок аренды:</span>
+	<div class="rent-terms">
+		{{ form.rental_perion_begin }}
+		{{ form.rental_perion_end }}
+	</div>
+</div>
+<div class="form-row">
+	<span class="mobile-full-width">Укажите цену за сутки:</span>
+	{{ form.price }}
+	<span class="mobile-full-width"><span class="recommended-price">рекомендованая цена - </span><span class="price	">139</span><span class="currency">UAH</span></span>
+</div>

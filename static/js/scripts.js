@@ -69,7 +69,6 @@ $(document).ready(function(){
             data: serializedData,
             type: "POST",
             success: function (data) {
-                $('#form_rent_wizard').append(data);
                 for (var k in data) {
                     if (data[k] == 'errors_marker_value') {
                         display_errors(data);
@@ -80,6 +79,8 @@ $(document).ready(function(){
                     window.location.replace(main_url);
                 }
                 else if (data['errors_marker_key'] == undefined){
+                    $('#form_rent_wizard').find('*').not($fnb).remove();
+                    $('#form_rent_wizard').prepend(data);
                     // increase next_step till the forms in multistep form end
                     if (next_step != 5) {
                         next_step++;

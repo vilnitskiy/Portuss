@@ -1,0 +1,44 @@
+{% load static %}
+<span class="tab-content-heading">В этом разделе укажите технические характеристики вашего автомобиля</span>
+<table>
+    <tbody>
+        <tr>
+            {% for item in form0 %}
+            {% if forloop.counter < 4 %}
+                <td>{{ item }}</td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for item in form0 %}
+            {% if forloop.counter >= 4 and forloop.counter < 7 %}
+                <td>{{ item }}</td>
+            {% endif %}
+            {% endfor %}   
+        </tr>
+        <tr>
+            {% for item in form0 %}
+            {% if forloop.counter >= 7 and forloop.counter < 8 %}
+                <td colspan="3">{{ item }}</td>
+            {% endif %}
+            {% endfor %} 
+        </tr>
+    </tbody>
+</table>
+<span class="tab-content-heading">Выберите местоположение авто:</span>
+
+<div class="input-separator">
+    {% for item in form0 %}
+    {% if forloop.counter >= 8 and  forloop.counter < 10 %}
+        {{ item }}
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class="input-separator">
+    {% for item in form0 %}
+    {% if forloop.counter >= 10 %}
+        {{ item }}
+    {% endif %}
+    {% endfor %}
+</div>

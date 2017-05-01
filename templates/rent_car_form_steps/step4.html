@@ -1,0 +1,10 @@
+{% load static %}
+<span class="tab-content-heading">И наконец, вы можете указать документы на автомобиль</span>
+<div class="doc-row">
+	<label class="document-load-button" for="{{ form.docs.id_for_label }}">Load docs</label>
+	{{ form.docs }}
+	<label class="insurance-check">
+		{{ form.is_insured }}
+		<span>Застрахован ли ваш автомобиль?</span>
+	</label>
+</div>

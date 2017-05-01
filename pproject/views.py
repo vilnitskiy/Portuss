@@ -1,27 +1,32 @@
 import json
 
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
-from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
 
 from pproject.models import CommonUser, Car
 from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
-    CarRentForm4, CarRentForm5, RegistrationMultiForm, LoginForm
+    CarRentForm4, CarRentForm5, RegistrationMultiForm, LoginForm, \
+    QuickSearchForm
 
 
 def main(request):
     form = LoginForm
+    quick_search_form = QuickSearchForm
     if request.POST:
         form = LoginForm(request.POST)
         if form.is_valid():
             new_user = authenticate(username=form.cleaned_data['email'],
                                     password=form.cleaned_data['password'])
             login(request, new_user)
+    if request.POST and request.POST['rental_perion_begin']:
+        quick_search_form = QuickSearchForm(request.POST)
+        if form.is_valid():
+            return redirect(reverse('search'),
+                            {'quick_search_form': quick_search_form})
     if (request.user.is_authenticated() and
             not request.user.is_superuser and
             not request.user.is_staff):
@@ -31,7 +36,10 @@ def main(request):
         user = User.objects.get(username=request.user.username)
     else:
         user = ''
-    return render(request, 'main.html', {'form': form, 'common_user': user})
+    return render(request, 'main.html', {
+        'form': form,
+        'common_user': user,
+        'quick_search_form': quick_search_form})
 
 
 class RegistrationView(CreateView):
@@ -67,14 +75,21 @@ class CarRentView(FormView):
         CarRentForm1, CarRentForm2,
         CarRentForm3, CarRentForm4,
         CarRentForm5]
+    form_step_template = [
+        'rent_car_form_steps/step0.html',
+        'rent_car_form_steps/step1.html',
+        'rent_car_form_steps/step2.html',
+        'rent_car_form_steps/step3.html',
+        'rent_car_form_steps/step4.html']
     template_name = 'set_car_rent.html'
     car_data_dict = {}
     car_created = False
 
     def get(self, request, *args, **kwargs):
-        form1 = self.form_class()
+        form0 = self.form_class()
         if request.is_ajax():
-            return HttpResponse(form1)
+            return render_to_response(
+                self.form_step_template[0], {'form0': form0})
         return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
@@ -112,7 +127,9 @@ class CarRentView(FormView):
 
                 if next_step < len(self.form_classes):
                     rendered_form = self.get_form(next_form_class)
-                    return HttpResponse(rendered_form)
+                    return render_to_response(
+                        self.form_step_template[next_step],
+                        {'form': rendered_form})
             else:
                 submited_form.errors.update(
                     {'errors_marker_key': 'errors_marker_value'})
