@@ -1,16 +1,13 @@
 import json
 
-from django.shortcuts import render, redirect, render_to_response
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
-from django.core.files.storage import FileSystemStorage
-from django import forms
-from django.conf import settings
 
 from pproject.models import CommonUser, Car
 from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
@@ -62,7 +59,7 @@ class CarRentView(FormView):
 
     First we pass CarRentForm1 rendered to html to js via ajax,
     after that we get next_form parameter from js and render next
-    form and get it in js
+    form and get it in js.
     """
 
     form_class = CarRentForm1
@@ -71,6 +68,8 @@ class CarRentView(FormView):
         CarRentForm3, CarRentForm4,
         CarRentForm5]
     template_name = 'set_car_rent.html'
+    car_data_dict = {}
+    car_created = False
 
     def get(self, request, *args, **kwargs):
         form1 = self.form_class()
@@ -90,12 +89,30 @@ class CarRentView(FormView):
         """
         if request.is_ajax():
             next_step = int(request.POST['next_step'])
-            next_form_class = next_rent_form_class(next_step)
+            if next_step < len(self.form_classes):
+                next_form_class = next_rent_form_class(next_step)
             val_form = self.form_classes[next_step - 1]
             submited_form = val_form(request.POST)
             if submited_form.is_valid():
-                rendered_form = self.get_form(next_form_class)
-                return HttpResponse(rendered_form)
+                self.car_data_dict.update(submited_form.cleaned_data)
+                if val_form is self.form_classes[-1] and not self.car_created:
+                    new_car = Car.objects.create(**self.car_data_dict)
+                    self.car_created = True
+                    if (self.request.user.is_authenticated() and
+                            not self.request.user.is_superuser and
+                            not self.request.user.is_staff):
+                        base_user = User.objects.get(
+                            username=self.request.user.username)
+                        user = CommonUser.objects.get(user=base_user)
+                        new_car.owner = user
+                        new_car.save()
+                    # redirect calls self.get() which render redirect page
+                    # in current view so we'd redirect via js
+                    return HttpResponse('OK')
+
+                if next_step < len(self.form_classes):
+                    rendered_form = self.get_form(next_form_class)
+                    return HttpResponse(rendered_form)
             else:
                 submited_form.errors.update(
                     {'errors_marker_key': 'errors_marker_value'})
@@ -106,7 +123,9 @@ class CarRentView(FormView):
 
 
 def next_rent_form_class(next_step):
-    form_classes = [CarRentForm1, CarRentForm2, CarRentForm3, CarRentForm4]
+    form_classes = [CarRentForm1, CarRentForm2,
+                    CarRentForm3, CarRentForm4,
+                    CarRentForm5]
     form_class = form_classes[next_step]
     return form_class
 

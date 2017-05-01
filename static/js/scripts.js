@@ -45,15 +45,10 @@ $(document).ready(function(){
         type: "GET",
         dataType: 'html',
         success: function (data) {
-            console.log('OK');
-            console.log(data);
-            $('#form_rent_wizard').append(data);
+            $('#form_rent_wizard').prepend(data);
         },
         error: function(data){
-            console.log('notOK');
-            var errors = data.responseJSON;
-            console.log(data.responseText);
-            $('#form_rent_wizard').append(data.responseText);
+            console.log(data);
         }
     });
 
@@ -67,8 +62,7 @@ $(document).ready(function(){
     }
 
     var next_step = 1;
-    $("#submit_wizard").click(function(e){
-        e.preventDefault();
+    $fnb.click(function(e){
         var serializedData = $('#form_rent_wizard').serialize() + '&next_step=' + next_step;
         $.ajax({
             url: rent_url,
@@ -81,12 +75,21 @@ $(document).ready(function(){
                         display_errors(data);
                     }
                 }
-                if (data['errors_marker_key'] == undefined){
+                if (data == 'OK') {
+                    console.log('redirect');
+                    window.location.replace(main_url);
+                }
+                else if (data['errors_marker_key'] == undefined){
                     // increase next_step till the forms in multistep form end
-                    if (next_step != 4) {
+                    if (next_step != 5) {
                         next_step++;
                     }
                     console.log(next_step);
+                    e.preventDefault();
+                    var $cur_dp_tab=$(".dp-tab-active"),
+                        $cur_ac_tab=$(".active-form-tab");
+                    $cur_ac_tab.removeClass("active-form-tab").addClass('non-active-tab').next().addClass("active-form-tab").removeClass('non-active-tab');
+                    $cur_dp_tab.removeClass("dp-tab-active").addClass('dp-tab-inactive').next().addClass("dp-tab-active").removeClass('non-active-tab');
                 }
             },
             error: function(data){
@@ -96,16 +99,6 @@ $(document).ready(function(){
         });
     });
 
-
-    $fnb.click(function(e){
-        e.preventDefault();
-        var $cur_tab=$(".active-tab"),
-            $cur_dp_tab=$(".dp-tab-active"),
-            $cur_ac_tab=$(".active-form-tab");
-        $cur_tab.removeClass("active-tab").slideToggle(1).next().slideToggle(1).addClass("active-tab");
-        $cur_ac_tab.removeClass("active-form-tab").addClass('non-active-tab').next().addClass("active-form-tab").removeClass('non-active-tab');
-        $cur_dp_tab.removeClass("dp-tab-active").addClass('dp-tab-inactive').next().addClass("dp-tab-active").removeClass('non-active-tab');
-    });
     $fpb.click(function(e){
         e.preventDefault();
         var $cur_tab=$(".active-tab"),

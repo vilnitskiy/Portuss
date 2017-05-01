@@ -1,8 +1,33 @@
 {% extends "base.html" %}
 {% block main %}
-<form id="form_rent_wizard" method="POST">
-{% include "car_rent_forms/step0.html" %}
-<input type="button" value="submit" id="submit_wizard">
-<input type="button" value="get" id="submit_get">
-</form>
+<div class="wrapper">
+{% include "header.html" %}
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1">
+                    <span class="form-heading">Сдать машину в аренду</span>
+                    <div class="tabs-row">
+                        <div class="form-tab active-form-tab"><span class="tab-index">1.</span>Технические характеристики</div>
+                        <div class="form-tab non-active-tab"><span class="tab-index">2.</span>Фотографии</div>
+                        <div class="form-tab non-active-tab"><span class="tab-index">3.</span>Описание</div>
+                        <div class="form-tab non-active-tab"><span class="tab-index">4.</span>Цена</div>
+                        <div class="form-tab non-active-tab"><span class="tab-index">5.</span>Документы</div>
+                    </div>
+                    <div class="rent-form">
+                        <div class="tab-content pre-active">
+                            <form id="form_rent_wizard" method="POST" enctype="multipart/form-data">
+                                <!--Place where form data should be inserted by js-->
+                                <div class="input-separator">
+                                    <input type="button" class="form-next-step-button" value="submit" id="  submit_wizard">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "footer.html" %}
 {% endblock %}
