@@ -24,7 +24,7 @@ def main(request):
             new_user = authenticate(username=form.cleaned_data['email'],
                                     password=form.cleaned_data['password'])
             login(request, new_user)
-    if request.POST and request.POST['rental_perion_begin']:
+    if 'rental_perion_begin' in request.POST:
         quick_search_form = QuickSearchForm(request.POST)
         if quick_search_form.is_valid():
             return redirect(

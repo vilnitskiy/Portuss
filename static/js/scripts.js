@@ -39,19 +39,19 @@ $(document).ready(function(){
              }
          } 
     });
-
-    $.ajax({
-        url: rent_url,
-        type: "GET",
-        dataType: 'html',
-        success: function (data) {
-            $('#form_rent_wizard').prepend(data);
-        },
-        error: function(data){
-            console.log(data);
-        }
-    });
-
+    if (typeof rent_url != 'undefined') {
+        $.ajax({
+            url: rent_url,
+            type: "GET",
+            dataType: 'html',
+            success: function (data) {
+                $('#form_rent_wizard').prepend(data);
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+    }
     function display_errors(errors){
         $('.error').remove();
         for (var k in errors) {
@@ -101,7 +101,6 @@ $(document).ready(function(){
     });
     $('#submit-car-search').click(function(e){
         var serializedSearchData = $('#detailed-search').serialize();
-        console.log(search_url);
         $.ajax({
             url: search_url,
             data: serializedSearchData,
