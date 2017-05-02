@@ -11,10 +11,10 @@
 git_ignore
 build
 .noseids
-media
 *.dat
 .env
 *.log
 venv
 staticfiles
 .venv
+templates_makeup
