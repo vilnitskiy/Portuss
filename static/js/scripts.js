@@ -99,6 +99,22 @@ $(document).ready(function(){
             }
         });
     });
+    $('#submit-car-search').click(function(e){
+        var serializedSearchData = $('#detailed-search').serialize();
+        console.log(search_url);
+        $.ajax({
+            url: search_url,
+            data: serializedSearchData,
+            type: "POST",
+            success: function (data) {
+
+            },
+            error: function(data){
+                var errors = data.responseJSON;
+                console.log(errors);
+            }
+        });
+    });
 
     $fpb.click(function(e){
         e.preventDefault();

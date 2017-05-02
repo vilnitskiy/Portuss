@@ -1,0 +1,36 @@
+<div class="detailed-search-block">
+    <form method="post" id="detailed-search">
+        <div>
+            {{ form.car_type }}
+            {{ form.fuel }}
+        </div>
+        <div>
+            {{ form.transmission }}
+            {{ form.condition }}
+        </div>
+        <input type="text" name="{{ form.model.name }}" id="brand" placeholder="Марка/Модель">
+        <br>
+        <div class="ds-slider-row">
+            <div>
+            Год выпуска:
+                {{ extra_form.rental_perion_begin }}
+                {{ extra_form.rental_perion_end }}
+            </div>
+            <div>
+            Пробег:
+                <input type="text" name="mileage1" placeholder="from">
+                <input type="text" name="mileage2" placeholder="to">
+            </div>
+            <div>
+            Цена:
+                <input type="text" name="price1" placeholder="from">
+                <input type="text" name="price2" placeholder="from">
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="ds-row">
+            <input id="submit-car-search" type="button" value="Поиск">
+        </div>
+    </form>
+</div>

@@ -1,0 +1,22 @@
+{% load static %}
+{% load rental_period %}
+{% for car in searched_cars %}
+<div class="search-result">
+<div class="search-result-img-sector">
+	<img src="{{ car.photo.url }}">
+</div>
+<div class="search-result-text-sector">
+	<div class="search-result-heading">{{ car.model }} for {% rental_period car %}</div>
+	<div class="search-result-short-description">
+	    <p>{{ car.description_title }}</p>
+	</div>
+	<a href="#" class="search-result-more-info">Подробнее</a>
+	<div class="search-result-info-row">
+        <div class="info-block"><img src="{% static 'images/wallet.png' %}"><span>${{ car.price }}</span></div>
+        <div class="info-block"><img src="{% static 'images/calendar.png' %}"><span>for {{ car.price }}</span></div>
+        <div class="info-block"><img src="{% static 'images/car.png' %}"><span>{{ car.model }}</span></div>
+        <div class="info-block"><img src="{% static 'images/city.png' %}"><span>{{ car.city }}</span></div>
+    </div>
+</div>
+</div>
+{% endfor %}

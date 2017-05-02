@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="wrapper">
+{% include "header.html" %}
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="search-page-heading">
+                        <a href="#" class="detailed-search">Подробный поиск</a>
+                        <a href="#id-show-on-map" class="look-on-map modal-show">Посмотреть на карте</a>
+                    </div>
+                    {% include 'modal_search_form.html' %}
+                    <div class="search-result">
+                    	{% include 'quick_searched_cars.html' %}
+                    </div>
+                    <div class="more-results-row">
+                    	<button id="search-show-more">Показать еще предложения</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% include "footer.html" %}
+{% endblock %}

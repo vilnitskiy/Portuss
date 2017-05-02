@@ -113,7 +113,6 @@ class Car(models.Model):
         null=True,
         blank=True)
 
-    @staticmethod
     def rental_period(self):
         rental_perion = self.rental_perion_end - self.rental_perion_begin
         return rental_perion

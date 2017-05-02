@@ -1,7 +1,7 @@
     <div id="id-registration-login" class="modal-box">
         <div class="modal-box__close-btn"></div>
         <div class="popup-content">
-            <form method="post" action="#" name="login" id="login">
+            <form method="post" name="login" id="login">
                 {% csrf_token %}
                 <span>Войти как</span>
                 {% for item in form %}

@@ -7,8 +7,9 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.main, name='main'),
-    url(r'^car-rent/', login_required(views.CarRentView.as_view()), name='car_rent'),
+    url(r'^car-rent/$', login_required(views.CarRentView.as_view()), name='car_rent'),
     url(r'^profile/$', views.user_profile, name='user_profile'),
+    url(r'^search/$', views.search, name='search'),
 
     # auth views
     url(r'^registration/',

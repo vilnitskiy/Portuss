@@ -1,9 +1,11 @@
 import json
-
+import urllib
+from datetime import datetime
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
 from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -24,9 +26,10 @@ def main(request):
             login(request, new_user)
     if request.POST and request.POST['rental_perion_begin']:
         quick_search_form = QuickSearchForm(request.POST)
-        if form.is_valid():
-            return redirect(reverse('search'),
-                            {'quick_search_form': quick_search_form})
+        if quick_search_form.is_valid():
+            return redirect(
+                reverse('search') + '?' + 'quicksearch=True&' +
+                urllib.urlencode(quick_search_form.cleaned_data))
     if (request.user.is_authenticated() and
             not request.user.is_superuser and
             not request.user.is_staff):
@@ -40,6 +43,46 @@ def main(request):
         'form': form,
         'common_user': user,
         'quick_search_form': quick_search_form})
+
+
+def search(request):
+    form = CarRentForm1
+    extra_form = CarRentForm4
+    if not request.is_ajax():
+        if request.GET['quicksearch']:
+            qsearch_dict = dict(request.GET.iterlists())
+            qsearch_dict.pop('quicksearch')
+            searched_cars = Car.objects.filter(
+                city=qsearch_dict['city'][0],
+                rental_perion_begin=qsearch_dict['rental_perion_begin'][0],
+                rental_perion_end=qsearch_dict['rental_perion_end'][0])
+            return render(
+                request,
+                'search.html',
+                {'searched_cars': searched_cars[:2],
+                 'form': form,
+                 'extra_form': extra_form})
+    elif request.POST and request.is_ajax():
+        for v1 in range(int(request.POST['mileage2'])):
+            if v1 >= int(request.POST['mileage1']):
+                for v2 in range(int(request.POST['price2'])):
+                    if v2 >= int(request.POST['price1']):
+                        for v3 in datetime.strptime(request.POST['rental_perion_begin'], '%Y-%m-%d') + timedelta(n) for n in (range(datetime.strptime(request.POST['rental_perion_end'], '%Y-%m-%d'))):
+                            if v3 >= request.POST['rental_perion_begin']:
+                                s_cars = Car.objects.filter(
+                                    car_type=request.POST['car_type'][0],
+                                    transmission=request.POST['transmission'][0],
+                                    model=request.POST['model'][0],
+                                    fuel=request.POST['fuel'][0],
+                                    condition=request.POST['condition'][0],
+                                    rental_perion_begin=request.POST['rental_perion_begin'][0],
+                                    rental_perion_end=request.POST['rental_perion_end'][0],
+                                    mileage=v1,
+                                    price=v2)
+                                print s_cars
+    return render(request, 'search.html', {
+        'form': form,
+        'extra_form': extra_form})
 
 
 class RegistrationView(CreateView):
