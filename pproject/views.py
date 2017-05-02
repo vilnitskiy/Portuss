@@ -63,7 +63,7 @@ def search(request):
                  'form': form,
                  'extra_form': extra_form})
     elif request.POST and request.is_ajax():
-"""        for v1 in range(int(request.POST['mileage2'])):
+        """for v1 in range(int(request.POST['mileage2'])):
             if v1 >= int(request.POST['mileage1']):
                 for v2 in range(int(request.POST['price2'])):
                     if v2 >= int(request.POST['price1']):
