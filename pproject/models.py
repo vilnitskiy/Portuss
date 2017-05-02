@@ -78,10 +78,8 @@ class Car(models.Model):
     price = models.PositiveIntegerField()
     description_title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    rental_perion_begin = models.DateTimeField(
-        validators=[validators.validate_rental_perion_begin])
-    rental_perion_end = models.DateTimeField(
-        validators=[validators.validate_rental_perion_end])
+    rental_perion_begin = models.DateField()
+    rental_perion_end = models.DateField()
     country = models.CharField(
         null=True,
         blank=False,

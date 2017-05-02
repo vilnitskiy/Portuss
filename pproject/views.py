@@ -1,6 +1,7 @@
 import json
 import urllib
-from datetime import datetime
+import datetime
+from itertools import chain
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
@@ -19,7 +20,7 @@ from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
 def main(request):
     form = LoginForm
     quick_search_form = QuickSearchForm
-    if request.POST:
+    if request.POST and not request.user.is_authenticated():
         form = LoginForm(request.POST)
         if form.is_valid():
             new_user = authenticate(username=form.cleaned_data['email'],
@@ -54,10 +55,18 @@ def search(request):
         if 'quicksearch' in request.GET:
             qsearch_dict = dict(request.GET.iterlists())
             qsearch_dict.pop('quicksearch')
-            searched_cars = Car.objects.filter(
-                city=qsearch_dict['city'][0],
-                rental_perion_begin=qsearch_dict['rental_perion_begin'][0],
-                rental_perion_end=qsearch_dict['rental_perion_end'][0])
+            date1 = datetime.datetime.\
+                strptime(
+                    qsearch_dict['rental_perion_begin'][0], '%Y-%m-%d').date()
+            date2 = datetime.datetime.\
+                strptime(
+                    qsearch_dict['rental_perion_end'][0], '%Y-%m-%d').date()
+            day_count = (date2 - date1).days
+            searched_cars = Car.objects.none()
+            for single_begin_date in (date1 + datetime.timedelta(n) for n in range(day_count)):
+                searched_cars = searched_cars | Car.objects.filter(
+                    city=qsearch_dict['city'][0],
+                    rental_perion_begin=single_begin_date)
             return render(
                 request,
                 'search.html',

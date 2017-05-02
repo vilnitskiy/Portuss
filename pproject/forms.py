@@ -1,6 +1,6 @@
 from random import choice
 from string import letters
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -164,11 +164,10 @@ class LoginForm(ModelForm):
         return self.cleaned_data
 
 
-class QuickSearchForm(ModelForm):
-    class Meta:
-        model = Car
-        fields = (
-            'city', 'rental_perion_begin', 'rental_perion_end',)
+class QuickSearchForm(Form):
+    city = forms.CharField(max_length=60)
+    rental_perion_begin = forms.DateField()
+    rental_perion_end = forms.DateField()
 
     def __init__(self, *args, **kwargs):
         super(QuickSearchForm, self).__init__(*args, **kwargs)
