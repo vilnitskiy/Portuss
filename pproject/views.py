@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.models import User
+from social_django.models import UserSocialAuth
 
 from pproject.models import CommonUser, Car
 from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
@@ -30,11 +31,12 @@ def main(request):
             return redirect(
                 reverse('search') + '?' + 'quicksearch=True&' +
                 urllib.urlencode(quick_search_form.cleaned_data))
+
     if (request.user.is_authenticated() and
             not request.user.is_superuser and
             not request.user.is_staff):
         base_user = User.objects.get(username=request.user.username)
-        user = CommonUser.objects.get(user=base_user)
+        user = CommonUser.objects.get_or_create(user=base_user)
     elif request.user.is_superuser or request.user.is_staff:
         user = User.objects.get(username=request.user.username)
     else:
@@ -194,4 +196,7 @@ def next_rent_form_class(next_step):
 def user_profile(request):
     base_user = User.objects.get(username=request.user.username)
     user = CommonUser.objects.get(user=base_user)
-    return render(request, 'user_profile.html', {'common_user': user})
+    user_cars = Car.objects.filter(owner=user)
+    return render(request, 'user_profile.html',
+                  {'common_user': user,
+                   'searched_cars': user_cars})

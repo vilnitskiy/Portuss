@@ -33,7 +33,7 @@ class CommonUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_of_birth = models.DateField(
         validators=[validators.validate_date_of_birth],
-        null=False,
+        null=True,
         blank=False)
     city = models.CharField(max_length=60, null=True, blank=True)
     phone = models.IntegerField(null=True, blank=True)

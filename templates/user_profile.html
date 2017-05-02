@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load rental_period %}
 
 {% block main %}
 <div class="wrapper">
@@ -30,22 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 po-contact-info-section">-->
-                    <!--<div>-->
-                        <!--<span>Телефон: </span><span class="po-phone">+380654456955</span>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<span class="po-vk">vk.com/vanya_vanin</span>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 po-contact-info-section">-->
-                    <!--<div>-->
-                        <!--<span>Email: </span><span class="po-e-mail">vlad@ilnitskiy.esy</span>-->
-                    <!--</div>-->
-                    <!--<div>-->
-                        <!--<span class="po-facebook">facebook.com/ggg</span>-->
-                    <!--</div>-->
-                <!--</div>-->
+
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="revision-section">
                         <span class="po-section-heading">Проверено Portuss</span>
@@ -58,33 +44,29 @@
                     <p class="po-about-myself">
                         {{ common_user.about }}
                     </p>
-                    <span class="po-section-heading">Мои объявления:</span>
-                    <div class="search-result">
+                    {% if searched_cars.count > 0 %}
+                        <span class="po-section-heading">Мои объявления:</span>
+                    {% endif %}
+                        {% for car in searched_cars %}
+                        <div class="search-result">
                         <div class="search-result-img-sector">
-                            <img src="./images/search-result-car-1.png">
+                            <img src="{{ car.photo.url }}">
                         </div>
                         <div class="search-result-text-sector">
-                            <div class="search-result-heading">Nissan Note на 2 недели</div>
+                            <div class="search-result-heading">{{ car.model }} for {% rental_period car %}</div>
                             <div class="search-result-short-description">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipisicing elit, sed do eiusmod tempor incididunt
-                                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                                    sint
-                                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                                </p>
+                                <p>{{ car.description_title }}</p>
                             </div>
                             <a href="#" class="search-result-more-info">Подробнее</a>
                             <div class="search-result-info-row">
-                                <div class="info-block"><img src="./images/wallet.png"><span>$300</span></div>
-                                <div class="info-block"><img src="./images/calendar.png"><span>на 14 дней</span></div>
-                                <div class="info-block"><img src="./images/car.png"><span>Nissan Note</span></div>
-                                <div class="info-block"><img src="./images/city.png"><span>Малі Кучугури</span></div>
+                                <div class="info-block"><img src="{% static 'images/wallet.png' %}"><span>${{ car.price }}</span></div>
+                            <div class="info-block"><img src="{% static 'images/calendar.png' %}"><span>for {{ car.price }}</span></div>
+                            <div class="info-block"><img src="{% static 'images/car.png' %}"><span>{{ car.model }}</span></div>
+                            <div class="info-block"><img src="{% static 'images/city.png' %}"><span>{{ car.city }}</span></div>
                             </div>
                         </div>
-                    </div>
+                        </div>
+                        {% endfor %}
                     <span class="po-section-heading">Мои поездки:</span>
                     <div class="slider-holder popular-cars-slider-holder">
                         <div class="popular-cars-slider">
