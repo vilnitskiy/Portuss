@@ -51,7 +51,7 @@ def search(request):
     form = CarRentForm1
     extra_form = CarRentForm4
     if not request.is_ajax():
-        if request.GET['quicksearch']:
+        if 'quicksearch' in request.GET:
             qsearch_dict = dict(request.GET.iterlists())
             qsearch_dict.pop('quicksearch')
             searched_cars = Car.objects.filter(
