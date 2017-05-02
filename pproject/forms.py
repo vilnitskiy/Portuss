@@ -179,3 +179,26 @@ class QuickSearchForm(Form):
         self.fields['rental_perion_end'].widget = forms.TextInput(attrs={
             'id': 'page-search-date-to',
             'placeholder': 'to'})
+
+
+class SearchForm(CarRentForm1, QuickSearchForm):
+    myear1 = forms.IntegerField()
+    myear2 = forms.IntegerField()
+    mileage1 = forms.IntegerField()
+    mileage2 = forms.IntegerField()
+    price1 = forms.IntegerField()
+    price2 = forms.IntegerField()
+
+    def __init__(self, *args, **kwargs):
+        super(SearchForm, self).__init__(*args, **kwargs)
+        self.fields['mileage1'].widget = forms.TextInput(attrs={
+            'placeholder': 'from'})
+        self.fields['mileage2'].widget = forms.TextInput(attrs={
+            'id': 'page-search-date-from',
+            'placeholder': 'to'})
+        self.fields['price1'].widget = forms.TextInput(attrs={
+            'id': 'page-search-date-to',
+            'placeholder': 'from'})
+        self.fields['price2'].widget = forms.TextInput(attrs={
+            'id': 'page-search-date-to',
+            'placeholder': 'to'})

@@ -115,6 +115,27 @@ $(document).ready(function(){
         });
     });
 
+    $('#search-show-more').click(function(e){
+        search_params = 'city=' + search_param_city + '&rental_perion_begin='
+            + rental_perion_begin + '&rental_perion_end=' + rental_perion_end
+            + '&quicksearch=True';
+        console.log(search_params);
+        $.ajax({
+            url: search_url,
+            dataType: 'html',
+            type: 'GET',
+            data: search_params,
+            success: function (data) {
+                $('.search-result:last').after(data);
+                $('.more-results-row').remove();
+            },
+            error: function(data){
+                var errors = data.responseJSON;
+                console.log(errors);
+            }
+        });
+    });
+
     $fpb.click(function(e){
         e.preventDefault();
         var $cur_tab=$(".active-tab"),

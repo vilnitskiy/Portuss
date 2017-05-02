@@ -13,18 +13,18 @@
         <div class="ds-slider-row">
             <div>
             Год выпуска:
-                {{ extra_form.rental_perion_begin }}
-                {{ extra_form.rental_perion_end }}
+                {{ form.rental_perion_begin }}
+                {{ form.rental_perion_end }}
             </div>
             <div>
             Пробег:
-                <input type="text" name="mileage1" placeholder="from">
-                <input type="text" name="mileage2" placeholder="to">
+                {{ form.mileage1 }}
+                {{ form.mileage2 }}
             </div>
             <div>
             Цена:
-                <input type="text" name="price1" placeholder="from">
-                <input type="text" name="price2" placeholder="from">
+                {{ form.price1 }}
+                {{ form.price2 }}
             </div>
         </div>
         <br>

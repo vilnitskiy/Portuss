@@ -1,7 +1,6 @@
 import json
 import urllib
 import datetime
-from itertools import chain
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
@@ -9,30 +8,28 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.models import User
-from social_django.models import UserSocialAuth
 
 from pproject.models import CommonUser, Car
 from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
     CarRentForm4, CarRentForm5, RegistrationMultiForm, LoginForm, \
-    QuickSearchForm
+    QuickSearchForm, SearchForm
 
 
 def main(request):
     form = LoginForm
     quick_search_form = QuickSearchForm
-    if request.POST and not request.user.is_authenticated():
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            new_user = authenticate(username=form.cleaned_data['email'],
-                                    password=form.cleaned_data['password'])
-            login(request, new_user)
     if 'rental_perion_begin' in request.POST:
         quick_search_form = QuickSearchForm(request.POST)
         if quick_search_form.is_valid():
             return redirect(
                 reverse('search') + '?' + 'quicksearch=True&' +
                 urllib.urlencode(quick_search_form.cleaned_data))
-
+    if request.POST and not request.user.is_authenticated():
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            new_user = authenticate(username=form.cleaned_data['email'],
+                                    password=form.cleaned_data['password'])
+            login(request, new_user)
     if (request.user.is_authenticated() and
             not request.user.is_superuser and
             not request.user.is_staff):
@@ -49,30 +46,35 @@ def main(request):
 
 
 def search(request):
-    form = CarRentForm1
-    extra_form = CarRentForm4
-    if not request.is_ajax():
-        if 'quicksearch' in request.GET:
-            qsearch_dict = dict(request.GET.iterlists())
-            qsearch_dict.pop('quicksearch')
-            date1 = datetime.datetime.\
-                strptime(
-                    qsearch_dict['rental_perion_begin'][0], '%Y-%m-%d').date()
-            date2 = datetime.datetime.\
-                strptime(
-                    qsearch_dict['rental_perion_end'][0], '%Y-%m-%d').date()
-            day_count = (date2 - date1).days
-            searched_cars = Car.objects.none()
-            for single_begin_date in (date1 + datetime.timedelta(n) for n in range(day_count)):
-                searched_cars = searched_cars | Car.objects.filter(
-                    city=qsearch_dict['city'][0],
-                    rental_perion_begin=single_begin_date)
-            return render(
-                request,
-                'search.html',
-                {'searched_cars': searched_cars[:2],
-                 'form': form,
-                 'extra_form': extra_form})
+    adv_search_form = SearchForm
+    searched_cars = Car.objects.none()
+    if 'quicksearch' in request.GET:
+        qsearch_dict = dict(request.GET.iterlists())
+        qsearch_dict.pop('quicksearch')
+        date1 = datetime.datetime.\
+            strptime(
+                qsearch_dict['rental_perion_begin'][0], '%Y-%m-%d').date()
+        date2 = datetime.datetime.\
+            strptime(
+                qsearch_dict['rental_perion_end'][0], '%Y-%m-%d').date()
+        day_count = (date2 - date1).days
+        for single_begin_date in (
+                date1 + datetime.timedelta(n) for n in range(day_count)):
+            searched_cars = searched_cars | Car.objects.filter(
+                city=qsearch_dict['city'][0],
+                rental_perion_begin=single_begin_date)
+        if request.is_ajax():
+            print searched_cars.count
+            return render_to_response(
+                'quick_searched_cars.html',
+                {'searched_cars': searched_cars[:len(searched_cars) - 2]})
+        return render(
+            request,
+            'search.html',
+            {'searched_cars': searched_cars[
+                len(searched_cars) - 2:len(searched_cars)],
+             'form': adv_search_form,
+             'search_params': qsearch_dict})
     elif request.POST and request.is_ajax():
         """for v1 in range(int(request.POST['mileage2'])):
             if v1 >= int(request.POST['mileage1']):
@@ -93,8 +95,18 @@ def search(request):
                                 print s_cars"""
         pass
     return render(request, 'search.html', {
-        'form': form,
-        'extra_form': extra_form})
+        'form': adv_search_form})
+
+
+def book_a_car(request, car_id):
+    if 'complete_booking' in request.GET:
+        return redirect(
+            reverse('complete_booking') + '?' + 'car_id=' + car_id)
+    return render(request, 'book_a_car.html')
+
+
+def complete_booking(request):
+    return render(request, 'complete_booking.html')
 
 
 class RegistrationView(CreateView):

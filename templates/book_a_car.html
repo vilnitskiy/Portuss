@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main %}
+<div class="wrapper">
+{% include "header.html" %}
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <img src="./images/cc-main-image.png">
+                    <div class="cc-price-holder">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <span class="cc-price">$50 в день</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row cc-section-first">
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                    <form action="#" method="post" class="cc-map-holder">
+                        <label for="book-date-from" class="rent-term">Срок аренды</label>
+                        <div class="pre-datepicker-row">
+                            <input type="text" readonly name="book-date-from" id="book-date-from" placeholder="от">
+                            <input type="text" readonly name="book-date-to" id="book-date-to" placeholder="до">
+                        </div>
+                        <div class="pre-price-block">
+                            <span>Стоимость с комиссией - </span><span class="pre-price">1800</span><span class="currency">грн</span>
+                        </div>
+                        <div class="cc-map">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10145.49820330653!2d30.799392150000003!3d50.527203300000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sua!4v1485003057388" frameborder="0"></iframe>
+                        </div>
+                        <a href="?complete_booking=True" class="cc-rent-button">Забронировать</a>
+                    </form>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 col-md-push-6 col-lg-push-6">
+                    <div class="cc-profile-holder">
+                        <div class="cc-profile-photo"><img src="./images/profile-img-omg.jpg"></div>
+                        <div class="cc-user-info">
+                            <span class="cc-user-name">Богдан Юзвиков</span>
+                            <span class="cc-user-location">Борисполь</span>
+                        </div>
+                        <a href="#id-author-contacts" class="cc-profile-contact modal-show">Связаться с владельцем</a>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-pull-3 col-lg-pull-3">
+                    <h3 class="cc-heading">Заголовок объявления</h3>
+                    <div class="cc-rating">
+                        <ul class="rating">
+                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                        </ul>
+                    </div>
+                    <span class="cc-car-info cc-brand-model">Марка, модель</span>
+                    <span class="cc-car-info cc-fuel-type">Тип топлива</span>
+                    <span class="cc-car-info cc-transmission">Тип коробки передач</span>
+                    <span class="cc-detailed-info">Подробные характеристики</span>
+                    <div class="cc-detailed-info-block">
+                        <div class="d-i-row">
+                            <span>Тип транспорта:</span><span class="d-i d-i-transport-type">Грузовик</span>
+                        </div>
+                        <div class="d-i-row">
+                            <span>Год выпуска:</span><span class="d-i d-i-manufactured-year">1988</span>
+                        </div>
+                        <div class="d-i-row">
+                            <span>Состояние:</span><span class="d-i d-i-condition">Как новенький</span>
+                        </div>
+                        <div class="d-i-row">
+                            <span>Пробег:</span><span class="d-i d-i-condition">18000км</span>
+                        </div>
+                    </div>
+                    <div class="cc-text-sector">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea incidunt magnam nam necessitatibus officiis omnis, praesentium quam unde voluptatem? Commodi consequatur ea eligendi eos ex excepturi expedita nemo placeat porro quidem ratione, reiciendis rem repudiandae, sapiente voluptate. Ab dicta dolor earum eum exercitationem libero molestias, quos? Cupiditate distinctio excepturi, fuga inventore magni nesciunt nulla provident quam. Doloremque neque non vitae!
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, ea hic in incidunt itaque iure nam ullam velit. Doloremque dolores excepturi iure libero maxime modi obcaecati odit quaerat quidem ratione sed tempore, tenetur, vitae. Cumque ipsam nostrum qui suscipit vero.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci culpa cum dolor hic modi pariatur quam quasi qui rerum totam! Aliquam asperiores aspernatur assumenda at blanditiis commodi deserunt ducimus eaque et eum eveniet, facilis harum illo in iste iusto nihil nobis obcaecati optio quas repellat saepe sint suscipit, unde veniam veritatis voluptates voluptatum. A alias asperiores, atque consequuntur dolor dolorem dolores inventore itaque, laudantium modi molestias numquam praesentium, quia quisquam quos reiciendis reprehenderit tempore vero? A ea ipsam sequi sunt.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row cc-section-second gallery-slider-row">
+                <span class="cc-gallery-heading">Фото автомобиля</span>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <div class="gallery-top">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-2.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-3.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-1.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-2.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-1.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-3.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next swiper-button-white"></div>
+                        <div class="swiper-button-prev swiper-button-white"></div>
+                        <div class="gallery-close">
+                            <img src="./images/cross.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="gallery-thumbs">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-2.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-3.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-1.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-2.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-1.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-table">
+                                    <div class="slider-image-holder">
+                                        <img src="./images/car-block-3.png" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination-gallery-button left-pagination-gallery-button"><div><div><img src="./images/slider-arrow-red.png" alt=""></div></div></div>
+                        <div class="pagination-gallery-button right-pagination-gallery-button"><div><div><img src="./images/slider-arrow-red.png" alt=""></div></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row cc-section-third">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <div class="comment-table comment-section-heading">
+                        <div class="comment-cell">
+                            <a href="#id-left-comment" class="left-comment modal-show">Оставить отзыв</a>
+                        </div>
+                        <div class="comment-cell">
+                            <div>
+                                <span class="comment-counter">4</span><span class="comment-counter-after"> отзыва</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-table">
+                        <div class="comment-cell">
+                            <div class="comment-profile-photo">
+                                <img src="./images/profile-img-omg.jpg">
+                            </div>
+                        </div>
+                        <div class="comment-cell">
+                            <div class="comment-heading">
+                                <span class="comment-user-name">Богдан,</span>
+                                <span class="comment-user-age">27</span>
+                                <span> лет</span>
+                            </div>
+                            <div class="comment-text">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                </p>
+                            </div>
+                            <span class="comment-date">27.09.2016</span>
+                            <a href="#" class="comment-like">Полезный отзыв</a>
+                        </div>
+                    </div>
+                    <div class="comment-table">
+                        <div class="comment-cell">
+                            <div class="comment-profile-photo">
+                                <img src="./images/profile-img-omg.jpg">
+                            </div>
+                        </div>
+                        <div class="comment-cell">
+                            <div class="comment-heading">
+                                <span class="comment-user-name">Богдан,</span>
+                                <span class="comment-user-age">27</span>
+                                <span> лет</span>
+                            </div>
+                            <div class="comment-text">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                </p>
+                            </div>
+                            <span class="comment-date">27.09.2016</span>
+                            <a href="#" class="comment-like">Полезный отзыв</a>
+                        </div>
+                    </div>
+                    <div class="comment-table">
+                        <div class="comment-cell">
+                            <div class="comment-profile-photo">
+                                <img src="./images/profile-img-omg.jpg">
+                            </div>
+                        </div>
+                        <div class="comment-cell">
+                            <div class="comment-heading">
+                                <span class="comment-user-name">Богдан,</span>
+                                <span class="comment-user-age">27</span>
+                                <span> лет</span>
+                            </div>
+                            <div class="comment-text">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                </p>
+                            </div>
+                            <span class="comment-date">27.09.2016</span>
+                            <a href="#" class="comment-like">Полезный отзыв</a>
+                        </div>
+                    </div>
+                    <div class="comment-table">
+                        <div class="comment-cell">
+                            <div class="comment-profile-photo">
+                                <img src="./images/profile-img-omg.jpg">
+                            </div>
+                        </div>
+                        <div class="comment-cell">
+                            <div class="comment-heading">
+                                <span class="comment-user-name">Богдан,</span>
+                                <span class="comment-user-age">27</span>
+                                <span> лет</span>
+                            </div>
+                            <div class="comment-text">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                </p>
+                            </div>
+                            <span class="comment-date">27.09.2016</span>
+                            <a href="#" class="comment-like">Полезный отзыв</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pagination-row">
+                <ul class="pagination">
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "footer.html" %}
+{% endblock %}
