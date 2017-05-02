@@ -7,7 +7,39 @@
     <div class="page-content">
 	<form method="post" id="profile-reg" name="profile-reg">
 		{% csrf_token %}
-			{{ form }}
+			<span>Заполните форму регистрации</span>
+			<label for="{{ form.base_user.first_name.id_for_label }}">{{ form.base_user.first_name.label }}</label>
+			{{ form.base_user.first_name }}
+
+			<label for="{{ form.base_user.last_name.id_for_label }}">{{ form.base_user.last_name.label }}</label>
+			{{ form.base_user.last_name }}
+
+			<label for="{{ form.base_user.password1.id_for_label }}">{{ form.base_user.password1.label }}</label>
+			{{ form.base_user.password1 }}
+
+			<label for="{{ form.base_user.password2.id_for_label }}">{{ form.base_user.password2.label }}</label>
+			{{ form.base_user.password2 }}
+
+			<label for="{{ form.common_user.city.id_for_label }}">{{ form.common_user.city.label }}</label>
+			{{ form.common_user.city }}
+
+			<label for="{{ form.common_user.date_of_birth.id_for_label }}">{{ form.common_user.date_of_birth.label }}</label>
+			{{ form.common_user.date_of_birth }}
+
+			<label for="{{ form.common_user.phone.id_for_label }}">{{ form.common_user.phone.label }}</label>
+			{{ form.common_user.phone }}
+
+			<label for="{{ form.base_user.email.id_for_label }}">{{ form.base_user.email.label }}</label>
+			{{ form.base_user.email }}
+
+			<label for="{{ form.common_user.vk.id_for_label }}">{{ form.common_user.vk.label }}</label>
+			{{ form.common_user.vk }}
+
+			<label for="{{ form.common_user.fb.id_for_label }}">{{ form.common_user.fb.label }}</label>
+			{{ form.common_user.fb }}
+
+			<label for="{{ form.common_user.about.id_for_label }}">{{ form.common_user.about.label }}</label>
+			{{ form.common_user.about }}
 		<input type="submit" value="Регистрация">
 	</form>
 	</div>
