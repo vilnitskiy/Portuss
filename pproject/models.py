@@ -64,7 +64,7 @@ class Car(models.Model):
     transmission = models.CharField(
         choices=CarConstants.TRANSMISSION_CHOICES,
         max_length=30)
-    issue_date = models.DateField()
+    issue_date = models.PositiveIntegerField()
     condition = models.CharField(
         choices=CarConstants.CONDITION_CHOICES,
         max_length=20)

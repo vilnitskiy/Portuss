@@ -64,7 +64,6 @@ def search(request):
                 city=qsearch_dict['city'][0],
                 rental_perion_begin=single_begin_date)
         if request.is_ajax():
-            print searched_cars.count
             return render_to_response(
                 'quick_searched_cars.html',
                 {'searched_cars': searched_cars[:len(searched_cars) - 2]})
@@ -76,24 +75,33 @@ def search(request):
              'form': adv_search_form,
              'search_params': qsearch_dict})
     elif request.POST and request.is_ajax():
-        """for v1 in range(int(request.POST['mileage2'])):
-            if v1 >= int(request.POST['mileage1']):
-                for v2 in range(int(request.POST['price2'])):
-                    if v2 >= int(request.POST['price1']):
-                        for v3 in datetime.strptime(request.POST['rental_perion_begin'], '%Y-%m-%d') + timedelta(n) for n in (range(datetime.strptime(request.POST['rental_perion_end'], '%Y-%m-%d'))):
-                            if v3 >= request.POST['rental_perion_begin']:
-                                s_cars = Car.objects.filter(
-                                    car_type=request.POST['car_type'][0],
-                                    transmission=request.POST['transmission'][0],
-                                    model=request.POST['model'][0],
-                                    fuel=request.POST['fuel'][0],
-                                    condition=request.POST['condition'][0],
-                                    rental_perion_begin=request.POST['rental_perion_begin'][0],
-                                    rental_perion_end=request.POST['rental_perion_end'][0],
-                                    mileage=v1,
-                                    price=v2)
-                                print s_cars"""
-        pass
+        qsearch_dict = dict(request.POST.iterlists())
+        date_delta = (int(qsearch_dict['myear2'][0]) -
+                      int(qsearch_dict['myear1'][0]))
+        price_delta = (int(qsearch_dict['price2'][0]) -
+                       int(qsearch_dict['price1'][0]))
+        mileage_delta = (int(qsearch_dict['mileage2'][0]) -
+                         int(qsearch_dict['mileage1'][0]))
+        for some_price in range(
+                range(int(qsearch_dict['price1'][0]) + k) for k in range(price_delta)):
+            print some_price
+            for year in (
+                    range(int(qsearch_dict['myear1'][0]) + m) for m in range(price_delta)):
+                for some_milage in (
+                        range(int(qsearch_dict['mileage1'][0]) + n) for n in range(mileage_delta)):
+                    searched_cars = searched_cars | Car.objects.filter(
+                        car_type=qsearch_dict['car_type'][0],
+                        fuel=qsearch_dict['fuel'][0],
+                        transmission=qsearch_dict['transmission'][0],
+                        condition=qsearch_dict['condition'][0],
+                        model=qsearch_dict['model'][0],
+                        issue_date=year,
+                        price=some_price,
+                        mileage=some_milage)
+    return render_to_response(
+        'quick_searched_cars.html',
+        {'searched_cars': searched_cars})
+
     return render(request, 'search.html', {
         'form': adv_search_form})
 

@@ -194,11 +194,15 @@ class SearchForm(CarRentForm1, QuickSearchForm):
         self.fields['mileage1'].widget = forms.TextInput(attrs={
             'placeholder': 'from'})
         self.fields['mileage2'].widget = forms.TextInput(attrs={
-            'id': 'page-search-date-from',
             'placeholder': 'to'})
         self.fields['price1'].widget = forms.TextInput(attrs={
-            'id': 'page-search-date-to',
             'placeholder': 'from'})
         self.fields['price2'].widget = forms.TextInput(attrs={
-            'id': 'page-search-date-to',
+            'placeholder': 'to'})
+        self.fields['model'].widget = forms.TextInput(attrs={
+            'id': 'brand',
+            'placeholder': 'Brand/Model'})
+        self.fields['myear1'].widget = forms.TextInput(attrs={
+            'placeholder': 'from'})
+        self.fields['myear2'].widget = forms.TextInput(attrs={
             'placeholder': 'to'})

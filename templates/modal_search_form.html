@@ -8,13 +8,15 @@
             {{ form.transmission }}
             {{ form.condition }}
         </div>
-        <input type="text" name="{{ form.model.name }}" id="brand" placeholder="Марка/Модель">
+        <div>
+        {{ form.model }}
+        </div>
         <br>
         <div class="ds-slider-row">
             <div>
             Год выпуска:
-                {{ form.rental_perion_begin }}
-                {{ form.rental_perion_end }}
+                {{ form.myear1 }}
+                {{ form.myear2 }}
             </div>
             <div>
             Пробег:
