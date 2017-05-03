@@ -106,7 +106,9 @@ $(document).ready(function(){
             data: serializedSearchData,
             type: "POST",
             success: function (data) {
-
+                $('.search-result').remove();
+                $('.more-results-row').before(data);
+                $('.more-results-row').remove();
             },
             error: function(data){
                 var errors = data.responseJSON;

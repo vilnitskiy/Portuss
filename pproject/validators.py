@@ -24,3 +24,11 @@ def validate_date_of_birth(value):
     #if value > timezone.now():
     #    raise ValidationError("Please, write your real date of birth!")
     return "OK"
+
+
+def validate_price(value):
+    if value % 100 == 0:
+        return "OK"
+    else:
+        raise ValidationError(
+            "Please, write the price divisible by 100")

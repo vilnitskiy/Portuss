@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'portuss.wsgi.application'
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default="postgres:///channels_example", conn_max_age=500)
+    'default': dj_database_url.config(default="postgres:///portuss_table", conn_max_age=500)
 }
 
 

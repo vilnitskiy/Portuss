@@ -48,6 +48,8 @@ def main(request):
 def search(request):
     adv_search_form = SearchForm
     searched_cars = Car.objects.none()
+    year_searched_cars = Car.objects.none()
+    mileage_searched_cars = Car.objects.none()
     if 'quicksearch' in request.GET:
         qsearch_dict = dict(request.GET.iterlists())
         qsearch_dict.pop('quicksearch')
@@ -63,44 +65,58 @@ def search(request):
             searched_cars = searched_cars | Car.objects.filter(
                 city=qsearch_dict['city'][0],
                 rental_perion_begin=single_begin_date)
+        if len(searched_cars) < 2:
+            idx = 0
+        else:
+            idx = len(searched_cars) - 2
         if request.is_ajax():
             return render_to_response(
                 'quick_searched_cars.html',
-                {'searched_cars': searched_cars[:len(searched_cars) - 2]})
+                {'searched_cars': searched_cars[:idx]})
         return render(
             request,
             'search.html',
             {'searched_cars': searched_cars[
-                len(searched_cars) - 2:len(searched_cars)],
+                idx:len(searched_cars)],
              'form': adv_search_form,
              'search_params': qsearch_dict})
     elif request.POST and request.is_ajax():
         qsearch_dict = dict(request.POST.iterlists())
-        date_delta = (int(qsearch_dict['myear2'][0]) -
-                      int(qsearch_dict['myear1'][0]))
-        price_delta = (int(qsearch_dict['price2'][0]) -
-                       int(qsearch_dict['price1'][0]))
-        mileage_delta = (int(qsearch_dict['mileage2'][0]) -
-                         int(qsearch_dict['mileage1'][0]))
-        for some_price in range(
-                range(int(qsearch_dict['price1'][0]) + k) for k in range(price_delta)):
-            print some_price
-            for year in (
-                    range(int(qsearch_dict['myear1'][0]) + m) for m in range(price_delta)):
-                for some_milage in (
-                        range(int(qsearch_dict['mileage1'][0]) + n) for n in range(mileage_delta)):
-                    searched_cars = searched_cars | Car.objects.filter(
-                        car_type=qsearch_dict['car_type'][0],
-                        fuel=qsearch_dict['fuel'][0],
-                        transmission=qsearch_dict['transmission'][0],
-                        condition=qsearch_dict['condition'][0],
-                        model=qsearch_dict['model'][0],
-                        issue_date=year,
-                        price=some_price,
-                        mileage=some_milage)
-    return render_to_response(
-        'quick_searched_cars.html',
-        {'searched_cars': searched_cars})
+        prices1 = set(range(int(qsearch_dict['price1'][0])))
+        prices2 = set(range(int(qsearch_dict['price2'][0]) + 1))
+        myears1 = set(range(int(qsearch_dict['myear1'][0])))
+        myears2 = set(range(int(qsearch_dict['myear2'][0]) + 1))
+        mieages1 = set(range(int(qsearch_dict['mileage1'][0])))
+        mieages2 = set(range(int(qsearch_dict['mileage2'][0]) + 1))
+
+        price_list = []
+        for oprice in list(prices2 - prices1):
+            if oprice % 100 == 0:
+                price_list.append(oprice)
+
+        for some_price in price_list:
+            searched_cars = searched_cars | Car.objects.filter(
+                car_type=qsearch_dict['car_type'][0],
+                fuel=qsearch_dict['fuel'][0],
+                transmission=qsearch_dict['transmission'][0],
+                condition=qsearch_dict['condition'][0],
+                model=qsearch_dict['model'][0],
+                price=some_price)
+        for year in list(myears2 - myears1):
+            if searched_cars.filter(
+                    issue_date=year).count() != 0:
+                year_searched_cars = searched_cars
+            else:
+                year_searched_cars = year_searched_cars | Car.objects.none()
+        for some_mileage in list(mieages2 - mieages1):
+            if year_searched_cars.filter(
+                    mileage=some_mileage).count() != 0:
+                mileage_searched_cars = searched_cars
+            else:
+                mileage_searched_cars = mileage_searched_cars | Car.objects.none()
+        return render_to_response(
+            'quick_searched_cars.html',
+            {'searched_cars': mileage_searched_cars})
 
     return render(request, 'search.html', {
         'form': adv_search_form})

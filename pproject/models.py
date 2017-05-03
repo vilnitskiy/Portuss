@@ -1,7 +1,10 @@
-from __future__ import unicode_literals
+
+from datetime import date
+
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from pproject import validators
 
@@ -64,18 +67,26 @@ class Car(models.Model):
     transmission = models.CharField(
         choices=CarConstants.TRANSMISSION_CHOICES,
         max_length=30)
-    issue_date = models.PositiveIntegerField()
+    issue_date = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(1950),
+            MaxValueValidator(date.today().year)])
     condition = models.CharField(
         choices=CarConstants.CONDITION_CHOICES,
         max_length=20)
-    mileage = models.PositiveIntegerField()
+    # mileage in thousands of km
+    mileage = models.PositiveIntegerField(
+        validators=[MaxValueValidator(300)])
     model = models.CharField(max_length=10)
     photo = models.ImageField(
         upload_to='img/users_cars_photos/',
         default='img/users_cars_photos/car.jpg',
         null=False,
         blank=False)
-    price = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(
+        validators=[validators.validate_price,
+                    MinValueValidator(100),
+                    MaxValueValidator(10000)])
     description_title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     rental_perion_begin = models.DateField()
