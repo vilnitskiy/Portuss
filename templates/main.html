@@ -1,18 +1,7 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-</head>
-<body class="popup_on">
+
+{% block main %}
 <div class="wrapper">
 {% include "header.html" %}
     <div class="page-content">
@@ -187,67 +176,5 @@
     {% endif %}
     <div class="background-mask"></div>
 </div>
-<a href="how-this-work.html" class="how-it-works-holder">
-    <span class="how-it-works">Как это работает?</span>
-</a>
-<div class="footer">
-    <div class="footer-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="footer-block">
-                        <select name="currency" id="currency">
-                            <option>Валюта</option>
-                            <option>Грн</option>
-                            <option>$</option>
-                        </select>
-                        <select name="lang" id="lang">
-                            <option>Язык</option>
-                            <option>Укр</option>
-                            <option>Eng</option>
-                        </select>
-                    </div>
-                    <div class="footer-block">
-                        <ul class="footer-link-group">
-                            <li><a href="#">О компании</a></li>
-                            <li><a href="#">Условия и конфиденциальность</a></li>
-                            <li><a href="#">Правила</a></li>
-                            <li><a href="#">Помощь</a></li>
-                            <li><a href="#">Карта сайта</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-block">
-                        <ul class="contact-phone">
-                            <li>+380500000000</li>
-                            <li>+380500000000</li>
-                            <li>+380500000000</li>
-                        </ul>    
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="social-row">
-    <ul class="social-bar">
-        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-        <li><a href="#"><i class="fa fa-odnoklassniki" aria-hidden="true"></i></a></li>
-        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-        <li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-    </ul>
-</div>
-<script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
-<script src="{% static 'js/swiper.jquery.min.js' %}"></script>
-<script src="{% static 'js/modal-popup.js' %}"></script>
-<script src="{% static 'js/jquery-ui.min.js' %}"></script>
-<script src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script>
-<script src="{% static 'js/select-block.js' %}"></script>
-<script src="{% static 'js/scripts.js' %}"></script>
-<script src="{% static 'js/slider.js' %}"></script>
-<script type="text/javascript">
-    var modal = new Modal(".popup_on")
-</script>
-</body>
-</html>
+{% include "footer.html" %}
+{% endblock %}

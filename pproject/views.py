@@ -1,6 +1,7 @@
 import json
 import urllib
 import datetime
+import collections
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
@@ -12,7 +13,7 @@ from django.contrib.auth.models import User
 from pproject.models import CommonUser, Car
 from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
     CarRentForm4, CarRentForm5, RegistrationMultiForm, LoginForm, \
-    QuickSearchForm, SearchForm
+    QuickSearchForm, SearchForm, EditMultiForm
 
 
 def main(request):
@@ -239,9 +240,28 @@ def next_rent_form_class(next_step):
 
 
 def user_profile(request):
+    form = EditMultiForm
     base_user = User.objects.get(username=request.user.username)
     user = CommonUser.objects.get(user=base_user)
+    upd_base_user = User.objects.filter(username=request.user.username)
+    upd_user = CommonUser.objects.filter(user=base_user)
     user_cars = Car.objects.filter(owner=user)
+    upd_form = form(request.POST)
+    new_base_data = {}
+    new_data = {}
+    if upd_form.is_valid():
+        for field1 in upd_form.cleaned_data['base_user']:
+            if upd_form.cleaned_data['base_user'][field1]:
+                new_base_data.update({
+                    field1: upd_form.cleaned_data['base_user'][field1]})
+        for field2 in upd_form.cleaned_data['common_user']:
+            if upd_form.cleaned_data['common_user'][field2]:
+                new_data.update({
+                    field2: upd_form.cleaned_data['common_user'][field2]})
+        upd_base_user.update(**new_base_data)
+        upd_user.update(**new_data)
+
     return render(request, 'user_profile.html',
                   {'common_user': user,
-                   'searched_cars': user_cars})
+                   'searched_cars': user_cars,
+                   'form': form})

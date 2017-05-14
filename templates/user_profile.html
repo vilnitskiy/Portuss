@@ -246,6 +246,42 @@
             </div>
         </div>
     </div>
+    <!--Modal section-->
+    <div id="id-profile-edit" class="modal-box">
+        <div class="modal-box__close-btn"></div>
+        <div class="popup-content">
+            <form method="post" id="profile-edit" name="profile-edit">
+                {% csrf_token %}
+                <span>Введите данные в поля
+                    которые хотите изменить</span>
+                <label for="{{ form.base_user.first_name.id_for_label }}">{{ form.base_user.first_name.label }}:</label>
+                {{ form.base_user.first_name }}
+
+                <label for="{{ form.base_user.last_name.id_for_label }}">{{ form.base_user.last_name.label }}:</label>
+                {{ form.base_user.last_name }}
+
+                <label for="{{ form.common_user.date_of_birth.id_for_label }}">{{ form.common_user.date_of_birth.label }}:</label>
+                {{ form.common_user.date_of_birth }}
+
+                <label for="{{ form.common_user.phone.id_for_label }}">{{ form.common_user.phone.label }}:</label>
+                {{ form.common_user.phone }}
+
+                <label for="{{ form.base_user.email.id_for_label }}">{{ form.base_user.email.label }}:</label>
+                {{ form.base_user.email }}
+
+                <label for="{{ form.common_user.vk.id_for_label }}">{{ form.common_user.vk.label }}:</label>
+                {{ form.common_user.vk }}
+
+                <label for="{{ form.common_user.fb.id_for_label }}">{{ form.common_user.fb.label }}:</label>
+                {{ form.common_user.fb }}
+
+                <label for="{{ form.common_user.about.id_for_label }}">{{ form.common_user.about.label }}:</label>
+                {{ form.common_user.about }}
+                <input type="submit" value="Изменить">
+            </form>
+        </div>
+    </div>
+    <div class="background-mask"></div>
 </div>
 {% include "footer.html" %}
 {% endblock %}

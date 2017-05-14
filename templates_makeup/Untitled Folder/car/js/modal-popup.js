@@ -5,13 +5,15 @@
 // 	}
 
 // var m1 = new Modal('#main');
-
+console.log('lol');
 function Modal (sSelector) {
     var m = this;
     // 1. Data section
     m.main           = $(sSelector);
     m.backgroundMask = m.main.find('.background-mask');
     m.AllModalBox    = m.main.find('.modal-box');
+    console.log('lol');
+    console.log(m.AllModalBox);
     // 2. Logic section
     m.showModal = function (event) {
         event.preventDefault(); 

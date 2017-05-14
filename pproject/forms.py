@@ -180,6 +180,14 @@ class QuickSearchForm(Form):
             'id': 'page-search-date-to',
             'placeholder': 'to'})
 
+    def clean(self):
+        r_begin = self.cleaned_data.get('rental_perion_begin')
+        r_end = self.cleaned_data.get('rental_perion_end')
+        if (r_end - r_begin).days > 365:
+            raise forms.ValidationError(
+                "You can't rent car for more than year.")
+        return self.cleaned_data
+
 
 class SearchForm(CarRentForm1, QuickSearchForm):
     myear1 = forms.IntegerField()
@@ -206,3 +214,33 @@ class SearchForm(CarRentForm1, QuickSearchForm):
             'placeholder': 'from'})
         self.fields['myear2'].widget = forms.TextInput(attrs={
             'placeholder': 'to'})
+
+
+class BaseEditUserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            'email',
+            'first_name', 'last_name',)
+
+
+class UserEditForm(ModelForm):
+    class Meta:
+        model = CommonUser
+        exclude = ['user', 'own_cars', 'tenant_cars', 'photo']
+
+
+class EditMultiForm(MultiModelForm):
+    form_classes = {
+        'base_user': BaseEditUserForm,
+        'common_user': UserEditForm,
+    }
+
+    def __init__(self, *args, **kwargs):
+        super(EditMultiForm, self).__init__(*args, **kwargs)
+        for key1 in self['base_user'].fields:
+            if key1 != 'password':
+                self['base_user'].fields[key1].required = False
+
+        for key2 in self['common_user'].fields:
+            self['common_user'].fields[key2].required = False

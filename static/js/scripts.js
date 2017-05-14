@@ -53,10 +53,12 @@ $(document).ready(function(){
         });
     }
     function display_errors(errors){
-        $('.error').remove();
+        $('.r-error').each(function() {
+            $(this).remove();
+        });
         for (var k in errors) {
             if (errors[k] != 'errors_marker_value') {
-                $("#form_rent_wizard").append(errors[k]);
+                $('[name=' + k + ']').after('<div class="r-error">' + errors[k] + '</div>');
             }
        }
     }
