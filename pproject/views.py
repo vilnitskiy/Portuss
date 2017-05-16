@@ -1,7 +1,6 @@
 import json
 import urllib
 import datetime
-import collections
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
@@ -22,6 +21,11 @@ def main(request):
     if 'rental_perion_begin' in request.POST:
         quick_search_form = QuickSearchForm(request.POST)
         if quick_search_form.is_valid():
+            for item in quick_search_form.cleaned_data:
+                if not isinstance(
+                        quick_search_form.cleaned_data[item], datetime.date):
+                    quick_search_form.cleaned_data[item] = \
+                        quick_search_form.cleaned_data[item].encode('utf8')
             return redirect(
                 reverse('search') + '?' + 'quicksearch=True&' +
                 urllib.urlencode(quick_search_form.cleaned_data))
