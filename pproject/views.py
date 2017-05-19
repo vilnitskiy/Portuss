@@ -1,6 +1,7 @@
 import json
 import urllib
 import datetime
+import unicodedata
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
@@ -53,6 +54,7 @@ def main(request):
 def search(request):
     adv_search_form = SearchForm
     searched_cars = Car.objects.none()
+    price_searched_cars = Car.objects.none()
     year_searched_cars = Car.objects.none()
     mileage_searched_cars = Car.objects.none()
     if 'quicksearch' in request.GET:
@@ -87,41 +89,67 @@ def search(request):
              'search_params': qsearch_dict})
     elif request.POST and request.is_ajax():
         qsearch_dict = dict(request.POST.iterlists())
-        prices1 = set(range(int(qsearch_dict['price1'][0])))
-        prices2 = set(range(int(qsearch_dict['price2'][0]) + 1))
-        myears1 = set(range(int(qsearch_dict['myear1'][0])))
-        myears2 = set(range(int(qsearch_dict['myear2'][0]) + 1))
-        mieages1 = set(range(int(qsearch_dict['mileage1'][0])))
-        mieages2 = set(range(int(qsearch_dict['mileage2'][0]) + 1))
+        pre_data = {
+            'car_type': qsearch_dict['car_type'][0],
+            'fuel': qsearch_dict['fuel'][0],
+            'transmission': qsearch_dict['transmission'][0],
+            'condition': qsearch_dict['condition'][0],
+            'model': qsearch_dict['model'][0]
+        }
+        for item in pre_data.keys():
+            if not unicodedata.normalize('NFKD', pre_data[item]).encode('ascii', 'ignore'):
+                del pre_data[item]
 
-        price_list = []
-        for oprice in list(prices2 - prices1):
-            if oprice % 100 == 0:
-                price_list.append(oprice)
+        searched_cars = searched_cars | Car.objects.filter(**pre_data)
 
-        for some_price in price_list:
-            searched_cars = searched_cars | Car.objects.filter(
-                car_type=qsearch_dict['car_type'][0],
-                fuel=qsearch_dict['fuel'][0],
-                transmission=qsearch_dict['transmission'][0],
-                condition=qsearch_dict['condition'][0],
-                model=qsearch_dict['model'][0],
-                price=some_price)
-        for year in list(myears2 - myears1):
-            if searched_cars.filter(
-                    issue_date=year).count() != 0:
-                year_searched_cars = searched_cars
-            else:
-                year_searched_cars = year_searched_cars | Car.objects.none()
-        for some_mileage in list(mieages2 - mieages1):
-            if year_searched_cars.filter(
-                    mileage=some_mileage).count() != 0:
-                mileage_searched_cars = searched_cars
-            else:
-                mileage_searched_cars = mileage_searched_cars | Car.objects.none()
+        if qsearch_dict['price1'][0] and qsearch_dict['price2'][0]:
+            prices1 = set(range(int(qsearch_dict['price1'][0])))
+            prices2 = set(range(int(qsearch_dict['price2'][0]) + 1))
+            price_list = []
+            for oprice in list(prices2 - prices1):
+                if oprice % 100 == 0:
+                    price_list.append(oprice)
+
+            for some_price in price_list:
+                p_searched_cars = searched_cars.filter(
+                    price=some_price)
+                if p_searched_cars:
+                    price_searched_cars = price_searched_cars | p_searched_cars
+            searched_cars = price_searched_cars
+
+        if qsearch_dict['myear1'][0] and qsearch_dict['myear2'][0]:
+            myears1 = set(range(int(qsearch_dict['myear1'][0])))
+            myears2 = set(range(int(qsearch_dict['myear2'][0]) + 1))
+            for year in list(myears2 - myears1):
+                if price_searched_cars:
+                    y_searched_cars = price_searched_cars.filter(
+                        issue_date=year)
+                else:
+                    y_searched_cars = searched_cars.filter(
+                        issue_date=year)
+                if y_searched_cars:
+                    year_searched_cars = year_searched_cars | y_searched_cars
+            searched_cars = year_searched_cars
+        if qsearch_dict['mileage1'][0] and qsearch_dict['mileage2'][0]:
+            mieages1 = set(range(int(qsearch_dict['mileage1'][0])))
+            mieages2 = set(range(int(qsearch_dict['mileage2'][0]) + 1))
+            for some_mileage in list(mieages2 - mieages1):
+                if year_searched_cars:
+                    m_searched_cars = year_searched_cars.filter(
+                        mileage=some_mileage)
+                elif price_searched_cars and not year_searched_cars:
+                    m_searched_cars = price_searched_cars.filter(
+                        mileage=some_mileage)
+                else:
+                    m_searched_cars = searched_cars.filter(
+                        mileage=some_mileage)
+                if m_searched_cars:
+                    mileage_searched_cars = mileage_searched_cars | m_searched_cars
+            searched_cars = mileage_searched_cars
+
         return render_to_response(
             'quick_searched_cars.html',
-            {'searched_cars': mileage_searched_cars})
+            {'searched_cars': searched_cars})
 
     return render(request, 'search.html', {
         'form': adv_search_form})

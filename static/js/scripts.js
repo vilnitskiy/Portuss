@@ -109,7 +109,7 @@ $(document).ready(function(){
             type: "POST",
             success: function (data) {
                 $('.search-result').remove();
-                $('.more-results-row').before(data);
+                $('.detailed-search-block').after(data);
                 $('.more-results-row').remove();
             },
             error: function(data){
