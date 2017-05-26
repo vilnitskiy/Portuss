@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -14,6 +14,15 @@ from pproject.models import CommonUser, Car
 from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
     CarRentForm4, CarRentForm5, RegistrationMultiForm, LoginForm, \
     QuickSearchForm, SearchForm, EditMultiForm
+
+
+def header_search(request):
+    return JsonResponse({
+        'success_url':
+        reverse('search') + '?' +
+            'quicksearch=True&' +
+            'headersearch=True&' +
+            'city=' + request.POST['header_search']})
 
 
 def main(request):
@@ -60,18 +69,22 @@ def search(request):
     if 'quicksearch' in request.GET:
         qsearch_dict = dict(request.GET.iterlists())
         qsearch_dict.pop('quicksearch')
-        date1 = datetime.datetime.\
-            strptime(
-                qsearch_dict['rental_perion_begin'][0], '%Y-%m-%d').date()
-        date2 = datetime.datetime.\
-            strptime(
-                qsearch_dict['rental_perion_end'][0], '%Y-%m-%d').date()
-        day_count = (date2 - date1).days
-        for single_begin_date in (
-                date1 + datetime.timedelta(n) for n in range(day_count)):
+        if 'headersearch' not in request.GET:
+            date1 = datetime.datetime.\
+                strptime(
+                    qsearch_dict['rental_perion_begin'][0], '%Y-%m-%d').date()
+            date2 = datetime.datetime.\
+                strptime(
+                    qsearch_dict['rental_perion_end'][0], '%Y-%m-%d').date()
+            day_count = (date2 - date1).days
+            for single_begin_date in (
+                    date1 + datetime.timedelta(n) for n in range(day_count)):
+                searched_cars = searched_cars | Car.objects.filter(
+                    city=qsearch_dict['city'][0],
+                    rental_perion_begin=single_begin_date)
+        else:
             searched_cars = searched_cars | Car.objects.filter(
-                city=qsearch_dict['city'][0],
-                rental_perion_begin=single_begin_date)
+                city=qsearch_dict['city'][0])
         if len(searched_cars) < 2:
             idx = 0
         else:

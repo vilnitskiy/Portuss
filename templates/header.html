@@ -13,9 +13,10 @@
                 </a>
             </div>
             <div class="header-block search-block desktop-only-element">
-                <form action="#" method="post" class="header-search">
-                    <input type="text">
-                    <input type="submit" value=" ">
+                <form method="post" class="header-search">
+                {% csrf_token %}
+                    <input id="header-search" name="header_search"  type="text">
+                    <input id="header-search-btn" type="submit" value=" ">
                     <div class="additional-layer">
                         <i class="fa fa-search" aria-hidden="true"></i>
                     </div>

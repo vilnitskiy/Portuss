@@ -119,6 +119,25 @@ $(document).ready(function(){
         });
     });
 
+    $('#header-search-btn').click(function(e){
+        var serializedSearchData = $('.header-search').serialize();
+        console.log(serializedSearchData);
+        $.ajax({
+            url: header_search_url,
+            data: serializedSearchData,
+            type: "POST",
+            success: function (data) {
+                var url = data['success_url'];
+                console.log(url);
+                $(location).attr('href',url);
+            },
+            error: function(data){
+                var errors = data.responseJSON;
+                console.log(errors);
+            }
+        });
+    });
+
     $('#search-show-more').click(function(e){
         var search_params = 'city=' + String.fromCharCode(parseInt(search_param_city, 16)) + '&rental_perion_begin='
             + rental_perion_begin + '&rental_perion_end=' + rental_perion_end
