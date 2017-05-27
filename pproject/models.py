@@ -1,6 +1,5 @@
-
 from datetime import date
-
+from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -78,19 +77,25 @@ class Car(models.Model):
     mileage = models.PositiveIntegerField(
         validators=[MaxValueValidator(300)])
     model = models.CharField(max_length=10)
-    photo = models.ImageField(
+    photo = models.FileField(
         upload_to='img/users_cars_photos/',
         default='img/users_cars_photos/car.jpg',
         null=False,
         blank=False)
     price = models.PositiveIntegerField(
+        default=200,
+        blank=False,
         validators=[validators.validate_price,
                     MinValueValidator(100),
                     MaxValueValidator(10000)])
     description_title = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    rental_perion_begin = models.DateField()
-    rental_perion_end = models.DateField()
+    rental_perion_begin = models.DateField(
+        default=datetime.now,
+        blank=False)
+    rental_perion_end = models.DateField(
+        default=datetime.now,
+        blank=False)
     country = models.CharField(
         null=True,
         blank=False,

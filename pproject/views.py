@@ -10,6 +10,12 @@ from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+from django.core.files import File
+import os
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.conf import settings
+
 from pproject.models import CommonUser, Car
 from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
     CarRentForm4, CarRentForm5, RegistrationMultiForm, LoginForm, \
@@ -49,7 +55,7 @@ def main(request):
             not request.user.is_superuser and
             not request.user.is_staff):
         base_user = User.objects.get(username=request.user.username)
-        user = CommonUser.objects.get_or_create(user=base_user)
+        user = CommonUser.objects.get_or_create(user=base_user)[0]
     elif request.user.is_superuser or request.user.is_staff:
         user = User.objects.get(username=request.user.username)
     else:
@@ -66,6 +72,9 @@ def search(request):
     price_searched_cars = Car.objects.none()
     year_searched_cars = Car.objects.none()
     mileage_searched_cars = Car.objects.none()
+    if request.user.is_authenticated():
+        base_user = User.objects.get(username=request.user.username)
+        user = CommonUser.objects.get(user=base_user)
     if 'quicksearch' in request.GET:
         qsearch_dict = dict(request.GET.iterlists())
         qsearch_dict.pop('quicksearch')
@@ -99,7 +108,8 @@ def search(request):
             {'searched_cars': searched_cars[
                 idx:len(searched_cars)],
              'form': adv_search_form,
-             'search_params': qsearch_dict})
+             'search_params': qsearch_dict,
+             'common_user': user})
     elif request.POST and request.is_ajax():
         qsearch_dict = dict(request.POST.iterlists())
         pre_data = {
@@ -110,7 +120,8 @@ def search(request):
             'model': qsearch_dict['model'][0]
         }
         for item in pre_data.keys():
-            if not unicodedata.normalize('NFKD', pre_data[item]).encode('ascii', 'ignore'):
+            if not unicodedata.normalize('NFKD', pre_data[item]).encode(
+                    'ascii', 'ignore'):
                 del pre_data[item]
 
         searched_cars = searched_cars | Car.objects.filter(**pre_data)
@@ -165,14 +176,16 @@ def search(request):
             {'searched_cars': searched_cars})
 
     return render(request, 'search.html', {
-        'form': adv_search_form})
+        'form': adv_search_form, 'common_user': user})
 
 
 def book_a_car(request, car_id):
+    base_user = User.objects.get(username=request.user.username)
+    user = CommonUser.objects.get(user=base_user)
     if 'complete_booking' in request.GET:
         return redirect(
             reverse('complete_booking') + '?' + 'car_id=' + car_id)
-    return render(request, 'book_a_car.html')
+    return render(request, 'book_a_car.html', {'common_user': user})
 
 
 def complete_booking(request):
@@ -196,6 +209,9 @@ class RegistrationView(CreateView):
         login(self.request, new_user)
 
         return redirect(reverse(self.success_url))
+
+
+tmp_file = ''
 
 
 class CarRentView(FormView):
@@ -224,10 +240,12 @@ class CarRentView(FormView):
 
     def get(self, request, *args, **kwargs):
         form0 = self.form_class()
+        base_user = User.objects.get(username=request.user.username)
+        user = CommonUser.objects.get(user=base_user)
         if request.is_ajax():
             return render_to_response(
                 self.form_step_template[0], {'form0': form0})
-        return render(request, self.template_name)
+        return render(request, self.template_name, {'common_user': user})
 
     def post(self, request, *args, **kwargs):
         """
@@ -239,16 +257,29 @@ class CarRentView(FormView):
         from form errors
 
         """
+        global tmp_file
         if request.is_ajax():
             next_step = int(request.POST['next_step'])
             if next_step < len(self.form_classes):
                 next_form_class = next_rent_form_class(next_step)
             val_form = self.form_classes[next_step - 1]
-            submited_form = val_form(request.POST)
+            submited_form = val_form(request.POST, request.FILES)
+            if 'photo' in request.FILES:
+                path = default_storage.save(
+                    request.FILES['photo'].name,
+                    ContentFile(request.FILES['photo'].read()))
+                tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+
             if submited_form.is_valid():
                 self.car_data_dict.update(submited_form.cleaned_data)
                 if val_form is self.form_classes[-1] and not self.car_created:
-                    new_car = Car.objects.create(**self.car_data_dict)
+                    if tmp_file:
+                        with open(tmp_file, 'r+') as f:
+                            photo = File(f)
+                            self.car_data_dict['photo'] = photo
+                            new_car = Car.objects.create(**self.car_data_dict)
+                    else:
+                        new_car = Car.objects.create(**self.car_data_dict)
                     self.car_created = True
                     if (self.request.user.is_authenticated() and
                             not self.request.user.is_superuser and

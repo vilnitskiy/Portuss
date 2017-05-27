@@ -66,10 +66,19 @@ $(document).ready(function(){
     var next_step = 1;
     $fnb.click(function(e){
         var serializedData = $('#form_rent_wizard').serialize() + '&next_step=' + next_step;
+        var form = $('#form_rent_wizard')[0];
+        var formData = new FormData(form);
+        formData.append('next_step', next_step);
+        console.log(serializedData);
+        console.log(formData);
         $.ajax({
             url: rent_url,
-            data: serializedData,
+            data: formData,
             type: "POST",
+            enctype: 'multipart/form-data',
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
             success: function (data) {
                 for (var k in data) {
                     if (data[k] == 'errors_marker_value') {
