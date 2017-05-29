@@ -8,3 +8,22 @@ The project consists of 3 apps: pproject, payments and posts.
 3. posts app is for livechats. It is based on django channels. In that moment you can create the new chat room from admin page and just give the link on newly created chat for any user you want. You can see all the chats if you follow the <potruss_domain>/chose-chat/.
 
 Each app has its own urls and migrations. The portuss/urls.py file is the main file with urls. It inherits from pproject, payments and posts urls. Project settings are locaded in portuss/settings.py. All templates are locaded in templates/ folder.
+
+# How to run server:
+$ git clone git@github.com:vilnitskiy/Portuss.git
+
+$ cd Portuss
+
+$ sudo -u postgres psql
+
+	CREATE DATABASE portuss_table;
+
+$ virtualenv .venv --no-site-packages
+
+$ source .venv/bin/activate
+
+$ pip install -r requirements.txt
+
+$ make migrate
+
+$ make run
