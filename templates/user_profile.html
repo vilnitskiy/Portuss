@@ -57,7 +57,7 @@
                             <div class="search-result-short-description">
                                 <p>{{ car.description_title }}</p>
                             </div>
-                            <a href="#" class="search-result-more-info">Подробнее</a>
+                            <a href="{% url 'book_a_car' car.id %}" class="search-result-more-info">Подробнее</a>
                             <div class="search-result-info-row">
                                 <div class="info-block"><img src="{% static 'images/wallet.png' %}"><span>${{ car.price }}</span></div>
                             <div class="info-block"><img src="{% static 'images/calendar.png' %}"><span>for {{ car.price }}</span></div>
