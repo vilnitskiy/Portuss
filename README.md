@@ -10,6 +10,18 @@ The project consists of 3 apps: pproject, payments and posts.
 Each app has its own urls and migrations. The portuss/urls.py file is the main file with urls. It inherits from pproject, payments and posts urls. Project settings are locaded in portuss/settings.py. All templates are locaded in templates/ folder.
 
 # How to run server:
+$ wget http://download.redis.io/redis-stable.tar.gz
+
+$ tar xvzf redis-stable.tar.gz
+
+$ cd redis-stable
+
+$ make
+
+$ sudo make install
+
+$ redis-server
+
 $ git clone git@github.com:vilnitskiy/Portuss.git
 
 $ cd Portuss
