@@ -84,9 +84,21 @@ def search(request):
     price_searched_cars = Car.objects.none()
     year_searched_cars = Car.objects.none()
     mileage_searched_cars = Car.objects.none()
-    if request.user.is_authenticated():
+    if request.POST and not request.user.is_authenticated():
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            new_user = authenticate(username=form.cleaned_data['email'],
+                                    password=form.cleaned_data['password'])
+            login(request, new_user)
+    if (request.user.is_authenticated() and
+            not request.user.is_superuser and
+            not request.user.is_staff):
         base_user = User.objects.get(username=request.user.username)
-        user = CommonUser.objects.get(user=base_user)
+        user = CommonUser.objects.get_or_create(user=base_user)[0]
+    elif request.user.is_superuser or request.user.is_staff:
+        user = User.objects.get(username=request.user.username)
+    else:
+        user = ''
     if 'quicksearch' in request.GET:
         qsearch_dict = dict(request.GET.iterlists())
         qsearch_dict.pop('quicksearch')
