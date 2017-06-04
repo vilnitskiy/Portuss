@@ -1,0 +1,28 @@
+{% load commentator_age %}
+<div class="comment-table" id="{{ new_comment.id }}">
+    <div class="comment-cell">
+        <div class="comment-profile-photo">
+            <img src="{{ new_comment.comment_author.photo.url }}">
+        </div>
+    </div>
+    <div class="comment-cell">
+        <div class="comment-heading">
+            <span class="comment-user-name">{{ new_comment.comment_author.user.first_name }},</span>
+            <span class="comment-user-age">
+                {% commentator_age new_comment.comment_author.date_of_birth %}
+            </span>
+            <span> лет</span>
+        </div>
+        <div class="comment-text">
+            <p>
+                {{ new_comment.comment_body }}
+            </p>
+        </div>
+        <span class="comment-date">{{ new_comment.comment_date | date:"d.m.Y" }}</span>
+        <input type="button" class="like-comment" id="{{ new_comment.id }}" value="Полезный отзыв" {% if new_comment.is_interesting %}disabled{% endif %}>
+        <a href="#" class="comment-like">Полезный отзыв</a>
+    </div>
+</div>
+<script type="text/javascript">
+    var is_owner = "{{ is_owner }}";
+</script>

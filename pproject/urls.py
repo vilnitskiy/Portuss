@@ -15,7 +15,7 @@ urlpatterns = [
         login_required(views.CarRentView.as_view()),
         name='car_rent'),
     url(
-        r'^profile/$',
+        r'^profile/(?P<user_id>[0-9]+)/$',
         login_required(views.user_profile),
         name='user_profile'),
     url(
@@ -28,12 +28,16 @@ urlpatterns = [
         name='header_search'),
     url(
         r'^book-a-car/(?P<car_id>[0-9]+)/$',
-        login_required(views.book_a_car),
+        views.book_a_car,
         name='book_a_car'),
     url(
         r'^complete-booking/$',
         views.complete_booking,
         name='complete_booking'),
+    url(
+        r'^help/$',
+        views.help,
+        name='help'),
 
     # auth views
     url(r'^registration/',

@@ -168,6 +168,35 @@ $(document).ready(function(){
         });
     });
 
+    $('#send-comment').click(function(e){
+        $.post(
+            window.location.pathname,
+            $("#comment-car-form").serialize(), 
+            function(data) {
+                if (typeof is_owner == "undefined" || is_owner == "False") {
+                    $('.clients-reviews').prepend(data);
+                    $('.comment-tab').addClass('active');
+                    $('.clients-reviews').css('display','block');
+                    $('.owners-reviews').css('display','none');
+                    $('.owners-tab').removeClass('active');
+                }
+                else {
+                    $('.clients-tab').prepend(data);
+                    $('.owners-tab').addClass('active');
+                    $('.clients-reviews').css('display','none');
+                    $('.owners-reviews').css('display','block');
+                    $('.comment-tab').removeClass('active');
+                }
+            });
+    });
+    $('.po-comment-section').on('click', '.like-comment', function(){
+        post_data = {'like': $(this).attr('id')}
+        $(this).prop('disabled', true);
+        $.post(
+            window.location.pathname,
+            post_data);
+    });
+
     $fpb.click(function(e){
         e.preventDefault();
         var $cur_tab=$(".active-tab"),

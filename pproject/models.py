@@ -48,9 +48,12 @@ class CommonUser(models.Model):
 
     docs_are_checked = models.BooleanField(default=False)
     soc_networks_are_checked = models.BooleanField(default=False)
-    # TODO: develop rating system, it's could be \
-    # model method or model field
-    # rating = models.PositiveIntegerField()
+    comment = models.TextField(null=True, blank=True)
+    user_rating = models.PositiveIntegerField(
+        default=3,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(5)])
 
     def __unicode__(self):
         return u"%s %s" % (self.user.first_name, self.user.last_name)
@@ -126,12 +129,89 @@ class Car(models.Model):
         related_name='user_rent_cars',
         null=True,
         blank=True)
+    __original_renter = None
+    times_rented = models.PositiveIntegerField(
+        default=0,
+        blank=True,
+        null=False)
+    car_rating = models.PositiveIntegerField(
+        default=3,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(5)])
 
     def rental_period(self):
         rental_perion = self.rental_perion_end - self.rental_perion_begin
         return rental_perion
 
+    def __init__(self, *args, **kwargs):
+        super(Car, self).__init__(*args, **kwargs)
+        self.__original_renter = self.renter
+
+    def save(self, force_insert=False, force_update=False, *args, **kwargs):
+        if self.renter != self.__original_renter:
+            self.times_rented += 1
+        self.all_renters.append(self.renter)
+        super(Car, self).save(force_insert, force_update, *args, **kwargs)
+        self.__original_renter = self.renter
+
     def __unicode__(self):
         rental_period = Car.rental_period(self)
         return u"%s, %s. Price: %d, yet there are (%s) in rent" % (
             self.model, self.transmission, self.price, rental_period)
+
+
+class CommentCarOwner(models.Model):
+    comment_body = models.TextField(null=True, blank=True)
+    comment_date = models.DateField(
+        default=datetime.now,
+        blank=False)
+    is_interesting = models.PositiveIntegerField(
+        default=0,
+        blank=True,
+        null=False)
+    comment_author = models.ForeignKey(
+        CommonUser,
+        related_name='comment_author',
+        null=False,
+        blank=False)
+    commented_user = models.ForeignKey(
+        CommonUser,
+        related_name='commented_user',
+        null=False,
+        blank=False)
+
+    def __unicode__(self):
+        return u"Comment for %s, %s" % (
+            self.commented_user.user.first_name,
+            self.commented_user.user.last_name)
+
+
+class CommentCar(models.Model):
+    comment_body = models.TextField(
+        null=False,
+        blank=False,
+        default='comment')
+    comment_date = models.DateField(
+        default=datetime.now,
+        blank=False)
+    is_interesting = models.PositiveIntegerField(
+        default=0,
+        blank=True,
+        null=False)
+    comment_author = models.ForeignKey(
+        CommonUser,
+        related_name='comment_car_author',
+        null=False,
+        blank=False)
+    commented_car = models.ForeignKey(
+        Car,
+        related_name='commented_car',
+        null=False,
+        blank=False)
+    unauthed_user_email = models.EmailField(
+        null=True,
+        blank=True)
+
+    def __unicode__(self):
+        return u"Comment for %s" % (self.commented_car)

@@ -8,7 +8,8 @@ from django import forms
 
 from betterforms.multiform import MultiModelForm
 
-from pproject.models import Car, CommonUser
+from pproject.models import Car, CommonUser,\
+    CommentCarOwner, CommentCar
 
 
 class CarRentForm1(ModelForm):
@@ -244,3 +245,15 @@ class EditMultiForm(MultiModelForm):
 
         for key2 in self['common_user'].fields:
             self['common_user'].fields[key2].required = False
+
+
+class CommentCarOwnerForm(ModelForm):
+    class Meta:
+        model = CommentCarOwner
+        fields = ('comment_body',)
+
+
+class CommentCarForm(ModelForm):
+    class Meta:
+        model = CommentCar
+        fields = ('comment_body', 'unauthed_user_email',)

@@ -2,6 +2,7 @@ import json
 import urllib
 import datetime
 import unicodedata
+import os
 from django.shortcuts import render, redirect, render_to_response
 from django.views.generic.edit import FormView
 from django.views.generic.edit import CreateView
@@ -11,15 +12,16 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 from django.core.files import File
-import os
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
 
-from pproject.models import CommonUser, Car
+from pproject.models import CommonUser, Car, CommentCarOwner, CommentCar
 from pproject.forms import CarRentForm1, CarRentForm2, CarRentForm3, \
     CarRentForm4, CarRentForm5, RegistrationMultiForm, LoginForm, \
-    QuickSearchForm, SearchForm, EditMultiForm
+    QuickSearchForm, SearchForm, EditMultiForm, CommentCarOwnerForm, \
+    CommentCarForm
 
 
 def header_search(request):
@@ -34,6 +36,14 @@ def header_search(request):
 def main(request):
     form = LoginForm
     quick_search_form = QuickSearchForm
+    popular_ads = Car.objects.order_by('-times_rented')[:10]
+    sorted_ads_by_popularity = Car.objects.order_by('-city')
+    re_sorted_ads_by_popularity = list(sorted_ads_by_popularity)
+    count_cars = sorted_ads_by_popularity.count()
+    for index, obj in enumerate(re_sorted_ads_by_popularity):
+        if index < (count_cars - 1):
+            if obj.city == re_sorted_ads_by_popularity[index + 1].city:
+                del re_sorted_ads_by_popularity[index + 1]
     if 'rental_perion_begin' in request.POST:
         quick_search_form = QuickSearchForm(request.POST)
         if quick_search_form.is_valid():
@@ -63,7 +73,9 @@ def main(request):
     return render(request, 'main.html', {
         'form': form,
         'common_user': user,
-        'quick_search_form': quick_search_form})
+        'quick_search_form': quick_search_form,
+        'popular_ads': popular_ads,
+        'sorted_ads_by_popularity': re_sorted_ads_by_popularity[:10]})
 
 
 def search(request):
@@ -180,16 +192,71 @@ def search(request):
 
 
 def book_a_car(request, car_id):
-    base_user = User.objects.get(username=request.user.username)
-    user = CommonUser.objects.get(user=base_user)
+    comment_form = CommentCarForm
+    form = LoginForm
+    comments = CommentCar.objects.all()
+    car_comments = comments_paginator(comments, request)
+    if request.POST and not request.user.is_authenticated():
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            new_user = authenticate(username=form.cleaned_data['email'],
+                                    password=form.cleaned_data['password'])
+            login(request, new_user)
+    if (request.user.is_authenticated() and
+            not request.user.is_superuser and
+            not request.user.is_staff):
+        base_user = User.objects.get(username=request.user.username)
+        user = CommonUser.objects.get_or_create(user=base_user)[0]
+    elif request.user.is_superuser or request.user.is_staff:
+        user = User.objects.get(username=request.user.username)
+    else:
+        user = ''
+    car = Car.objects.get(id=car_id)
+
     if 'complete_booking' in request.GET:
         return redirect(
             reverse('complete_booking') + '?' + 'car_id=' + car_id)
-    return render(request, 'book_a_car.html', {'common_user': user})
+
+    post_comment_form = CommentCarForm(request.POST)
+    if post_comment_form.is_valid():
+        CommentCar.objects.create(
+            comment_author=user,
+            commented_car=Car.objects.get(id=car_id),
+            **post_comment_form.cleaned_data)
+
+    return render(request, 'book_a_car.html', {
+        'common_user': user,
+        'car': car,
+        'comment_form': comment_form,
+        'form': form,
+        'comments': car_comments,
+        'count_comments': comments.count()})
 
 
 def complete_booking(request):
     return render(request, 'complete_booking.html')
+
+
+def help(request):
+    form = LoginForm
+    if request.POST and not request.user.is_authenticated():
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            new_user = authenticate(username=form.cleaned_data['email'],
+                                    password=form.cleaned_data['password'])
+            login(request, new_user)
+    if (request.user.is_authenticated() and
+            not request.user.is_superuser and
+            not request.user.is_staff):
+        base_user = User.objects.get(username=request.user.username)
+        user = CommonUser.objects.get_or_create(user=base_user)[0]
+    elif request.user.is_superuser or request.user.is_staff:
+        user = User.objects.get(username=request.user.username)
+    else:
+        user = ''
+    return render(request, 'how-this-work.html', {
+        'common_user': user,
+        'form': form})
 
 
 class RegistrationView(CreateView):
@@ -315,8 +382,9 @@ def next_rent_form_class(next_step):
     return form_class
 
 
-def user_profile(request):
+def user_profile(request, user_id):
     form = EditMultiForm
+    comment_form = CommentCarOwnerForm
     base_user = User.objects.get(username=request.user.username)
     user = CommonUser.objects.get(user=base_user)
     upd_base_user = User.objects.filter(username=request.user.username)
@@ -336,8 +404,58 @@ def user_profile(request):
                     field2: upd_form.cleaned_data['common_user'][field2]})
         upd_base_user.update(**new_base_data)
         upd_user.update(**new_data)
+    post_comment_form = comment_form(request.POST)
+    if request.is_ajax() and request.POST:
+        is_owner = False
+        if user_cars:
+            is_owner = True
+        if 'like' in request.POST:
+            liked_comment = CommentCarOwner.objects.get(
+                id=request.POST['like'])
+            liked_comment.is_interesting += 1
+            liked_comment.save()
+        if post_comment_form.is_valid():
+            new_comment = CommentCarOwner.objects.create(
+                comment_author=user,
+                commented_user=CommonUser.objects.get(id=user_id),
+                **post_comment_form.cleaned_data)
+            return render_to_response(
+                'car_owner_comment.html',
+                {'new_comment': new_comment,
+                 'is_owner': is_owner})
+
+    comments = CommentCarOwner.objects.filter(commented_user=user)
+    users_comments = []
+    onwers_comments = []
+    for comment in comments:
+        try:
+            cars = Car.objects.get(owner=comment.comment_author)
+        except:
+            cars = []
+        if cars:
+            onwers_comments.append(comment)
+        else:
+            users_comments.append(comment)
+
+    o_comments = comments_paginator(onwers_comments, request)
+    u_comments = comments_paginator(users_comments, request)
 
     return render(request, 'user_profile.html',
                   {'common_user': user,
                    'searched_cars': user_cars,
-                   'form': form})
+                   'form': form,
+                   'comment_form': comment_form,
+                   'onwers_comments': o_comments,
+                   'users_comments': u_comments})
+
+
+def comments_paginator(comments, req):
+    paginator = Paginator(comments, 10)
+    page = req.GET.get('page')
+    try:
+        paginated_comments = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_comments = paginator.page(1)
+    except EmptyPage:
+        paginated_comments = paginator.page(paginator.num_pages)
+    return paginated_comments

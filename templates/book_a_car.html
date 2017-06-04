@@ -1,18 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 {% block main %}
+{% load commentator_age %}
+
 <div class="wrapper">
 {% include "header.html" %}
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                    <img src="./images/cc-main-image.png">
+                    <img src="{{ car.photo.url }}">
                     <div class="cc-price-holder">
                         <div class="container">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <span class="cc-price">$50 в день</span>
+                                    <span class="cc-price">₴{{ car.price }} в день</span>
                                 </div>
                             </div>
                         </div>
@@ -40,16 +42,16 @@
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 col-md-push-6 col-lg-push-6">
                     <div class="cc-profile-holder">
-                        <div class="cc-profile-photo"><img src="./images/profile-img-omg.jpg"></div>
+                        <div class="cc-profile-photo"><img src="{{ car.owner.photo.url }}"></div>
                         <div class="cc-user-info">
-                            <span class="cc-user-name">Богдан Юзвиков</span>
-                            <span class="cc-user-location">Борисполь</span>
+                            <span class="cc-user-name">{{ car.owner.user.first_name }} {{ car.owner.user.last_name }}</span>
+                            <span class="cc-user-location">{{ car.owner.city }}</span>
                         </div>
                         <a href="#id-author-contacts" class="cc-profile-contact modal-show">Связаться с владельцем</a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-pull-3 col-lg-pull-3">
-                    <h3 class="cc-heading">Заголовок объявления</h3>
+                    <h3 class="cc-heading">{{ car.description_title }}</h3>
                     <div class="cc-rating">
                         <ul class="rating">
                             <li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -59,34 +61,26 @@
                             <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
                         </ul>
                     </div>
-                    <span class="cc-car-info cc-brand-model">Марка, модель</span>
-                    <span class="cc-car-info cc-fuel-type">Тип топлива</span>
-                    <span class="cc-car-info cc-transmission">Тип коробки передач</span>
+                    <span class="cc-car-info cc-brand-model">{{ car.model }}</span>
+                    <span class="cc-car-info cc-fuel-type">{{ car.fuel }}</span>
+                    <span class="cc-car-info cc-transmission">{{ car.transmission }}</span>
                     <span class="cc-detailed-info">Подробные характеристики</span>
                     <div class="cc-detailed-info-block">
                         <div class="d-i-row">
-                            <span>Тип транспорта:</span><span class="d-i d-i-transport-type">Грузовик</span>
+                            <span>Тип транспорта:</span><span class="d-i d-i-transport-type">{{ car.car_type }}</span>
                         </div>
                         <div class="d-i-row">
-                            <span>Год выпуска:</span><span class="d-i d-i-manufactured-year">1988</span>
+                            <span>Год выпуска:</span><span class="d-i d-i-manufactured-year">{{ car.issue_date }}</span>
                         </div>
                         <div class="d-i-row">
-                            <span>Состояние:</span><span class="d-i d-i-condition">Как новенький</span>
+                            <span>Состояние:</span><span class="d-i d-i-condition">{{ car.condition }}</span>
                         </div>
                         <div class="d-i-row">
-                            <span>Пробег:</span><span class="d-i d-i-condition">18000км</span>
+                            <span>Пробег:</span><span class="d-i d-i-condition">{{ car.mileage }}</span>
                         </div>
                     </div>
                     <div class="cc-text-sector">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea incidunt magnam nam necessitatibus officiis omnis, praesentium quam unde voluptatem? Commodi consequatur ea eligendi eos ex excepturi expedita nemo placeat porro quidem ratione, reiciendis rem repudiandae, sapiente voluptate. Ab dicta dolor earum eum exercitationem libero molestias, quos? Cupiditate distinctio excepturi, fuga inventore magni nesciunt nulla provident quam. Doloremque neque non vitae!
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, ea hic in incidunt itaque iure nam ullam velit. Doloremque dolores excepturi iure libero maxime modi obcaecati odit quaerat quidem ratione sed tempore, tenetur, vitae. Cumque ipsam nostrum qui suscipit vero.
-                        </p>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci culpa cum dolor hic modi pariatur quam quasi qui rerum totam! Aliquam asperiores aspernatur assumenda at blanditiis commodi deserunt ducimus eaque et eum eveniet, facilis harum illo in iste iusto nihil nobis obcaecati optio quas repellat saepe sint suscipit, unde veniam veritatis voluptates voluptatum. A alias asperiores, atque consequuntur dolor dolorem dolores inventore itaque, laudantium modi molestias numquam praesentium, quia quisquam quos reiciendis reprehenderit tempore vero? A ea ipsam sequi sunt.
-                        </p>
+                        {{ car.description }}
                     </div>
                 </div>
             </div>
@@ -98,42 +92,7 @@
                             <div class="swiper-slide">
                                 <div class="slider-table">
                                     <div class="slider-image-holder">
-                                        <img src="./images/car-block-2.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-3.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-1.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-2.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-1.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-3.png" alt="">
+                                        <img src="{{ car.photo.url }}" >
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +101,7 @@
                         <div class="swiper-button-next swiper-button-white"></div>
                         <div class="swiper-button-prev swiper-button-white"></div>
                         <div class="gallery-close">
-                            <img src="./images/cross.svg" alt="">
+                            <img src="{% static 'images/cross.svg' %}">
                         </div>
                     </div>
                     <div class="gallery-thumbs">
@@ -150,51 +109,17 @@
                             <div class="swiper-slide">
                                 <div class="slider-table">
                                     <div class="slider-image-holder">
-                                        <img src="./images/car-block-2.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-3.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-1.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-2.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-1.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="slider-table">
-                                    <div class="slider-image-holder">
-                                        <img src="./images/car-block-3.png" alt="">
+                                        <img src="{{ car.photo.url }}">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="pagination-gallery-button left-pagination-gallery-button"><div><div><img src="./images/slider-arrow-red.png" alt=""></div></div></div>
-                        <div class="pagination-gallery-button right-pagination-gallery-button"><div><div><img src="./images/slider-arrow-red.png" alt=""></div></div></div>
+                        <div class="pagination-gallery-button left-pagination-gallery-button"><div><div><img src="{% static 'images/slider-arrow-red.png' %}"></div></div></div>
+                        <div class="pagination-gallery-button right-pagination-gallery-button"><div><div><img src="{% static 'images/slider-arrow-red.png' %}"></div></div></div>
                     </div>
                 </div>
             </div>
+
             <div class="row cc-section-third">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                     <div class="comment-table comment-section-heading">
@@ -203,105 +128,70 @@
                         </div>
                         <div class="comment-cell">
                             <div>
-                                <span class="comment-counter">4</span><span class="comment-counter-after"> отзыва</span>
+                                <span class="comment-counter">{{ count_comments }}</span><span class="comment-counter-after">{% if count_comments > 1 %} comments{% else %} comment{% endif %}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="comment-table">
-                        <div class="comment-cell">
-                            <div class="comment-profile-photo">
-                                <img src="./images/profile-img-omg.jpg">
+                        {% for comment in comments %}
+                            <div class="comment-table">
+                                <div class="comment-cell">
+                                    <div class="comment-profile-photo">
+                                        <img src="{{ comment.comment_author.photo.url }}">
+                                    </div>
+                                </div>
+                                <div class="comment-cell">
+                                    <div class="comment-heading">
+                                        <span class="comment-user-name">{{ comment.comment_author.user.first_name }},</span>
+                                        <span class="comment-user-age">{% commentator_age comment.comment_author.date_of_birth %}</span>
+                                    </div>
+                                    <div class="comment-text">
+                                        <p>
+                                            {{ comment.comment_body }}
+                                        </p>
+                                    </div>
+                                    <span class="comment-date">{{ comment.comment_date | date:"d.m.Y" }}</span>
+                                    <input type="button" class="like-comment" id="{{ comment.id }}" value="Полезный отзыв" {% if comment.is_interesting %}disabled{% endif %}>
+                                </div>
                             </div>
-                        </div>
-                        <div class="comment-cell">
-                            <div class="comment-heading">
-                                <span class="comment-user-name">Богдан,</span>
-                                <span class="comment-user-age">27</span>
-                                <span> лет</span>
-                            </div>
-                            <div class="comment-text">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
-                                </p>
-                            </div>
-                            <span class="comment-date">27.09.2016</span>
-                            <a href="#" class="comment-like">Полезный отзыв</a>
-                        </div>
-                    </div>
-                    <div class="comment-table">
-                        <div class="comment-cell">
-                            <div class="comment-profile-photo">
-                                <img src="./images/profile-img-omg.jpg">
-                            </div>
-                        </div>
-                        <div class="comment-cell">
-                            <div class="comment-heading">
-                                <span class="comment-user-name">Богдан,</span>
-                                <span class="comment-user-age">27</span>
-                                <span> лет</span>
-                            </div>
-                            <div class="comment-text">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
-                                </p>
-                            </div>
-                            <span class="comment-date">27.09.2016</span>
-                            <a href="#" class="comment-like">Полезный отзыв</a>
-                        </div>
-                    </div>
-                    <div class="comment-table">
-                        <div class="comment-cell">
-                            <div class="comment-profile-photo">
-                                <img src="./images/profile-img-omg.jpg">
-                            </div>
-                        </div>
-                        <div class="comment-cell">
-                            <div class="comment-heading">
-                                <span class="comment-user-name">Богдан,</span>
-                                <span class="comment-user-age">27</span>
-                                <span> лет</span>
-                            </div>
-                            <div class="comment-text">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
-                                </p>
-                            </div>
-                            <span class="comment-date">27.09.2016</span>
-                            <a href="#" class="comment-like">Полезный отзыв</a>
-                        </div>
-                    </div>
-                    <div class="comment-table">
-                        <div class="comment-cell">
-                            <div class="comment-profile-photo">
-                                <img src="./images/profile-img-omg.jpg">
-                            </div>
-                        </div>
-                        <div class="comment-cell">
-                            <div class="comment-heading">
-                                <span class="comment-user-name">Богдан,</span>
-                                <span class="comment-user-age">27</span>
-                                <span> лет</span>
-                            </div>
-                            <div class="comment-text">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
-                                </p>
-                            </div>
-                            <span class="comment-date">27.09.2016</span>
-                            <a href="#" class="comment-like">Полезный отзыв</a>
-                        </div>
-                    </div>
+                        {% endfor %}
                 </div>
             </div>
+            {% if comments %}
             <div class="row pagination-row">
                 <ul class="pagination">
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
+                {% if comments.has_previous %}
+                    <li><a href="?page={{ comments.previous_page_number }}">{{ comments.previous_page_number }}</a></li>
+                {% endif %}
+                    <li><a href="?page={{ comments.number }}">{{ comments.number }}</a></li>
+                {% if comments.has_next %}
+                    <li><a href="?page={{ comments.next_page_number }}">{{ comments.next_page_number }}</a></li>
+                {% endif %}
                 </ul>
             </div>
+            {% endif %}
         </div>
     </div>
+    {% if not user.is_authenticated %}
+    <!--Modal section-->
+        {% include "modal_login.html" %}
+    {% endif %}
+    <div id="id-left-comment" class="modal-box">
+        <div class="modal-box__close-btn"></div>
+        <div class="popup-content">
+            <form method="post" name="comment-form" id="comment-form">
+                {% csrf_token %}
+                <span class="popup-heading">Оставьте свой коментарий здесь</span>
+                {% if not user.is_authenticated %}
+                    <label for="{{ comment_form.unauthed_user_email.name }}" class="for-notreg-user">E-mail:</label>
+                    {{ comment_form.unauthed_user_email }}
+                {% endif %}
+                <label for="{{ comment_form.comment_body.name }}">Текст коментария</label>
+                {{ comment_form.comment_body }}
+                <input type="submit" value="Коментировать">
+            </form>
+        </div>
+    </div>
+    <div class="background-mask"></div>
 </div>
 {% include "footer.html" %}
 {% endblock %}

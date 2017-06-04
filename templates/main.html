@@ -61,62 +61,23 @@
                     <div class="slider-holder popular-cars-slider-holder">
                         <div class="popular-cars-slider">
                             <div class="swiper-wrapper">
+                            {% for ad in popular_ads %}
                                 <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="car-name">Bugatti Veyron, Israel</span>
-                                    <span class="car-price">300</span>
-                                    <span class="currency">$</span>
-                                    <a href="#"></a>
+                                    <img src="{{ ad.photo.url }}" style="width:220px;height:140px;">
+                                    <span class="car-name">{{ ad.model }}, {{ ad.city }}</span>
+                                    <span class="car-price">{{ ad.price }}</span>
+                                    <span class="currency">₴</span>
+                                    <a href="{% url 'book_a_car' ad.id %}"></a>
                                     <ul class="rating">
+                                    {% with ''|center:ad.car_rating as range %}
+                                    {% for _ in range %}
                                         <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                    {% endfor %}
+                                    {% endwith %}
                                     </ul>
                                 </div>
-                                <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="car-name">Bugatti Veyron, Israel</span>
-                                    <span class="car-price">300</span>
-                                    <span class="currency">$</span>
-                                    <a href="#"></a>
-                                    <ul class="rating">
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="car-name">Bugatti Veyron, Israel</span>
-                                    <span class="car-price">300</span>
-                                    <span class="currency">$</span>
-                                    <a href="#"></a>
-                                    <ul class="rating">
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="car-name">Bugatti Veyron, Israel</span>
-                                    <span class="car-price">300</span>
-                                    <span class="currency">$</span>
-                                    <a href="#"></a>
-                                    <ul class="rating">
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
-                                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
-                                    </ul>
-                                </div>
+                            {% endfor %}
+                            </div>
                             </div>
                         </div>
                         <div class="slider-controls">
@@ -128,36 +89,13 @@
                     <div class="slider-holder popular-city-slider-holder">
                         <div class="popular-city-slider">
                             <div class="swiper-wrapper">
+                            {% for ad in sorted_ads_by_popularity %}
                                 <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="city-name">Kiev</span>
-                                    <a href="#"></a>
+                                    <img src="{{ ad.photo.url }}" style="width:220px;height:140px;">
+                                    <span class="city-name">{{ ad.city }}</span>
+                                    <a href="{% url 'book_a_car' ad.id %}"></a>
                                 </div>
-                                <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="city-name">Kiev</span>
-                                    <a href="#"></a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="city-name">Kiev</span>
-                                    <a href="#"></a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="city-name">Kiev</span>
-                                    <a href="#"></a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="city-name">Kiev</span>
-                                    <a href="#"></a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="{% static 'images/car-block-1.png' %}" alt="">
-                                    <span class="city-name">Kiev</span>
-                                    <a href="#"></a>
-                                </div>
+                            {% endfor %}
                             </div>
                         </div>
                         <div class="slider-controls">

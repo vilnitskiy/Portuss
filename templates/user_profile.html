@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load rental_period %}
+{% load commentator_age %}
 
 {% block main %}
 <div class="wrapper">
@@ -78,32 +79,11 @@
                                     <span class="currency">$</span>
                                     <a href="#"></a>
                                 </div>
-                                <div class="swiper-slide">
-                                    <img src="./images/car-block-1.png" alt="">
-                                    <span class="car-name">Bugatti Veyron, Israel</span>
-                                    <span class="car-price">300</span>
-                                    <span class="currency">$</span>
-                                    <a href="#"></a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="./images/car-block-1.png" alt="">
-                                    <span class="car-name">Bugatti Veyron, Israel</span>
-                                    <span class="car-price">300</span>
-                                    <span class="currency">$</span>
-                                    <a href="#"></a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="./images/car-block-1.png" alt="">
-                                    <span class="car-name">Bugatti Veyron, Israel</span>
-                                    <span class="car-price">300</span>
-                                    <span class="currency">$</span>
-                                    <a href="#"></a>
-                                </div>
                             </div>
                         </div>
                         <div class="slider-controls">
-                            <div class="popular-cars-prev"><img src="./images/slider-arrow-red.png" alt=""></div>
-                            <div class="popular-cars-next"><img src="./images/slider-arrow-red.png" alt=""></div>
+                            <div class="popular-cars-prev"><img src="{% static 'images/slider-arrow-red.png' %}"></div>
+                            <div class="popular-cars-next"><img src="{% static 'images/slider-arrow-red.png' %}"></div>
                         </div>
                     </div>
                     <div class="comment-tab-row">
@@ -112,134 +92,75 @@
                     </div>
                     <div class="po-comment-section">
                         <div class="clients-reviews">
+                        {% for comment in users_comments %}
                             <div class="comment-table">
                                 <div class="comment-cell">
                                     <div class="comment-profile-photo">
-                                        <img src="./images/profile-img-omg.jpg">
+                                        <img src="{{ comment.comment_author.photo.url }}">
                                     </div>
                                 </div>
                                 <div class="comment-cell">
                                     <div class="comment-heading">
-                                        <span class="comment-user-name">Богдан,</span>
-                                        <span class="comment-user-age">27</span>
-                                        <span> лет</span>
+                                        <span class="comment-user-name">{{ comment.comment_author.user.first_name }},</span>
+                                        <span class="comment-user-age">{% commentator_age comment.comment_author.date_of_birth %}</span>
                                     </div>
                                     <div class="comment-text">
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                            {{ comment.comment_body }}
                                         </p>
                                     </div>
-                                    <span class="comment-date">27.09.2016</span>
-                                    <a href="#" class="comment-like">Полезный отзыв</a>
+                                    <span class="comment-date">{{ comment.comment_date | date:"d.m.Y" }}</span>
+                                    <input type="button" class="like-comment" id="{{ comment.id }}" value="Полезный отзыв" {% if comment.is_interesting %}disabled{% endif %}>
                                 </div>
                             </div>
-                            <div class="comment-table">
-                                <div class="comment-cell">
-                                    <div class="comment-profile-photo">
-                                        <img src="./images/profile-img-omg.jpg">
-                                    </div>
-                                </div>
-                                <div class="comment-cell">
-                                    <div class="comment-heading">
-                                        <span class="comment-user-name">Богдан,</span>
-                                        <span class="comment-user-age">27</span>
-                                        <span> лет</span>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
-                                        </p>
-                                    </div>
-                                    <span class="comment-date">27.09.2016</span>
-                                    <a href="#" class="comment-like">Полезный отзыв</a>
-                                </div>
-                            </div>
-                            <div class="comment-table">
-                                <div class="comment-cell">
-                                    <div class="comment-profile-photo">
-                                        <img src="./images/profile-img-omg.jpg">
-                                    </div>
-                                </div>
-                                <div class="comment-cell">
-                                    <div class="comment-heading">
-                                        <span class="comment-user-name">Богдан,</span>
-                                        <span class="comment-user-age">27</span>
-                                        <span> лет</span>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
-                                        </p>
-                                    </div>
-                                    <span class="comment-date">27.09.2016</span>
-                                    <a href="#" class="comment-like">Полезный отзыв</a>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
+                        {% if users_comments %}
+                        <ul class="pagination">
+                            {% if comments.has_previous %}
+                            <li><a href="?page={{ comments.previous_page_number }}">{{ comments.previous_page_number }}</a></li>
+                        {% endif %}
+                            <li><a href="?page={{ comments.number }}">{{ comments.number }}</a></li>
+                        {% if comments.has_next %}
+                            <li><a href="?page={{ comments.next_page_number }}">{{ comments.next_page_number }}</a></li>
+                        {% endif %}
+                        </ul>
+                        {% endif %}
                         <div class="owners-reviews">
+                        {% for comment in onwers_comments %}
                             <div class="comment-table">
                                 <div class="comment-cell">
                                     <div class="comment-profile-photo">
-                                        <img src="./images/passport-guy.jpg">
+                                        <img src="{{ comment.comment_author.photo.url }}">
                                     </div>
                                 </div>
                                 <div class="comment-cell">
                                     <div class="comment-heading">
-                                        <span class="comment-user-name">Богдан,</span>
-                                        <span class="comment-user-age">27</span>
-                                        <span> лет</span>
+                                        <span class="comment-user-name">{{ comment.comment_author.user.first_name }},</span>
+                                        <span class="comment-user-age">{% commentator_age comment.comment_author.date_of_birth %}</span>
                                     </div>
                                     <div class="comment-text">
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
+                                            {{ comment.comment_body }}
                                         </p>
                                     </div>
-                                    <span class="comment-date">27.09.2016</span>
-                                    <a href="#" class="comment-like">Полезный отзыв</a>
+                                    <span class="comment-date">{{ comment.comment_date | date:"d.m.Y" }}</span>
+                                    <input type="button" class="like-comment" id="{{ comment.id }}" value="Полезный отзыв" {% if comment.is_interesting %}disabled{% endif %}>
                                 </div>
                             </div>
-                            <div class="comment-table">
-                                <div class="comment-cell">
-                                    <div class="comment-profile-photo">
-                                        <img src="./images/passport-guy.jpg">
-                                    </div>
-                                </div>
-                                <div class="comment-cell">
-                                    <div class="comment-heading">
-                                        <span class="comment-user-name">Богдан,</span>
-                                        <span class="comment-user-age">27</span>
-                                        <span> лет</span>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
-                                        </p>
-                                    </div>
-                                    <span class="comment-date">27.09.2016</span>
-                                    <a href="#" class="comment-like">Полезный отзыв</a>
-                                </div>
-                            </div>
-                            <div class="comment-table">
-                                <div class="comment-cell">
-                                    <div class="comment-profile-photo">
-                                        <img src="./images/passport-guy.jpg">
-                                    </div>
-                                </div>
-                                <div class="comment-cell">
-                                    <div class="comment-heading">
-                                        <span class="comment-user-name">Богдан,</span>
-                                        <span class="comment-user-age">27</span>
-                                        <span> лет</span>
-                                    </div>
-                                    <div class="comment-text">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, cupiditate delectus, fuga id magni, odit quaerat quam recusandae sint temporibus tenetur veniam? Amet blanditiis commodi dicta doloribus ea eaque et ex facilis fuga hic in ipsa nulla numquam pariatur repudiandae sed, tenetur. Accusamus accusantium, ad atque autem corporis cum cupiditate dolor doloremque expedita in ipsa iste iure iusto laboriosam quisquam sapiente sed sequi sit sunt tempore. A architecto asperiores at atque cumque cupiditate eos exercitationem illo iste mollitia obcaecati praesentium quaerat quia sequi similique soluta sunt suscipit temporibus, veritatis voluptates. Consequatur eaque in molestiae provident voluptas. Distinctio reiciendis rem sapiente.
-                                        </p>
-                                    </div>
-                                    <span class="comment-date">27.09.2016</span>
-                                    <a href="#" class="comment-like">Полезный отзыв</a>
-                                </div>
-                            </div>
+                        <div class="pagination">
+                            <span class="step-links">
+                                {% if onwers_comments.has_previous %}
+                                    <a href="?page={{ onwers_comments.previous_page_number }}">previous</a>
+                                {% endif %}
+                                <span class="current">
+                                    Page {{ onwers_comments.number }} of {{ onwers_comments.paginator.num_pages }}.
+                                </span>
+                                {% if onwers_comments.has_next %}
+                                    <a href="?page={{ onwers_comments.next_page_number }}">next</a>
+                                {% endif %}
+                        </span>
+                        </div>
+                        {% endfor %}
                         </div>
                     </div>
                 </div>
