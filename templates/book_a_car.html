@@ -54,11 +54,11 @@
                     <h3 class="cc-heading">{{ car.description_title }}</h3>
                     <div class="cc-rating">
                         <ul class="rating">
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star-half-o" aria-hidden="true"></i></li>
-                            <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                            {% with ''|center:car.car_rating as range %}
+                            {% for _ in range %}
+                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                            {% endfor %}
+                            {% endwith %}
                         </ul>
                     </div>
                     <span class="cc-car-info cc-brand-model">{{ car.model }}</span>
@@ -141,8 +141,12 @@
                                 </div>
                                 <div class="comment-cell">
                                     <div class="comment-heading">
+                                    {% if comment.comment_author.user.first_name %}
                                         <span class="comment-user-name">{{ comment.comment_author.user.first_name }},</span>
                                         <span class="comment-user-age">{% commentator_age comment.comment_author.date_of_birth %}</span>
+                                    {% else %}
+                                        <span class="comment-user-name">{{ comment.unauthed_user_email }}</span>
+                                    {% endif %}
                                     </div>
                                     <div class="comment-text">
                                         <p>

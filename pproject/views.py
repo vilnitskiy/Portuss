@@ -230,11 +230,17 @@ def book_a_car(request, car_id):
             reverse('complete_booking') + '?' + 'car_id=' + car_id)
 
     post_comment_form = CommentCarForm(request.POST)
-    if post_comment_form.is_valid():
-        CommentCar.objects.create(
-            comment_author=user,
-            commented_car=Car.objects.get(id=car_id),
-            **post_comment_form.cleaned_data)
+    if request.user.is_authenticated():
+        if post_comment_form.is_valid():
+            CommentCar.objects.create(
+                comment_author=user,
+                commented_car=Car.objects.get(id=car_id),
+                **post_comment_form.cleaned_data)
+    else:
+        if post_comment_form.is_valid():
+            CommentCar.objects.create(
+                commented_car=Car.objects.get(id=car_id),
+                **post_comment_form.cleaned_data)
 
     return render(request, 'book_a_car.html', {
         'common_user': user,

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from random import choice
 from string import letters
 from django.forms import ModelForm, Form
@@ -25,26 +26,34 @@ class CarRentForm1(ModelForm):
         super(CarRentForm1, self).__init__(*args, **kwargs)
         self.fields['car_type'].widget.attrs.update({
             'id': 'transport-type'})
+        self.fields['car_type'].empty_label = u'Тип транспорта'
+
         self.fields['fuel'].widget.attrs.update({
             'id': 'fuel-type'})
+        self.fields['fuel'].empty_label = u'Тип топлива'
+
         self.fields['transmission'].widget.attrs.update({
             'id': 'transmission-type'})
+        self.fields['transmission'].empty_label = u'Трансмиссия'
+
         self.fields['issue_date'].widget.attrs.update({
-            'id': 'manufactured-year', 'placeholder': 'Year of manufacturing'})
+            'id': 'manufactured-year', 'placeholder': u'Год выпуска'})
         self.fields['condition'].widget.attrs.update({
             'id': 'condition'})
+        self.fields['condition'].empty_label = u'Состояние'
+
         self.fields['mileage'].widget.attrs.update({
-            'id': 'mileage', 'placeholder': 'Mileage'})
+            'id': 'mileage', 'placeholder': u'Пробег'})
         self.fields['model'].widget.attrs.update({
-            'placeholder': 'Brand/Model'})
+            'placeholder': u'Марка/Модель'})
         self.fields['country'].widget.attrs.update({
-            'id': 'car-country', 'placeholder': 'Country'})
+            'id': 'car-country', 'placeholder': u'Страна'})
         self.fields['city'].widget.attrs.update({
-            'id': 'car-city', 'placeholder': 'City'})
+            'id': 'car-city', 'placeholder': u'Город'})
         self.fields['street'].widget.attrs.update({
-            'id': 'car-street', 'placeholder': 'Steet'})
+            'id': 'car-street', 'placeholder': u'Улица'})
         self.fields['building'].widget.attrs.update({
-            'id': 'car-house', 'placeholder': 'Building'})
+            'id': 'car-house', 'placeholder': u'Номер здания'})
 
 
 class CarRentForm2(ModelForm):
@@ -67,16 +76,15 @@ class CarRentForm3(ModelForm):
         super(CarRentForm3, self).__init__(*args, **kwargs)
         self.fields['description_title'].widget.attrs.update({
             'id': 'car-card-heading', 'rows': '2',
-            'placeholder': 'Here you can write'
-            'the title for the ad, otherwise'
-            'the system will generate it yourself.'})
+            'placeholder': """Здесь вы можете описать заголовок \
+для объявления, в противном случае система сформирует \
+его самостоятельно."""})
         self.fields['description'].widget.attrs.update({
             'id': 'car-card-description',
-            'placeholder': 'Here you can describe all'
-            'the nuances: the rules of behavior in'
-            'the car, whether it is possible to smoke'
-            'inside, whether the tank will be filled when'
-            'renting, etc.'})
+            'placeholder': """Здесь вы можете описать все \
+нюансы: правила поведения в автомобиле, можно \
+ли курить внутри, будет ли заполнен бак при сдаче \
+в аренду и тд."""})
 
 
 class CarRentForm4(ModelForm):
@@ -88,15 +96,15 @@ class CarRentForm4(ModelForm):
         super(CarRentForm4, self).__init__(*args, **kwargs)
         self.fields['rental_perion_begin'].widget.attrs.update({
             'id': 'rent-terms-from',
-            'placeholder': 'from',
-            'class': 'hasDatepicker'})
+            'placeholder': u'от',
+            'name': 'rent-terms-from'})
         self.fields['rental_perion_end'].widget.attrs.update({
             'id': 'rent-terms-to',
-            'placeholder': 'to',
-            'class': 'hasDatepicker'})
+            'placeholder': u'до',
+            'name': 'rent-terms-to'})
         self.fields['price'].widget.attrs.update({
             'id': 'form-price',
-            'placeholder': 'Enter the price'})
+            'placeholder': u'Введите цену'})
 
 
 class CarRentForm5(ModelForm):
@@ -161,7 +169,7 @@ class LoginForm(ModelForm):
         user = authenticate(username=username, password=password)
         if not user or not user.is_active:
             raise forms.ValidationError(
-                "Something went wrong, check your email and password and try again")
+                "Что-то пошло не так, проверьте ваш email и пароль и попробуйте еще раз.")
         return self.cleaned_data
 
 
@@ -173,20 +181,20 @@ class QuickSearchForm(Form):
     def __init__(self, *args, **kwargs):
         super(QuickSearchForm, self).__init__(*args, **kwargs)
         self.fields['city'].widget = forms.TextInput(attrs={
-            'placeholder': 'City'})
+            'placeholder': u'Город'})
         self.fields['rental_perion_begin'].widget = forms.TextInput(attrs={
             'id': 'page-search-date-from',
-            'placeholder': 'from'})
+            'placeholder': u'от'})
         self.fields['rental_perion_end'].widget = forms.TextInput(attrs={
             'id': 'page-search-date-to',
-            'placeholder': 'to'})
+            'placeholder': u'до'})
 
     def clean(self):
         r_begin = self.cleaned_data.get('rental_perion_begin')
         r_end = self.cleaned_data.get('rental_perion_end')
         if (r_end - r_begin).days > 365:
             raise forms.ValidationError(
-                "You can't rent car for more than year.")
+                u"Вы не можете арендовать машину больше, чем на год.")
         return self.cleaned_data
 
 
@@ -201,20 +209,20 @@ class SearchForm(CarRentForm1, QuickSearchForm):
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
         self.fields['mileage1'].widget = forms.TextInput(attrs={
-            'placeholder': 'from'})
+            'placeholder': u'от'})
         self.fields['mileage2'].widget = forms.TextInput(attrs={
-            'placeholder': 'to'})
+            'placeholder': u'до'})
         self.fields['price1'].widget = forms.TextInput(attrs={
-            'placeholder': 'from'})
+            'placeholder': u'от'})
         self.fields['price2'].widget = forms.TextInput(attrs={
-            'placeholder': 'to'})
+            'placeholder': u'до'})
         self.fields['model'].widget = forms.TextInput(attrs={
             'id': 'brand',
-            'placeholder': 'Brand/Model'})
+            'placeholder': u'Марка/Модель'})
         self.fields['myear1'].widget = forms.TextInput(attrs={
-            'placeholder': 'from'})
+            'placeholder': u'от'})
         self.fields['myear2'].widget = forms.TextInput(attrs={
-            'placeholder': 'to'})
+            'placeholder': u'до'})
 
 
 class BaseEditUserForm(ModelForm):

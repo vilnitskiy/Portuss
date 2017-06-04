@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from datetime import date
 from datetime import datetime
 
@@ -6,29 +7,6 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from pproject import validators
-
-
-class CarConstants:
-    CAR_TYPE_CHOICES = (
-        (u'', u'Transport type'),
-        ("t1", ("type1")),
-        ("t2", ("type2")),
-    )
-    FUEL_CHOICES = (
-        (u'', u'Fuel type'),
-        ("t1", ("type1")),
-        ("t2", ("type2")),
-    )
-    TRANSMISSION_CHOICES = (
-        (u'', u'Transmission type'),
-        ("t1", ("type1")),
-        ("t2", ("type2")),
-    )
-    CONDITION_CHOICES = (
-        (u'', u'Condition'),
-        ("t1", ("type1")),
-        ("t2", ("type2")),
-    )
 
 
 class CommonUser(models.Model):
@@ -59,23 +37,47 @@ class CommonUser(models.Model):
         return u"%s %s" % (self.user.first_name, self.user.last_name)
 
 
+class CarType(models.Model):
+    _car = models.CharField(
+        max_length=30)
+
+    def __unicode__(self):
+        return u"%s" % (self._car)
+
+
+class FuelType(models.Model):
+    _fuel = models.CharField(
+        max_length=30)
+
+    def __unicode__(self):
+        return u"%s" % (self._fuel)
+
+
+class TrasmissionType(models.Model):
+    _transmission = models.CharField(
+        max_length=30)
+
+    def __unicode__(self):
+        return u"%s" % (self._transmission)
+
+
+class ConditionType(models.Model):
+    _condition = models.CharField(
+        max_length=30)
+
+    def __unicode__(self):
+        return u"%s" % (self._condition)
+
+
 class Car(models.Model):
-    car_type = models.CharField(
-        choices=CarConstants.CAR_TYPE_CHOICES,
-        max_length=30)
-    fuel = models.CharField(
-        choices=CarConstants.FUEL_CHOICES,
-        max_length=30)
-    transmission = models.CharField(
-        choices=CarConstants.TRANSMISSION_CHOICES,
-        max_length=30)
+    car_type = models.ForeignKey(CarType)
+    fuel = models.ForeignKey(FuelType)
+    transmission = models.ForeignKey(TrasmissionType)
     issue_date = models.PositiveIntegerField(
         validators=[
             MinValueValidator(1950),
             MaxValueValidator(date.today().year)])
-    condition = models.CharField(
-        choices=CarConstants.CONDITION_CHOICES,
-        max_length=20)
+    condition = models.ForeignKey(ConditionType)
     # mileage in thousands of km
     mileage = models.PositiveIntegerField(
         validators=[MaxValueValidator(300)])
@@ -151,7 +153,6 @@ class Car(models.Model):
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         if self.renter != self.__original_renter:
             self.times_rented += 1
-        self.all_renters.append(self.renter)
         super(Car, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_renter = self.renter
 
@@ -202,8 +203,8 @@ class CommentCar(models.Model):
     comment_author = models.ForeignKey(
         CommonUser,
         related_name='comment_car_author',
-        null=False,
-        blank=False)
+        null=True,
+        blank=True)
     commented_car = models.ForeignKey(
         Car,
         related_name='commented_car',

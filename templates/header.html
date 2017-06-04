@@ -21,7 +21,9 @@
                         <i class="fa fa-search" aria-hidden="true"></i>
                     </div>
                 </form>
-                <a href="{% url 'car_rent' %}" class="give-car-for-rent">Сдать машину</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'car_rent' %}" class="give-car-for-rent">Сдать машину</a>
+                {% endif %}
             </div>
             <div class="header-block no-stretch help-block desktop-only-element">
                 <a href="{% url 'help' %}" class="get-help">Помощь</a>
