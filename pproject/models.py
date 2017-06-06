@@ -85,8 +85,8 @@ class Car(models.Model):
     photo = models.FileField(
         upload_to='img/users_cars_photos/',
         default='img/users_cars_photos/car.jpg',
-        null=False,
-        blank=False)
+        null=True,
+        blank=True)
     price = models.PositiveIntegerField(
         default=200,
         blank=False,

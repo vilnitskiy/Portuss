@@ -39,11 +39,14 @@ def main(request):
     popular_ads = Car.objects.order_by('-times_rented')[:10]
     sorted_ads_by_popularity = Car.objects.order_by('-city')
     re_sorted_ads_by_popularity = list(sorted_ads_by_popularity)
-    count_cars = sorted_ads_by_popularity.count()
-    for index, obj in enumerate(re_sorted_ads_by_popularity):
-        if index < (count_cars - 1):
-            if obj.city == re_sorted_ads_by_popularity[index + 1].city:
-                del re_sorted_ads_by_popularity[index + 1]
+    i = 0
+    while i < len(re_sorted_ads_by_popularity) - 1:
+        if (re_sorted_ads_by_popularity[i].city ==
+                re_sorted_ads_by_popularity[i + 1].city):
+            del re_sorted_ads_by_popularity[i + 1]
+        else:
+            i = 0
+
     if 'rental_perion_begin' in request.POST:
         quick_search_form = QuickSearchForm(request.POST)
         if quick_search_form.is_valid():
@@ -297,6 +300,7 @@ class RegistrationView(CreateView):
 
 
 tmp_file = ''
+path = ''
 
 
 class CarRentView(FormView):
@@ -342,7 +346,7 @@ class CarRentView(FormView):
         from form errors
 
         """
-        global tmp_file
+        global tmp_file, path
         if request.is_ajax():
             next_step = int(request.POST['next_step'])
             if next_step < len(self.form_classes):
@@ -361,8 +365,10 @@ class CarRentView(FormView):
                     if tmp_file:
                         with open(tmp_file, 'r+') as f:
                             photo = File(f)
-                            self.car_data_dict['photo'] = photo
+                            self.car_data_dict.pop('photo')
+
                             new_car = Car.objects.create(**self.car_data_dict)
+                            new_car.photo.save(path, photo, save=True)
                     else:
                         new_car = Car.objects.create(**self.car_data_dict)
                     self.car_created = True
