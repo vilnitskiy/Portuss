@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="login-form">
+    <a href="{% url 'registration' %}">Click here if you're not registerd yet</a>
+    <h2>Please, log in to join the chat</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {% for field in form %}
+            {{ field.label_tag }}
+            {{ field }}
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+        {% endfor %}
+        <div class="login-submit">
+          <input type="submit" value="Login">
+        </div>
+    </form>
+  </div>
+{% endblock content %}

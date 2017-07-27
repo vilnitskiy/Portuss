@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <form id="chatform">
+    <table id="chat">
+      <tbody>
+        <tr>
+          <td>Date</td>
+          <td>Username</td>
+          <td>Message</td>
+        </tr>
+        {% for message in messages %}
+          <tr>
+            <td>{{ message.formatted_timestamp }}</td>
+            <td>{{ message.author }}</td>
+            <td>{{ message.message }}</td>
+          </tr> 
+        {% endfor %}
+      </tbody>
+      <tfoot>
+      <tr>
+        <th>Tell us something:</th>
+        <td colspan=2>
+          <input id="message" type="text" placeholder="message">
+          <button type="submit" id="go">Say it</button>
+        </td>
+      </tfoot>
+    </table>
+  </form>
+{% endblock %}
+
+{% block afterbody %}
+  <script type="text/javascript" src='{% static "js/jquery-1.12.1.min.js" %}'></script>
+  <script type="text/javascript" src='{% static "js/reconnecting-websocket.min.js" %}'></script>
+  <script type="text/javascript" src='{% static "js/chat.js" %}'></script>
+{% endblock %}

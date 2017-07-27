@@ -1,45 +1,22 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Portuss</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    {% block extra_css %}{% endblock %}
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="{% static 'js/swiper.jquery.min.js' %}"></script>
-
-    <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
-    <script src="{% static 'js/payments_dropin.js' %}"></script>
-
-    <script src="{% static 'js/modal-popup.js' %}"></script>
-    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
-    <script src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script>
-    <script src="{% static 'js/select-block.js' %}"></script>
-    <script src="{% static 'js/scripts.js' %}"></script>
-    <script src="{% static 'js/slider.js' %}"></script>
-
-
-    {% block extra_js %}{% endblock %}
+  <meta charset="utf-8">
+  <title>{% block title %}Test Chat{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static 'css/skeleton.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chat.css' %}">
 </head>
-
-<body class="popup_on">
-    {% block main %}{% endblock %}
-    {% block extras %}{% endblock %}
-    <script type="text/javascript">
-        var modal = new Modal(".popup_on");
-        var rent_url = "{% url 'car_rent' %}";
-        var main_url = "{% url 'main' %}";
-        var search_url = "{% url 'search' %}";
-        var header_search_url = "{% url 'header_search' %}";
-    </script>
+<body>
+  <div class="section">
+    <div class="container">
+      <h1>Jellyfish Test Chat</h1>
+      <hr>
+      {% block content %}{% endblock content %}
+    </div>
+  </div>  
+  {% block afterbody %}{% endblock afterbody %}
 </body>
-
 </html>
